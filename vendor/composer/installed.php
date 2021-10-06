@@ -1,0 +1,71 @@
+<?php return array(
+    'root' => array(
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'type' => 'library',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'reference' => '941d273eba4879dab403a3d77211bddaa4ed7f21',
+        'name' => '__root__',
+        'dev' => true,
+    ),
+    'versions' => array(
+        '__root__' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'reference' => '941d273eba4879dab403a3d77211bddaa4ed7f21',
+            'dev_requirement' => false,
+        ),
+        'almasaeed2010/adminlte' => array(
+            'pretty_version' => 'v2.4.3',
+            'version' => '2.4.3.0',
+            'type' => 'template',
+            'install_path' => __DIR__ . '/../almasaeed2010/adminlte',
+            'aliases' => array(),
+            'reference' => 'b3acb63ac56b13eb45b36e628b384a9a2507b50e',
+            'dev_requirement' => false,
+        ),
+        'composer/installers' => array(
+            'pretty_version' => 'v1.12.0',
+            'version' => '1.12.0.0',
+            'type' => 'composer-plugin',
+            'install_path' => __DIR__ . '/./installers',
+            'aliases' => array(),
+            'reference' => 'd20a64ed3c94748397ff5973488761b22f6d3f19',
+            'dev_requirement' => false,
+        ),
+        'latte/latte' => array(
+            'pretty_version' => 'v2.10.4',
+            'version' => '2.10.4.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../latte/latte',
+            'aliases' => array(),
+            'reference' => '6e0540c60805b33148dc95db2602a087fb2ef9fb',
+            'dev_requirement' => false,
+        ),
+        'roundcube/plugin-installer' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '*',
+            ),
+        ),
+        'shama/baton' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '*',
+            ),
+        ),
+        'tracy/tracy' => array(
+            'pretty_version' => 'v2.8.7',
+            'version' => '2.8.7.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../tracy/tracy',
+            'aliases' => array(),
+            'reference' => '8e708de7c611f626c8792d43f1c78812ea24e6f6',
+            'dev_requirement' => false,
+        ),
+    ),
+);
