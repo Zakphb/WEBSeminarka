@@ -10,20 +10,6 @@ class ComposerStaticInitf7934d7bc9f168461b53a3044694792a
         'd507e002f7fce7f0c6dbf1f22edcb902' => __DIR__ . '/..' . '/tracy/tracy/src/Tracy/functions.php',
     );
 
-    public static $prefixLengthsPsr4 = array (
-        'C' => 
-        array (
-            'Composer\\Installers\\' => 20,
-        ),
-    );
-
-    public static $prefixDirsPsr4 = array (
-        'Composer\\Installers\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers',
-        ),
-    );
-
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Latte\\Attributes\\TemplateFilter' => __DIR__ . '/..' . '/latte/latte/src/Latte/attributes.php',
@@ -99,8 +85,6 @@ class ComposerStaticInitf7934d7bc9f168461b53a3044694792a
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitf7934d7bc9f168461b53a3044694792a::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitf7934d7bc9f168461b53a3044694792a::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInitf7934d7bc9f168461b53a3044694792a::$classMap;
 
         }, null, ClassLoader::class);

@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '941d273eba4879dab403a3d77211bddaa4ed7f21',
+        'reference' => 'd789e342c413fb4cd88a885627b7f38acc913f1c',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,25 +16,16 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '941d273eba4879dab403a3d77211bddaa4ed7f21',
+            'reference' => 'd789e342c413fb4cd88a885627b7f38acc913f1c',
             'dev_requirement' => false,
         ),
         'almasaeed2010/adminlte' => array(
-            'pretty_version' => 'v2.4.3',
-            'version' => '2.4.3.0',
-            'type' => 'template',
+            'pretty_version' => 'v3.1.0',
+            'version' => '3.1.0.0',
+            'type' => 'library',
             'install_path' => __DIR__ . '/../almasaeed2010/adminlte',
             'aliases' => array(),
-            'reference' => 'b3acb63ac56b13eb45b36e628b384a9a2507b50e',
-            'dev_requirement' => false,
-        ),
-        'composer/installers' => array(
-            'pretty_version' => 'v1.12.0',
-            'version' => '1.12.0.0',
-            'type' => 'composer-plugin',
-            'install_path' => __DIR__ . '/./installers',
-            'aliases' => array(),
-            'reference' => 'd20a64ed3c94748397ff5973488761b22f6d3f19',
+            'reference' => 'c641d7f5716ed47e76f70ab16e05ae41420120b8',
             'dev_requirement' => false,
         ),
         'latte/latte' => array(
@@ -45,18 +36,6 @@
             'aliases' => array(),
             'reference' => '6e0540c60805b33148dc95db2602a087fb2ef9fb',
             'dev_requirement' => false,
-        ),
-        'roundcube/plugin-installer' => array(
-            'dev_requirement' => false,
-            'replaced' => array(
-                0 => '*',
-            ),
-        ),
-        'shama/baton' => array(
-            'dev_requirement' => false,
-            'replaced' => array(
-                0 => '*',
-            ),
         ),
         'tracy/tracy' => array(
             'pretty_version' => 'v2.8.7',
