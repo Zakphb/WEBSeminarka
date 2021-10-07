@@ -1,2 +1,5 @@
-Options FileInfo AuthConfig Limit
-AllowOverride All   <--- make sure this is not set to "None"
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^index\.php/([a-zA-Z0-9_-]+)/method/param$ /index.php?url=$1 [QSA,L]
