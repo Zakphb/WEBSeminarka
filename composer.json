@@ -1,7 +1,23 @@
 {
+    "name": "zakphb/semestralka",
+    "autoload": {
+        "psr-4": {
+            "Zakphb\\Semestralka\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Pavel Žák",
+            "email": "zakp.hb@gmail.com"
+        }
+    ],
     "require": {
-        "almasaeed2010/adminlte": "~3.1",
-        "tracy/tracy": "^2.8",
-        "latte/latte": "^2.10"
+        "latte/latte": "~v2.10.4",
+        "tracy/tracy": "~v2.8.7",
+        "almasaeed2010/adminlte": "~v3.1.0"
+        }
+    ,
+    "require-dev": {
+        "roave/security-advisories": "dev-latest"
     }
 }
