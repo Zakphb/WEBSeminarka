@@ -1,5 +1,7 @@
 <?php
 namespace App\Core;
+use Latte\Engine;
+
 /**
  *
  */
@@ -7,14 +9,17 @@ class Application
 {
 	public Router $router;
 	public Request $request;
-
+	public Engine $latte;
+	public static string $ROOT;
 	/**
 	 *
 	 */
-	public function __construct()
+	public function __construct($root)
 	{
+		self::$ROOT = $root;
 		$this->request = new Request();
-		$this->router = new Router($this->request);
+		$this->latte = new Engine();
+		$this->router = new Router($this->request, $this->latte, $root);
 	}
 
 	/**
@@ -22,6 +27,6 @@ class Application
 	 */
 	public function run(): void
 	{
-		$this->router->resolve();
+		echo $this->router->resolve();
 	}
 }
