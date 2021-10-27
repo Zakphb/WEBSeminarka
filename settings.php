@@ -16,30 +16,29 @@ define("DB_USER","root");
 define("DB_PASS","");
 
 
-//// Nazvy tabulek v DB ////
 
-///** Tabulka s pohadkami. */
-//define("TABLE_INTRODUCTION", "orionlogin_mvc_introduction");
-///** Tabulka s uzivateli. */
-//define("TABLE_USER", "orionlogin_mvc_user");
+
 
 
 //// Dostupne stranky webu ////
 
 /** Adresar kontroleru. */
-const DIRECTORY_CONTROLLERS = "app\Controllers";
+const DIRECTORY_CONTROLLERS = "src/Controllers";
+const NAMESPACE_DIRECTORY_CONTROLLERS = "App\\Controllers\\";
 /** Adresar modelu. */
-const DIRECTORY_MODELS = "app\Models";
+const DIRECTORY_MODELS = "src/Models";
+const NAMESPACE_DIRECTORY_MODELS = null;
 /** Adresar sablon */
-const DIRECTORY_VIEWS = "app\Views";
-
+const DIRECTORY_VIEWS = "src/Views";
+const NAMESPACE_DIRECTORY_VIEWS = null;
 /** Klic defaultni webove stranky. */
 const DEFAULT_WEB_PAGE_KEY = "/";
 
 /** Dostupne webove stranky. */
 const WEB_PAGES = array(
-    'home' => '/',
-    'contact' => '/Contact/contact',
+    'Home' => '/',
+    'Contact' => '/Contact/contact',
+	'Login' => '/login'
 );
 
 ?>

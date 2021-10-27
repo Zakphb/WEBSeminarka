@@ -30,61 +30,90 @@ abstract class BaseDatabase
 
 	public function save($data)
 	{
-		$this->pdo->
-		$this->pdo->prepare()
+		$result = null;
+		if ($this->exists($data))
+		{
+			$result = $this->update($data);
+		} else
+		{
+			$result = $this->insert($data);
+		}
+		$result;
+	}
+
+	public function insert($data)
+	{
+		$prep = $this->pdo->prepare("
+			INSERT INTO ? 
+		    (?)
+		    VALUES (?);
+		");
+		return $prep->execute([$this->tableName, $data, $data]);
+	}
+
+	public function update($data)
+	{
+		$prep = $this->pdo->prepare("
+		UPDATE ?
+		SET 
+		VALUES (?);
+		");
+		return $prep->execute([$this->tableName, $data, $data]);
 	}
 
 	public function exists($data)
 	{
 		$sql = "SELECT * FROM ? WHERE ? = ?";
-		foreach ($data as $param){
-			$sql.=" AND ? = ?";
+		foreach ($data as $param)
+		{
+			$sql .= " AND ? = ?";
 		}
-		$sql.=" ;";
+		$sql .= " ;";
 		$st = $this->pdo->prepare($sql);
 		$st->bindValue("?", $this->tableName);
-		foreach ($data as $param) {
-			$st->bindValue( "?", $param);
-			$st->bindValue( "?", $param);
-		}
-		$st->execute();
-	}
-
-
-	/**
-	 *  Vrati seznam vsech uzivatelu pro spravu uzivatelu.
-	 * @return array Obsah spravy uzivatelu.
-	 */
-	public function getAllUsers(): array
-	{
-		// pripravim dotaz
-		$q = "SELECT * FROM " . TABLE_USER;
-		// provedu a vysledek vratim jako pole
-		// protoze je o uzkazku, tak netestuju, ze bylo neco vraceno
-		return $this->pdo->query($q)->fetchAll();
-	}
-
-	/**
-	 *  Smaze daneho uzivatele z DB.
-	 * @param int $userId ID uzivatele.
-	 */
-	public function deleteUser(int $userId): bool
-	{
-		// pripravim dotaz
-		$q = "DELETE FROM " . TABLE_USER . " WHERE id_user = $userId";
-		// provedu dotaz
-		$res = $this->pdo->query($q);
-		// pokud neni false, tak vratim vysledek, jinak null
-		if ($res)
+		foreach ($data as $param)
 		{
-			// neni false
-			return true;
-		} else
-		{
-			// je false
-			return false;
+			$st->bindValue("?", $param);
+			$st->bindValue("?", $param);
 		}
+		return $st->fetchAll();
 	}
+
+
+//	/**
+//	 *  Vrati seznam vsech uzivatelu pro spravu uzivatelu.
+//	 * @return array Obsah spravy uzivatelu.
+//	 */
+//	public function getAllUsers(): array
+//	{
+//		// pripravim dotaz
+//		$q = "SELECT * FROM " . TABLE_USER;
+//		// provedu a vysledek vratim jako pole
+//		// protoze je o uzkazku, tak netestuju, ze bylo neco vraceno
+//		return $this->pdo->query($q)->fetchAll();
+//	}
+//
+//	/**
+//	 *  Smaze daneho uzivatele z DB.
+//	 * @param int $userId ID uzivatele.
+//	 */
+//	public function deleteUser(int $userId): bool
+//	{
+//		// pripravim dotaz
+//		$q = "DELETE FROM " . TABLE_USER . " WHERE id_user = $userId";
+//		// provedu dotaz
+//		$res = $this->pdo->query($q);
+//		// pokud neni false, tak vratim vysledek, jinak null
+//		if ($res)
+//		{
+//			// neni false
+//			return true;
+//		} else
+//		{
+//			// je false
+//			return false;
+//		}
+//	}
 
 }
 

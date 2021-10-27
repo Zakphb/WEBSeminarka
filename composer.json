@@ -1,9 +1,7 @@
 {
     "name": "zakphb/semestralka",
     "autoload": {
-        "psr-4": {
-            "App\\": "src/"
-        }
+      "classmap": ["src/", "vendor/"]
     },
     "authors": [
         {

@@ -10,22 +10,25 @@ class ComposerStaticInitf7934d7bc9f168461b53a3044694792a
         'd507e002f7fce7f0c6dbf1f22edcb902' => __DIR__ . '/..' . '/tracy/tracy/src/Tracy/functions.php',
     );
 
-    public static $prefixLengthsPsr4 = array (
-        'A' => 
-        array (
-            'App\\' => 4,
-        ),
-    );
-
-    public static $prefixDirsPsr4 = array (
-        'App\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/src',
-        ),
-    );
-
     public static $classMap = array (
+        'App\\Controllers\\BaseController' => __DIR__ . '/../..' . '/src/Controllers/BaseController.php',
+        'App\\Controllers\\HomeController' => __DIR__ . '/../..' . '/src/Controllers/HomeController.php',
+        'App\\Controllers\\IController' => __DIR__ . '/../..' . '/src/Controllers/IController.php',
+        'App\\Controllers\\LoginController' => __DIR__ . '/../..' . '/src/Controllers/LoginController.php',
+        'App\\Controllers\\UserController' => __DIR__ . '/../..' . '/src/Controllers/UserController.php',
+        'App\\Core\\Application' => __DIR__ . '/../..' . '/src/Core/Application.php',
+        'App\\Core\\Request' => __DIR__ . '/../..' . '/src/Core/Request.php',
+        'App\\Core\\Router' => __DIR__ . '/../..' . '/src/Core/Router.php',
+        'App\\Entities\\BaseEntity' => __DIR__ . '/../..' . '/src/Entities/BaseEntity.php',
+        'App\\Entities\\UserEntity' => __DIR__ . '/../..' . '/src/Entities/UserEntity.php',
+        'App\\Models\\Database\\BaseDatabase' => __DIR__ . '/../..' . '/src/Models/Database/BaseDatabase.php',
+        'App\\Models\\Database\\UserDatabase' => __DIR__ . '/../..' . '/src/Models/Database/UserDatabase.php',
+        'ChildClass' => __DIR__ . '/..' . '/tracy/tracy/examples/dump.php',
+        'ComposerAutoloaderInitf7934d7bc9f168461b53a3044694792a' => __DIR__ . '/..' . '/composer/autoload_real.php',
+        'Composer\\Autoload\\ClassLoader' => __DIR__ . '/..' . '/composer/ClassLoader.php',
+        'Composer\\Autoload\\ComposerStaticInitf7934d7bc9f168461b53a3044694792a' => __DIR__ . '/..' . '/composer/autoload_static.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'DemoClass' => __DIR__ . '/..' . '/tracy/tracy/examples/exception.php',
         'Latte\\Attributes\\TemplateFilter' => __DIR__ . '/..' . '/latte/latte/src/Latte/attributes.php',
         'Latte\\Attributes\\TemplateFunction' => __DIR__ . '/..' . '/latte/latte/src/Latte/attributes.php',
         'Latte\\Bridges\\Tracy\\BlueScreenPanel' => __DIR__ . '/..' . '/latte/latte/src/Bridges/Tracy/BlueScreenPanel.php',
@@ -74,6 +77,8 @@ class ComposerStaticInitf7934d7bc9f168461b53a3044694792a
         'Latte\\Token' => __DIR__ . '/..' . '/latte/latte/src/Latte/Compiler/Token.php',
         'Latte\\TokenIterator' => __DIR__ . '/..' . '/latte/latte/src/Latte/Compiler/TokenIterator.php',
         'Latte\\Tokenizer' => __DIR__ . '/..' . '/latte/latte/src/Latte/Compiler/Tokenizer.php',
+        'ParentClass' => __DIR__ . '/..' . '/tracy/tracy/examples/dump.php',
+        'Test' => __DIR__ . '/..' . '/tracy/tracy/examples/dump-snapshot.php',
         'Tracy\\Bar' => __DIR__ . '/..' . '/tracy/tracy/src/Tracy/Bar/Bar.php',
         'Tracy\\BlueScreen' => __DIR__ . '/..' . '/tracy/tracy/src/Tracy/BlueScreen/BlueScreen.php',
         'Tracy\\Bridges\\Nette\\Bridge' => __DIR__ . '/..' . '/tracy/tracy/src/Bridges/Nette/Bridge.php',
@@ -99,8 +104,6 @@ class ComposerStaticInitf7934d7bc9f168461b53a3044694792a
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitf7934d7bc9f168461b53a3044694792a::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitf7934d7bc9f168461b53a3044694792a::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInitf7934d7bc9f168461b53a3044694792a::$classMap;
 
         }, null, ClassLoader::class);
