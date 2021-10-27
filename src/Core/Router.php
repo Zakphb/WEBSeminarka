@@ -43,18 +43,19 @@ class Router
 	public function resolve()
 	{
 		$path = $this->request->getPath();
+		$function = $this->request->getFunction();
 		$method = $this->request->getMethod();
 		$callback = $this->routes[$method][$path] ?? false;
 		if (!$callback)
 		{
 			//TODO: Pridat vyhozeni flash message
-			echo $this->latte->render($this->root . '/src/Views/error404.latte', ['path' => $path]);
+			$this->latte->render($this->root . '/src/Views/error404.latte', ['path' => $path]);
 			exit();
 		}
 		$controllerName = $this->buildControllerString($callback);
 		/** @var IController $controller Ovladac prislusne stranky. */
 		$controller = new $controllerName($this->latte);
-		$controller->show($path);
+		$function ? $controller->$function($_GET) : $controller->show();
 	}
 
 	public function buildControllerString($callback)

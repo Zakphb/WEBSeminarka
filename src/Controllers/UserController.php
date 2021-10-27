@@ -10,8 +10,8 @@ class UserController extends BaseController
 		parent::__construct($latte);
 	}
 
-	public function show(string $pageTitle, $args = null)
+	public function show(?string $path, $args = null)
 	{
-		parent::show("user");
+		parent::show($path);
 	}
 }

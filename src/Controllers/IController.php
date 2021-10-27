@@ -8,12 +8,11 @@ interface IController
 {
 
 	/**
-	 * Zajisti vypsani prislusne stranky.
-	 *
-	 * @param string $pageTitle Nazev stanky.
-	 * @return string               HTML prislusne stranky.
+	 * @param string|null $path
+	 * @param $args
+	 * @return mixed
 	 */
-	public function show(string $pageTitle, $args);
+	public function show(?string $path, $args);
 
 }
 

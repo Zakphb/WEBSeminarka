@@ -11,11 +11,11 @@ abstract class BaseController implements IController
 		$this->latte = $latte;
 	}
 
-	public function show(string $pageTitle,$args = null)
+	public function show(?string $path, $args = null)
 	{
 		if (is_null($args)){
 			$args = [];
 		}
-		return $this->latte->render($pageTitle, $args);
+		return $this->latte->render($path, $args);
 	}
 }

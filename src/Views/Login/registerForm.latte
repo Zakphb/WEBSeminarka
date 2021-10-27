@@ -1,0 +1,73 @@
+{block registerForm}
+<div class="register-box">
+    <div class="card">
+        <div class="card-body register-card-body">
+            <p class="login-box-msg">Registrace</p>
+
+            <form action="login.actionRegister" method="post">
+                <div class="input-group mb-3">
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Jméno" value="" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-user"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="text" id="surname" name="surname" class="form-control" placeholder="Příjmení" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-user"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Heslo" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="password" id="password-control" name="password-control" class="form-control" placeholder="Znova heslo" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="teacher" name="teacher" value="false">
+                            <label for="teacher">
+                                Jsem vyučující
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <a href="/login" class="text-center">Už mám účet</a>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary btn-block">Registrovat</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+
+        </div>
+        <!-- /.form-box -->
+    </div><!-- /.card -->
+</div>
+<!-- /.register-box -->
+{/block}

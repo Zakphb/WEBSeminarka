@@ -9,6 +9,15 @@ class UserEntity extends BaseEntity
 	const USER_SURNAME = 'surname';
 	const USER_EMAIL = 'email';
 	const USER_PASSWORD = 'password';
+
+	const COLUMN_NAMES = [
+		self::USER_ID,
+		self::USER_NAME,
+		self::USER_SURNAME,
+		self::USER_EMAIL,
+		self::USER_PASSWORD
+		];
+
 	private ?int $id;
 	private $name;
 	private $surname;
