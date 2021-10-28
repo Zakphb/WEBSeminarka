@@ -15,7 +15,7 @@ $app = new Application(__DIR__);
 
 foreach (iterator_to_array($it = new RecursiveIteratorIterator(new RecursiveArrayIterator(WEB_PAGES))) as $callback => $path)
 {
-	$app->router->get("$path", "$callback");
-	$app->router->post("$path", "$callback");
+	$app->router->get((string)$path, (string)$callback);
+	$app->router->post((string)$path, (string)$callback);
 }
 $app->run();

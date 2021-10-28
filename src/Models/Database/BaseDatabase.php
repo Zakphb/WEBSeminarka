@@ -2,6 +2,9 @@
 
 namespace App\Models\Database;
 
+use App\Utilities\ArrayUtils;
+use App\Utilities\StringUtils;
+use Exception;
 use PDO;
 
 /**
@@ -25,33 +28,77 @@ abstract class BaseDatabase
 		$this->pdo = new PDO("mysql:host=" . DB_SERVER . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
 		// vynuceni kodovani UTF-8
 		$this->pdo->exec("set names utf8");
+		$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	}
 
 
 	public function save($data)
 	{
-		$result = null;
+		if ($isMutli = ArrayUtils::isMultidimensional($data))
+		{
+			$insertedIds = [];
+			try
+			{
+				$this->pdo->beginTransaction();
+				foreach ($data as $row)
+				{
+					if ($this->exists($data))
+					{
+						$success = $this->update($row);
+					} else
+					{
+						$success = $this->insert($row);
+					}
+					if (!$success)
+					{
+						$this->pdo->rollback();
+						return false;
+					}
+					$insertedIds[] = $this->pdo->lastInsertId();
+				}
+				$this->pdo->commit();
+				return $insertedIds;
+			} catch
+			(Exception $e)
+			{
+				if ($isMutli)
+				{
+					$this->pdo->rollback();
+				}
+				echo $e;
+			}
+
+		}
 		if ($this->exists($data))
 		{
-			$result = $this->update($data);
+			$success = $this->update($data);
 		} else
 		{
-			$result = $this->insert($data);
+			$success = $this->insert($data);
 		}
-		$result;
+		if (!$success)
+		{
+			return false;
+		}
+		return $this->pdo->lastInsertId();
 	}
 
-	public function insert($data)
+
+	public function insert(array $data)
 	{
-		$prep = $this->pdo->prepare("
-			INSERT INTO ? 
-		    (?)
-		    VALUES (?);
-		");
-		return $prep->execute([$this->tableName, $data, $data]);
+		if (is_null($data["id"]) || array_key_exists("id", $data))
+		{
+			unset($data["id"]);
+		}
+		$sql = "INSERT INTO $this->tableName (" . ArrayUtils::arrayIntoQueryArgs(array_keys($data)) . ") VALUES (" .
+			ArrayUtils::arrayIntoQueryArgs(array_values($data), true) . ");";
+		$prep = $this->pdo->prepare($sql);
+		return $prep->execute();
 	}
 
-	public function update($data)
+
+	public
+	function update($data)
 	{
 		$prep = $this->pdo->prepare("
 		UPDATE ?
@@ -61,23 +108,67 @@ abstract class BaseDatabase
 		return $prep->execute([$this->tableName, $data, $data]);
 	}
 
-	public function exists($data)
+	public
+	function exists($data)
 	{
-		$sql = "SELECT * FROM ? WHERE ? = ?";
-		foreach ($data as $param)
+		if (isset($data["id"]))
 		{
-			$sql .= " AND ? = ?";
+			return true;
 		}
-		$sql .= " ;";
-		$st = $this->pdo->prepare($sql);
-		$st->bindValue("?", $this->tableName);
-		foreach ($data as $param)
-		{
-			$st->bindValue("?", $param);
-			$st->bindValue("?", $param);
-		}
-		return $st->fetchAll();
+		return $this->getWhere($data);
 	}
+
+//	public function selectWhere($data){
+//		$sql = "SELECT * FROM ? WHERE ? = ?";
+//		if (count($data) > 1)
+//		{
+//			foreach ($data as $param)
+//			{
+//				$sql .= " AND ? = ?";
+//			}
+//		}
+//		$sql .= ";";
+//		$st = $this->pdo->prepare($sql);
+//		$st->bindValue("?", $this->tableName);
+//		foreach ($data as $key => $param)
+//		{
+//			bdump($param);
+//			bdump($key);
+//			$st->bindValue("?", $key);
+//			$st->bindValue("?", $param);
+//		}
+//		return $st->fetchAll();
+//	}
+
+	public function getWhere($data, int $numberOfResults)
+	{
+		$sql = "SELECT * FROM ".$this->tableName." WHERE";
+		$counter = 0;
+		$placeholderKeyArray = [];
+		foreach ($data as $key => $value)
+		{
+			$placeholderKey = ":" . $key;
+			if ($counter > 0 && count($data) > 1)
+			{
+				$sql.= " AND ".$key." = $placeholderKey";
+			} else {
+				$sql .= " ".$key." = $placeholderKey ";
+			}
+			$placeholderKeyArray[] = $placeholderKey;
+			$counter++;
+		}
+		$sql.="LIMIT ".$numberOfResults.";";
+		$prep = $this->pdo->prepare($sql);
+		$position = 0;
+		foreach ($data as $value){
+			$prep->bindValue($placeholderKeyArray[$position],$value);
+			$position++;
+		}
+		$prep->execute();
+		return $prep->fetchAll();
+	}
+
+
 
 
 //	/**

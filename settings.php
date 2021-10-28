@@ -32,7 +32,7 @@ const NAMESPACE_DIRECTORY_MODELS = null;
 const DIRECTORY_VIEWS = "src/Views";
 const NAMESPACE_DIRECTORY_VIEWS = null;
 /** Klic defaultni webove stranky. */
-const DEFAULT_WEB_PAGE_KEY = "/";
+const DEFAULT_WEB_PAGE_KEY = "src/Views/home.latte";
 
 /** Dostupne webove stranky. */
 const WEB_PAGES = array(

@@ -13,7 +13,8 @@
         "latte/latte": "~v2.10.4",
         "tracy/tracy": "~v2.8.7",
         "almasaeed2010/adminlte": "~v3.1.0",
-      "ext-pdo": "*"
+      "ext-pdo": "*",
+      "ext-json": "*"
     }
     ,
     "require-dev": {

@@ -8,9 +8,14 @@ abstract class BaseEntity
 	{
 	}
 
-	public function toArray():array
+	public function toArray(): array
 	{
+		return array();
+	}
 
+	public static function constructFromArray(array $params)
+	{
+		return null;
 	}
 
 }

@@ -16,7 +16,7 @@ class UserEntity extends BaseEntity
 		self::USER_SURNAME,
 		self::USER_EMAIL,
 		self::USER_PASSWORD
-		];
+	];
 
 	private ?int $id;
 	private $name;
@@ -44,5 +44,10 @@ class UserEntity extends BaseEntity
 			self::USER_EMAIL => $this->email,
 			self::USER_PASSWORD => $this->password
 		];
+	}
+
+	public static function constructFromArray(array $params): UserEntity
+	{
+		return new UserEntity($params[self::USER_ID] ?: null, $params[self::USER_NAME], $params[self::USER_SURNAME], $params[self::USER_EMAIL], $params[self::USER_PASSWORD]);
 	}
 }

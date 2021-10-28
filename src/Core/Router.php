@@ -45,14 +45,22 @@ class Router
 		$path = $this->request->getPath();
 		$function = $this->request->getFunction();
 		$method = $this->request->getMethod();
-		$callback = $this->routes[$method][$path] ?? false;
-		if (!$callback)
+		$controllerBase = $this->routes[$method][$path] ?? false;
+		$this->resolveControllers($path, $function, $controllerBase);
+	}
+
+	public function redirect($controllerBase,$function = false){
+		$this->resolveControllers("", $function, $controllerBase);
+	}
+
+	public function resolveControllers($path, $function, $controllerBase){
+		if (!$controllerBase)
 		{
 			//TODO: Pridat vyhozeni flash message
-			$this->latte->render($this->root . '/src/Views/error404.latte', ['path' => $path]);
+			$this->latte->render($this->root . '/src/Views/error404.latte', ['path' => $path, 'controllerBase' => $controllerBase]);
 			exit();
 		}
-		$controllerName = $this->buildControllerString($callback);
+		$controllerName = $this->buildControllerString($controllerBase);
 		/** @var IController $controller Ovladac prislusne stranky. */
 		$controller = new $controllerName($this->latte);
 		$function ? $controller->$function($_GET) : $controller->show();
