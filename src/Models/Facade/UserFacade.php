@@ -76,6 +76,10 @@ class UserFacade
 		return new Response(false, "Uživatele se nepovedlo přihlásit, máte správné heslo ?");
 	}
 
+	public function getFullUser(int $id){
+		return $this->userDatabase->getById($id);
+	}
+
 	private function hashPassword($pass)
 	{
 		$pass = trim($pass);

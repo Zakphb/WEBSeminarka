@@ -4,7 +4,8 @@ namespace App\Controllers;
 
 class HomeController extends BaseController
 {
-	private const PATH_DEFAULT = "src/Views/home.latte";
+	public const PATH_DEFAULT = "src/Views/home.latte";
+	public const URL_DEFAULT = "http://localhost/";
 
 	public function __construct($latte)
 	{

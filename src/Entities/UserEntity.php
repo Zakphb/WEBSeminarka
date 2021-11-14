@@ -18,11 +18,11 @@ class UserEntity extends BaseEntity
 		self::USER_PASSWORD
 	];
 
-	private ?int $id;
-	private $name;
-	private $surname;
-	private $email;
-	private $password;
+	protected ?int $id;
+	protected $name;
+	protected $surname;
+	protected $email;
+	protected $password;
 
 
 	public function __construct(?int $id, $name, $surname, $email, $password)

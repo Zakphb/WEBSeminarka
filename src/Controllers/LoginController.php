@@ -2,20 +2,17 @@
 
 namespace App\Controllers;
 
-use App\Core\Router;
-use App\Entities\UserEntity;
-use App\Models\Database\PermissionDatabase;
-use App\Models\Database\RoleDatabase;
 use App\Models\Database\UserDatabase;
 use App\Models\Database\UserToRoleDatabase;
 use App\Models\Facade\UserFacade;
 use App\Utilities\RedirectUtils;
+use App\Utilities\Response;
 
 class LoginController extends BaseController
 {
 
-	private const PATH_LOGIN = "src/Views/Login/login.latte";
-	private const PATH_REGISTER = "src/Views/Login/register.latte";
+	private const VIEW_LOGIN = "src/Views/Login/login.latte";
+	private const VIEW_REGISTER = "src/Views/Login/register.latte";
 	private $userFacade;
 
 	public function __construct($latte)
@@ -24,7 +21,7 @@ class LoginController extends BaseController
 		$this->userFacade = new UserFacade(new UserDatabase(), new UserToRoleDatabase());
 	}
 
-	public function show(?string $path = self::PATH_LOGIN, $args = null)
+	public function show(?string $path = self::VIEW_LOGIN, $args = null)
 	{
 		parent::show($path, $args);
 	}
@@ -35,11 +32,17 @@ class LoginController extends BaseController
 		$logged = $this->userFacade->login($variables, $this->getUser());
 		if ($logged->isSuccess())
 		{
-
+			RedirectUtils::redirect(HomeController::URL_DEFAULT);
 		} else
 		{
 			$this->show();
 		}
+	}
+
+	public function actionLogout()
+	{
+		$this->getUser()->logout();
+		RedirectUtils::redirect(HomeController::URL_DEFAULT);
 	}
 
 	public function actionRegister()
@@ -48,15 +51,15 @@ class LoginController extends BaseController
 		$registered = $this->userFacade->register($variables);
 		if ($registered->isSuccess())
 		{
-			$this->show();
+			RedirectUtils::redirect(HomeController::URL_DEFAULT);
 		} else
 		{
-			$this->show(self::PATH_REGISTER);
+			$this->show(self::VIEW_REGISTER);
 		}
 	}
 
 	public function showRegister()
 	{
-		$this->show(self::PATH_REGISTER);
+		$this->show(self::VIEW_REGISTER);
 	}
 }

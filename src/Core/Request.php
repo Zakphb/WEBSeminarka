@@ -48,7 +48,6 @@ class Request
 					}
 				}
 				return $path;
-				break;
 			case self::CHOP_FUNCTION:
 				$path = substr($uri, 0, $functionPosition);
 				if ($functionPosition)
@@ -59,7 +58,6 @@ class Request
 					$function = false;
 				}
 				return $function;
-				break;
 		}
 	}
 

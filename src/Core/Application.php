@@ -27,6 +27,6 @@ class Application
 	 */
 	public function run(): void
 	{
-		echo $this->router->resolve();
+		$this->router->resolve();
 	}
 }

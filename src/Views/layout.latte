@@ -15,6 +15,14 @@
     <link rel="stylesheet" href="../../vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css">
     <!-- icheck bootstrap -->
     <link rel="stylesheet" href="../../vendor/almasaeed2010/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+
+{*    NUTNO NACITAT PRED LATTE*}
+    <!-- jQuery -->
+    <script src="../../vendor/almasaeed2010/adminlte/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-boxed">
 <!-- Site wrapper -->
@@ -27,7 +35,7 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link">Home</a>
+                <a href="/" class="nav-link">Home</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="#" class="nav-link">Contact</a>
@@ -39,10 +47,8 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="#" class="brand-link">
-            <img src="../../vendor/almasaeed2010/adminlte/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
-                 class="brand-image img-circle elevation-3" style="opacity: .8">
-            <span class="brand-text font-weight-light">NAZEV SKOLY</span>
+        <a href="/" class="brand-link">
+            <span class="brand-text font-weight-light">GENERICKÁ ŠKOLA</span>
         </a>
         <!-- Sidebar -->
         <div class="sidebar">
@@ -54,7 +60,12 @@
                              class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="/login" class="d-block">JMENO USERA</a>
+                        <a href="/login" class="d-block">{$user->getUserInfo()[App\Entities\UserEntity::USER_NAME]} {$user->getUserInfo()[App\Entities\UserEntity::USER_SURNAME]}</a>
+                    </div>
+                </div>
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="info">
+                        <a href="/login.actionLogout" class="d-block">Odhlasit se</a>
                     </div>
                 </div>
             {else}
@@ -78,21 +89,27 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Kroužky
+                                Dashboard
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="../../index.html" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Přidat nový</p>
+                                    <p>Dashboard v1</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="../../index2.html" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Schválit</p>
+                                    <p>Dashboard v2</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../index3.html" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Dashboard v3</p>
                                 </a>
                             </li>
                         </ul>
@@ -125,11 +142,5 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery -->
-<script src="../../vendor/almasaeed2010/adminlte/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
 </body>
 </html>

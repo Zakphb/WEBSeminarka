@@ -18,6 +18,7 @@ return array(
     'App\\Entities\\LoginFormEntity' => $baseDir . '/src/Entities/LoginFormEntity.php',
     'App\\Entities\\RegisterFormEntity' => $baseDir . '/src/Entities/RegisterFormEntity.php',
     'App\\Entities\\UserEntity' => $baseDir . '/src/Entities/UserEntity.php',
+    'App\\Entities\\UserFullEntity' => $baseDir . '/src/Entities/UserFullEntity.php',
     'App\\Entities\\UserToRoleEntity' => $baseDir . '/src/Entities/UserToRoleEntity.php',
     'App\\Models\\Database\\BaseDatabase' => $baseDir . '/src/Models/Database/BaseDatabase.php',
     'App\\Models\\Database\\HobbyGroupDatabase' => $baseDir . '/src/Models/Database/HobbyGroupDatabase.php',

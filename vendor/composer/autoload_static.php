@@ -23,6 +23,7 @@ class ComposerStaticInitf7934d7bc9f168461b53a3044694792a
         'App\\Entities\\LoginFormEntity' => __DIR__ . '/../..' . '/src/Entities/LoginFormEntity.php',
         'App\\Entities\\RegisterFormEntity' => __DIR__ . '/../..' . '/src/Entities/RegisterFormEntity.php',
         'App\\Entities\\UserEntity' => __DIR__ . '/../..' . '/src/Entities/UserEntity.php',
+        'App\\Entities\\UserFullEntity' => __DIR__ . '/../..' . '/src/Entities/UserFullEntity.php',
         'App\\Entities\\UserToRoleEntity' => __DIR__ . '/../..' . '/src/Entities/UserToRoleEntity.php',
         'App\\Models\\Database\\BaseDatabase' => __DIR__ . '/../..' . '/src/Models/Database/BaseDatabase.php',
         'App\\Models\\Database\\HobbyGroupDatabase' => __DIR__ . '/../..' . '/src/Models/Database/HobbyGroupDatabase.php',

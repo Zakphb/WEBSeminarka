@@ -1,6 +1,10 @@
 <?php
 namespace App\Utilities;
 
+use App\Models\Database\UserDatabase;
+use App\Models\Database\UserToRoleDatabase;
+use App\Models\Facade\UserFacade;
+
 /**
  *  Trida pro spravu prihlaseni uzivatele.
  * @author Michal Nykl
@@ -11,6 +15,7 @@ class Login
 	/** @var Sessions $ses Objekt pro praci se session. */
 	private $ses;
 
+	private $userFacade;
 	// viditelnost konstant od PHP v.7.1  !!!!
 
 	/** @var string SESSION_KEY  Klic pro ulozeni uzivatele do session */
@@ -28,6 +33,7 @@ class Login
 	{
 		// vytvorim instanci vlastni tridy pro praci se session (objekt)
 		$this->ses = new Sessions();
+		$this->userFacade = new UserFacade(new UserDatabase(), new UserToRoleDatabase());
 	}
 
 	/**
@@ -62,13 +68,14 @@ class Login
 	 *  Vrati informace o uzivateli.
 	 * @return string|null  Informace o uzivateli.
 	 */
-	public function getUserInfo()
+	public function getUserInfo(): ?array
 	{
 		if (!$this->isUserLogged())
 		{
 			return null;
 		}
 		$userInfo = $this->ses->readSession(self::SESSION_KEY);
+		return $this->userFacade->getFullUser($userInfo[self::KEY_ID]);
 	}
 
 }

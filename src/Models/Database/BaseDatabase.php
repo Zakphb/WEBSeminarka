@@ -2,6 +2,8 @@
 
 namespace App\Models\Database;
 
+use App\Entities\UserEntity;
+use App\Entities\UserFullEntity;
 use App\Utilities\ArrayUtils;
 use App\Utilities\StringUtils;
 use Exception;
@@ -166,6 +168,22 @@ abstract class BaseDatabase
 		}
 		$prep->execute();
 		return $prep->fetchAll();
+	}
+
+	public function getById($data){
+		$sql = "SELECT * FROM ".$this->tableName." WHERE id = :id";
+		$prep = $this->pdo->prepare($sql);
+		if (is_array($data)){
+			$prep->bindValue(":id", $data[UserEntity::USER_ID]);
+		} else
+		if (is_int($data)){
+			$prep->bindValue(":id", $data);
+		} else {
+			return false;
+		}
+		$prep->execute();
+		$arr = $prep->fetchAll();
+		return $arr[0];
 	}
 
 

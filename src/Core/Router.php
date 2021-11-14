@@ -49,10 +49,6 @@ class Router
 		$this->resolveControllers($path, $function, $controllerBase);
 	}
 
-	public function redirect($controllerBase,$function = false){
-		$this->resolveControllers("", $function, $controllerBase);
-	}
-
 	public function resolveControllers($path, $function, $controllerBase){
 		if (!$controllerBase)
 		{
