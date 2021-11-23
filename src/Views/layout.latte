@@ -1,4 +1,6 @@
 {varType App\Utilities\Login $user}
+{varType App\Entities\Full\UserFullEntity $userinfo}
+{varType array $actions}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,7 +62,7 @@
                              class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="/login" class="d-block">{$user->getUserInfo()[App\Entities\UserEntity::USER_NAME]} {$user->getUserInfo()[App\Entities\UserEntity::USER_SURNAME]}</a>
+                        <a href="/login" class="d-block">{$userinfo->getName()} {$userinfo->getSurname()}</a>
                     </div>
                 </div>
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -89,7 +91,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Dashboard
+                                Kroužky
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -97,19 +99,19 @@
                             <li class="nav-item">
                                 <a href="../../index.html" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Dashboard v1</p>
+                                    <p>Mé kroužky</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../../index2.html" class="nav-link">
+                                <a href="hobbygroup" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Dashboard v2</p>
+                                    <p>Přidat kroužek</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../../index3.html" class="nav-link">
+                                <a href="hobbygroup.actionGrid" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Dashboard v3</p>
+                                    <p>Seznam kroužků</p>
                                 </a>
                             </li>
                         </ul>

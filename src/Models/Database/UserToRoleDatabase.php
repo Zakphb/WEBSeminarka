@@ -2,12 +2,16 @@
 
 namespace App\Models\Database;
 
+use App\Entities\Database\Decomp\UserToRoleDecompDatabaseEntity;
+
 class UserToRoleDatabase extends BaseDatabase
 {
 	const TABLE_NAME = "zakphb_user_to_role";
+	const ENTITY_NAME = UserToRoleDecompDatabaseEntity::class;
+
 	public function __construct()
 	{
-		parent::__construct(self::TABLE_NAME);
+		parent::__construct(self::TABLE_NAME, self::ENTITY_NAME);
 	}
 
 	public function exists($data)

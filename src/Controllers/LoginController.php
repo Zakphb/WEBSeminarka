@@ -17,7 +17,7 @@ class LoginController extends BaseController
 
 	public function __construct($latte)
 	{
-		parent::__construct($latte);
+		parent::__construct($latte, null);
 		$this->userFacade = new UserFacade(new UserDatabase(), new UserToRoleDatabase());
 	}
 

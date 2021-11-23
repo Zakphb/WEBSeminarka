@@ -2,10 +2,9 @@
 
 namespace App\Models\Database;
 
-use App\Entities\UserEntity;
-use App\Entities\UserFullEntity;
+
+use App\Entities\Database\Object\BaseObjectDatabaseEntity;
 use App\Utilities\ArrayUtils;
-use App\Utilities\StringUtils;
 use Exception;
 use PDO;
 
@@ -19,13 +18,15 @@ abstract class BaseDatabase
 	private $pdo;
 
 	private $tableName;
+	private $entityName;
 
 	/**
 	 * Inicializace pripojeni k databazi.
 	 */
-	public function __construct($tableName)
+	public function __construct($tableName, $entityName)
 	{
 		$this->tableName = $tableName;
+		$this->entityName = $entityName;
 		// inicializace DB
 		$this->pdo = new PDO("mysql:host=" . DB_SERVER . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
 		// vynuceni kodovani UTF-8
@@ -117,34 +118,17 @@ abstract class BaseDatabase
 		{
 			return true;
 		}
-		return $this->getWhere($data);
+		return false;
 	}
 
-//	public function selectWhere($data){
-//		$sql = "SELECT * FROM ? WHERE ? = ?";
-//		if (count($data) > 1)
-//		{
-//			foreach ($data as $param)
-//			{
-//				$sql .= " AND ? = ?";
-//			}
-//		}
-//		$sql .= ";";
-//		$st = $this->pdo->prepare($sql);
-//		$st->bindValue("?", $this->tableName);
-//		foreach ($data as $key => $param)
-//		{
-//			bdump($param);
-//			bdump($key);
-//			$st->bindValue("?", $key);
-//			$st->bindValue("?", $param);
-//		}
-//		return $st->fetchAll();
-//	}
 
 	public function getWhere($data, int $numberOfResults)
 	{
-		$sql = "SELECT * FROM ".$this->tableName." WHERE";
+		if (count($data) === 0)
+		{
+			return false;
+		}
+		$sql = "SELECT * FROM " . $this->tableName . " WHERE";
 		$counter = 0;
 		$placeholderKeyArray = [];
 		foreach ($data as $key => $value)
@@ -152,77 +136,53 @@ abstract class BaseDatabase
 			$placeholderKey = ":" . $key;
 			if ($counter > 0 && count($data) > 1)
 			{
-				$sql.= " AND ".$key." = $placeholderKey";
-			} else {
-				$sql .= " ".$key." = $placeholderKey ";
+				$sql .= " AND " . $key . " = $placeholderKey";
+			} else
+			{
+				$sql .= " " . $key . " = $placeholderKey ";
 			}
 			$placeholderKeyArray[] = $placeholderKey;
 			$counter++;
 		}
-		$sql.="LIMIT ".$numberOfResults.";";
+		$sql .= "LIMIT " . $numberOfResults . ";";
 		$prep = $this->pdo->prepare($sql);
 		$position = 0;
-		foreach ($data as $value){
-			$prep->bindValue($placeholderKeyArray[$position],$value);
+		foreach ($data as $value)
+		{
+			$prep->bindValue($placeholderKeyArray[$position], $value);
 			$position++;
 		}
 		$prep->execute();
-		return $prep->fetchAll();
+		return $prep->fetchAll(PDO::FETCH_CLASS, $this->entityName);
 	}
 
-	public function getById($data){
-		$sql = "SELECT * FROM ".$this->tableName." WHERE id = :id";
+	public function getById($data)
+	{
+		$sql = "SELECT * FROM " . $this->tableName . " WHERE id = :id";
 		$prep = $this->pdo->prepare($sql);
-		if (is_array($data)){
-			$prep->bindValue(":id", $data[UserEntity::USER_ID]);
+		if (is_array($data))
+		{
+			$prep->bindValue(":id", $data[BaseObjectDatabaseEntity::BASE_ID]);
 		} else
-		if (is_int($data)){
-			$prep->bindValue(":id", $data);
-		} else {
-			return false;
-		}
+			if (is_int($data))
+			{
+				$prep->bindValue(":id", $data);
+			} else
+			{
+				return false;
+			}
 		$prep->execute();
-		$arr = $prep->fetchAll();
+		$arr = $prep->fetchAll(PDO::FETCH_CLASS, $this->entityName);
 		return $arr[0];
 	}
 
-
-
-
-//	/**
-//	 *  Vrati seznam vsech uzivatelu pro spravu uzivatelu.
-//	 * @return array Obsah spravy uzivatelu.
-//	 */
-//	public function getAllUsers(): array
-//	{
-//		// pripravim dotaz
-//		$q = "SELECT * FROM " . TABLE_USER;
-//		// provedu a vysledek vratim jako pole
-//		// protoze je o uzkazku, tak netestuju, ze bylo neco vraceno
-//		return $this->pdo->query($q)->fetchAll();
-//	}
-//
-//	/**
-//	 *  Smaze daneho uzivatele z DB.
-//	 * @param int $userId ID uzivatele.
-//	 */
-//	public function deleteUser(int $userId): bool
-//	{
-//		// pripravim dotaz
-//		$q = "DELETE FROM " . TABLE_USER . " WHERE id_user = $userId";
-//		// provedu dotaz
-//		$res = $this->pdo->query($q);
-//		// pokud neni false, tak vratim vysledek, jinak null
-//		if ($res)
-//		{
-//			// neni false
-//			return true;
-//		} else
-//		{
-//			// je false
-//			return false;
-//		}
-//	}
+	public function getAll()
+	{
+		$sql = "SELECT * FROM " . $this->tableName;
+		$prep = $this->pdo->prepare($sql);
+		$prep->execute();
+		return $prep->fetchAll(PDO::FETCH_CLASS, $this->entityName);
+	}
 
 }
 

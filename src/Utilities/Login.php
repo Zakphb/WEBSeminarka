@@ -1,6 +1,8 @@
 <?php
 namespace App\Utilities;
 
+
+use App\Entities\Database\Object\UserObjectDatabaseEntity;
 use App\Models\Database\UserDatabase;
 use App\Models\Database\UserToRoleDatabase;
 use App\Models\Facade\UserFacade;
@@ -68,7 +70,7 @@ class Login
 	 *  Vrati informace o uzivateli.
 	 * @return string|null  Informace o uzivateli.
 	 */
-	public function getUserInfo(): ?array
+	public function getUserInfo(): ?UserObjectDatabaseEntity
 	{
 		if (!$this->isUserLogged())
 		{

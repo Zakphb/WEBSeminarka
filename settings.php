@@ -38,7 +38,8 @@ const DEFAULT_WEB_PAGE_KEY = "src/Views/home.latte";
 const WEB_PAGES = array(
     'Home' => '/',
     'Contact' => '/Contact/contact',
-	'Login' => '/login'
+	'Login' => '/login',
+	'HobbyGroup' => '/hobbygroup',
 );
 
 ?>

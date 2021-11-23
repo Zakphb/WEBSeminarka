@@ -52,7 +52,14 @@ class Request
 				$path = substr($uri, 0, $functionPosition);
 				if ($functionPosition)
 				{
-					$function = substr($uri, strlen($path)+1, strlen($uri)); //+1 kvuli tecce
+					if ($argsPosition)
+					{
+						$start = min(strlen($path) + 1, $argsPosition);
+						$length = abs(strlen($path) + 1 - $argsPosition);
+						$function = substr($uri, $start, $length);
+					} else {
+						$function = substr($uri, strlen($path) + 1, strlen($uri));
+					}
 				} else
 				{
 					$function = false;

@@ -2,10 +2,9 @@
 
 namespace App\Models\Facade;
 
-use App\Entities\LoginFormEntity;
-use App\Entities\RegisterFormEntity;
-use App\Entities\UserEntity;
-use App\Entities\UserToRoleEntity;
+use App\Entities\Database\Decomp\UserToRoleDecompDatabaseEntity;
+use App\Entities\Database\Object\UserObjectDatabaseEntity;
+use App\Entities\Full\UserFullEntity;
 use App\Models\Database\RoleDatabase;
 use App\Models\Database\UserDatabase;
 use App\Models\Database\UserToRoleDatabase;
@@ -26,20 +25,19 @@ class UserFacade
 
 	public function register($formValues): Response
 	{
-		$formValues[RegisterFormEntity::REGISTER_PASSWORD] = $this->hashPassword($formValues[RegisterFormEntity::REGISTER_PASSWORD]);
-		$registerFormEntity = $this->mapRegisterFormValuesToObject($formValues);
-		$userEntity = $this->mapRegisterFormEntityToUserEntity($registerFormEntity);
+		$formValues[UserFullEntity::USER_PASSWORD] = $this->hashPassword($formValues[UserFullEntity::USER_PASSWORD]);
+		$userEntity = $this->mapFormDataToUserEntity($formValues);
 		if ($this->doUserExistAlready($userEntity))
 		{
 			return new Response(false, "Uživatel jiz existuje.");
 		}
 		$userInserted = $this->userDatabase->save($userEntity->toArray());
-		if ($registerFormEntity->toArray()[RegisterFormEntity::REGISTER_TEACHER])
+		if ($userEntity[UserFullEntity::USER_TEACHER])
 		{
-			$roleInserted = $this->userToRoleDatabase->save([UserToRoleEntity::USER_TO_ROLE_USER_ID => $userInserted, UserToRoleEntity::USER_TO_ROLE_ROLE_ID => RoleDatabase::ROLE_TEACHER_IN_WAITING]);
+			$roleInserted = $this->userToRoleDatabase->save([UserToRoleDecompDatabaseEntity::USER_TO_ROLE_USER_ID => $userInserted, UserToRoleDecompDatabaseEntity::USER_TO_ROLE_ROLE_ID => RoleDatabase::ROLE_TEACHER_IN_WAITING]);
 		} else
 		{
-			$roleInserted = $this->userToRoleDatabase->save([UserToRoleEntity::USER_TO_ROLE_USER_ID => $userInserted, UserToRoleEntity::USER_TO_ROLE_ROLE_ID => RoleDatabase::ROLE_STUDENT]);
+			$roleInserted = $this->userToRoleDatabase->save([UserToRoleDecompDatabaseEntity::USER_TO_ROLE_USER_ID => $userInserted, UserToRoleDecompDatabaseEntity::USER_TO_ROLE_ROLE_ID => RoleDatabase::ROLE_STUDENT]);
 		}
 		if ($roleInserted !== false && $userInserted !== false)
 		{
@@ -48,10 +46,10 @@ class UserFacade
 		return new Response(false, "Při registraci došlo k chybě, zkuste to znovu.");
 	}
 
-	public function doUserExistAlready(UserEntity $userEntity)
+	public function doUserExistAlready(UserFullEntity $userEntity)
 	{
 		$user = $userEntity->toArray();
-		unset($user[UserEntity::USER_PASSWORD], $user[UserEntity::USER_ID]);
+		unset($user[UserFullEntity::USER_PASSWORD], $user[UserFullEntity::USER_ID]);
 		$user = $this->userDatabase->getWhere($userEntity->toArray(), 1);
 		if (empty($user))
 		{
@@ -62,15 +60,15 @@ class UserFacade
 
 	public function login($formValues, Login $user): Response
 	{
-		$loginFormEntity = $this->mapLoginFormValuesToObject($formValues);
-		$userFromDatabase = $this->userDatabase->getUser($loginFormEntity->getEmail());
-		if (empty($userFromDatabase))
+		$userEntity = $this->mapFormDataToUserEntity($formValues);
+		$userFromDatabase = $this->userDatabase->getUser($userEntity->getEmail());
+		if ($userFromDatabase === null)
 		{
 			return new Response(false, "Zadaný uživatel neexistuje.");
 		}
-		if (password_verify($loginFormEntity->getPassword(), $userFromDatabase[UserEntity::USER_PASSWORD]))
+		if (password_verify($userEntity->getPassword(), $userFromDatabase->getPassword()))
 		{
-			$user->login($userFromDatabase[UserEntity::USER_ID]);
+			$user->login($userFromDatabase->getId());
 			return new Response(true, "Přihlášení proběhlo úspěšně");
 		}
 		return new Response(false, "Uživatele se nepovedlo přihlásit, máte správné heslo ?");
@@ -80,30 +78,14 @@ class UserFacade
 		return $this->userDatabase->getById($id);
 	}
 
+	public function mapFormDataToUserEntity($formData){
+		return UserFullEntity::constructFromArray($formData);
+	}
+
 	private function hashPassword($pass)
 	{
 		$pass = trim($pass);
 		return trim(password_hash($pass, PASSWORD_DEFAULT));
-	}
-
-	private function mapRegisterFormValuesToObject($formValues)
-	{
-		return RegisterFormEntity::constructFromArray($formValues);
-	}
-
-	private function mapLoginFormValuesToObject($formValues)
-	{
-		return LoginFormEntity::constructFromArray($formValues);
-	}
-
-	private function mapRegisterFormEntityToUserEntity(RegisterFormEntity $registerFormEntity): UserEntity
-	{
-		$registerFormEntityArray = $registerFormEntity->toArray();
-		if (isset($registerFormEntityArray[RegisterFormEntity::REGISTER_TEACHER]))
-		{
-			unset($registerFormEntityArray[RegisterFormEntity::REGISTER_TEACHER]);
-		}
-		return UserEntity::constructFromArray($registerFormEntityArray);
 	}
 
 

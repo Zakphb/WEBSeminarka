@@ -7,7 +7,7 @@ class UserController extends BaseController
 
 	public function __construct($latte)
 	{
-		parent::__construct($latte);
+		parent::__construct($latte, null);
 	}
 
 	public function show(?string $path, $args = null)

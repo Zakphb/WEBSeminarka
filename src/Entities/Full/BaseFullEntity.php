@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Entities;
+namespace App\Entities\Full;
 
-abstract class BaseEntity
+abstract class BaseFullEntity
 {
 	public function __construct()
 	{
@@ -17,5 +17,4 @@ abstract class BaseEntity
 	{
 		return null;
 	}
-
 }

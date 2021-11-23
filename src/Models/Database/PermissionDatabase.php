@@ -5,9 +5,10 @@ namespace App\Models\Database;
 class PermissionDatabase extends BaseDatabase
 {
 	const TABLE_NAME = "zakphb_permission";
+	const ENTITY_NAME = "PermissionObjectEntity";
 	public function __construct()
 	{
-		parent::__construct(self::TABLE_NAME);
+		parent::__construct(self::TABLE_NAME, self::ENTITY_NAME);
 	}
 
 	public function exists($data)
