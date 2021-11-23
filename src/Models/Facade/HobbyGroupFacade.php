@@ -2,6 +2,7 @@
 
 namespace App\Models\Facade;
 
+use App\Entities\Database\Object\HobbyGroupObjectDatabaseEntity;
 use App\Models\Database\HobbyGroupDatabase;
 
 class HobbyGroupFacade
@@ -18,11 +19,13 @@ class HobbyGroupFacade
 		$this->hobbyGroupDatabase->save($formVariables);
 	}
 
-	public function getAllHobbyGroups(){
+	public function getAllHobbyGroups() :array
+	{
 		return $this->hobbyGroupDatabase->getAll();
 	}
 
-	public function getHobbyGroupById(int $id){
+	public function getHobbyGroupById(int $id): HobbyGroupObjectDatabaseEntity
+	{
 		return $this->hobbyGroupDatabase->getById($id);
 	}
 }

@@ -74,9 +74,11 @@ abstract class BaseDatabase
 		}
 		if ($this->exists($data))
 		{
+			bdump("exists");
 			$success = $this->update($data);
 		} else
 		{
+			bdump("insert");
 			$success = $this->insert($data);
 		}
 		if (!$success)
@@ -103,12 +105,33 @@ abstract class BaseDatabase
 	public
 	function update($data)
 	{
-		$prep = $this->pdo->prepare("
-		UPDATE ?
-		SET 
-		VALUES (?);
-		");
-		return $prep->execute([$this->tableName, $data, $data]);
+		$sql = "UPDATE " . $this->tableName . " SET";
+		$id = $data[BaseObjectDatabaseEntity::BASE_ID];
+		unset($data[BaseObjectDatabaseEntity::BASE_ID]);
+		$count = 0;
+		foreach ($data as $key => $value)
+		{
+			$placeholderKey = ":" . $key;
+			if ($count < count($data) - 1)
+			{
+				$sql .= " " . $key . "=$placeholderKey,";
+			} else
+			{
+				$sql .= " " . $key . "=$placeholderKey";
+			}
+			$count++;
+			$placeholderKeyArray[] = $placeholderKey;
+		}
+		$sql .= " WHERE id = :id";
+		$prep = $this->pdo->prepare($sql);
+		$position = 0;
+		foreach ($data as $value)
+		{
+			$prep->bindValue($placeholderKeyArray[$position], $value);
+			$position++;
+		}
+		$prep->bindValue(":id", $id);
+		return $prep->execute();
 	}
 
 	public

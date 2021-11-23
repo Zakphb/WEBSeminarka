@@ -3,7 +3,6 @@
 namespace App\Models\Facade;
 
 use App\Entities\Database\Decomp\UserToRoleDecompDatabaseEntity;
-use App\Entities\Database\Object\UserObjectDatabaseEntity;
 use App\Entities\Full\UserFullEntity;
 use App\Models\Database\RoleDatabase;
 use App\Models\Database\UserDatabase;

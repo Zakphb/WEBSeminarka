@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Entities\BaseObjectDatabaseEntity;
+use App\Entities\Database\Object\BaseObjectDatabaseEntity;
 use App\Models\Database\HobbyGroupDatabase;
 use App\Models\Facade\HobbyGroupFacade;
 use App\Utilities\ActionMapper;
@@ -54,7 +54,6 @@ class HobbyGroupController extends BaseController
 		$variables = $_GET;
 		if (!empty($variables))
 		{
-			bdump($variables);
 			$this->loadForm($variables);
 		} else
 		{
