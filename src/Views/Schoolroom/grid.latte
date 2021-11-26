@@ -1,0 +1,62 @@
+{layout '../layout.latte'}
+{varType App\Entities\Database\Object\SchoolroomObjectEntity[] $gridvalues}
+{varType App\Enums\EBaseActionNames $actions}
+{block content}
+    <!-- Main content -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Kroužky</h3>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped projects">
+                <thead>
+                <tr>
+                    <th style="width: 20%">
+                        Jméno
+                    </th>
+                    <th style="width: 30%">
+                        Popis
+                    </th>
+                    <th>
+                        Cena
+                    </th>
+                    <th style="width: 8%" class="text-center">
+                        Kapacita
+                    </th>
+                    <th style="width: 20%">
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                    {foreach $gridvalues as  $gridValue}
+                <tr>
+                        <td>
+                            {$gridValue->getName()}
+                        </td>
+                        <td>
+                            {$gridValue->getType()}
+                        </td>
+                        <td class="project-actions">
+                            <a class="btn btn-primary btn-sm" href="{$actions::detail()}?id={$gridValue->getId()}">
+                                <i class="fas fa-folder">
+                                </i>
+                                View
+                            </a>
+                            <a class="btn btn-info btn-sm" href="{$actions::edit()}?id={$gridValue->getId()}">
+                                <i class="fas fa-pencil-alt">
+                                </i>
+                                Edit
+                            </a>
+                            <a class="btn btn-danger btn-sm" href="{$actions::delete()}?id={$gridValue->getId()}">
+                                <i class="fas fa-trash">
+                                </i>
+                                Delete
+                            </a>
+                        </td>
+                </tr>
+                    {/foreach}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{/block}

@@ -1,0 +1,50 @@
+{varType App\Entities\Database\Object\SchoolroomObjectEntity $formData}
+{varType array $selectNames}
+{varType App\Enums\EBaseActionNames $actions}
+{block editForm}
+    <!-- Main content -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-body">
+                <form action="{$actions::edit()}" method="post">
+                    {ifset $formData}<input type="hidden" name="id" value="{$formData->getId()}">{/ifset}
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="name" placeholder="Jméno"
+                               value="{ifset $formData}{$formData->getName()}{/ifset}" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <!-- select -->
+                        <label>Typ třídy</label>
+                        <select name="type" class="form-control">
+                            {ifset $formData}
+                            {/ifset}
+                                        {foreach $selectNames as $key => $selectName}
+                                {if $key === $formData->getType()}
+                                    <option value="{$key}" selected>{$selectName}</option>
+                                {else}
+                                    <option value="{$key}">{$selectName}</option>
+                                {/if}
+                            {/foreach}
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block">Uložit</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+            </div>
+            <!-- /.card-body -->
+            <!-- /.card -->
+        </div>
+        <!-- /.content -->
+{/block}
