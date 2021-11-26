@@ -2,7 +2,7 @@
 
 namespace App\Entities\Database\Decomp;
 
-class UserToRoleDecompDatabaseEntity extends BaseDecompDatabaseEntity
+class UserToRoleDecompEntity extends BaseDecompEntity
 {
 	const USER_TO_ROLE_USER_ID = 'user_id';
 	const USER_TO_ROLE_ROLE_ID = 'role_id';

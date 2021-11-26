@@ -3,7 +3,7 @@
 namespace App\Models\Database;
 
 
-use App\Entities\Database\Object\BaseObjectDatabaseEntity;
+use App\Entities\Database\Object\BaseObjectEntity;
 use App\Utilities\ArrayUtils;
 use Exception;
 use PDO;
@@ -20,6 +20,9 @@ abstract class BaseDatabase
 	private $tableName;
 	private $entityName;
 
+	private const SQL = 'sql';
+	private const PLACEHOLDER = 'placeholder';
+
 	/**
 	 * Inicializace pripojeni k databazi.
 	 */
@@ -35,57 +38,58 @@ abstract class BaseDatabase
 	}
 
 
-	public function save($data)
+	public function save($data): string
 	{
-		if ($isMutli = ArrayUtils::isMultidimensional($data))
-		{
-			$insertedIds = [];
-			try
-			{
-				$this->pdo->beginTransaction();
-				foreach ($data as $row)
-				{
-					if ($this->exists($data))
-					{
-						$success = $this->update($row);
-					} else
-					{
-						$success = $this->insert($row);
-					}
-					if (!$success)
-					{
-						$this->pdo->rollback();
-						return false;
-					}
-					$insertedIds[] = $this->pdo->lastInsertId();
-				}
-				$this->pdo->commit();
-				return $insertedIds;
-			} catch
-			(Exception $e)
-			{
-				if ($isMutli)
-				{
-					$this->pdo->rollback();
-				}
-				echo $e;
-			}
-
-		}
+		$lastId = null;
+//		if ($isMutli = ArrayUtils::isMultidimensional($data))
+//		{
+//			$insertedIds = [];
+//			try
+//			{
+//				$this->pdo->beginTransaction();
+//				foreach ($data as $row)
+//				{
+//					if ($this->exists($data))
+//					{
+//						$success = $this->update($row);
+//					} else
+//					{
+//						$success = $this->insert($row);
+//					}
+//					if (!$success)
+//					{
+//						$this->pdo->rollback();
+//						return false;
+//					}
+//					$insertedIds[] = $this->pdo->lastInsertId();
+//				}
+//				$this->pdo->commit();
+//				return $insertedIds;
+//			} catch
+//			(Exception $e)
+//			{
+//				if ($isMutli)
+//				{
+//					$this->pdo->rollback();
+//				}
+//				echo $e;
+//			}
+//
+//		}
 		if ($this->exists($data))
 		{
-			bdump("exists");
 			$success = $this->update($data);
+			$lastId = $data[BaseObjectEntity::BASE_ID];
 		} else
 		{
-			bdump("insert");
 			$success = $this->insert($data);
+			$lastId = $this->pdo->lastInsertId();
 		}
 		if (!$success)
 		{
 			return false;
 		}
-		return $this->pdo->lastInsertId();
+		return $lastId;
 	}
 
 
@@ -106,8 +110,8 @@ abstract class BaseDatabase
 	function update($data)
 	{
 		$sql = "UPDATE " . $this->tableName . " SET";
-		$id = $data[BaseObjectDatabaseEntity::BASE_ID];
-		unset($data[BaseObjectDatabaseEntity::BASE_ID]);
+		$id = (int)$data[BaseObjectEntity::BASE_ID];
+		unset($data[BaseObjectEntity::BASE_ID]);
 		$count = 0;
 		foreach ($data as $key => $value)
 		{
@@ -144,8 +148,76 @@ abstract class BaseDatabase
 		return false;
 	}
 
+	public function deleteById($data)
+	{
+
+		$sql = "DELETE FROM " . $this->tableName . " WHERE id = :id";
+		if ($this->byId($data, $sql))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	public function deleteWhere($data)
+	{
+		$whereData = $this->whereString($data);
+		if ($whereData)
+		{
+			$sql = $whereData[self::SQL];
+			$prep = $this->pdo->prepare($sql);
+			$position = 0;
+			foreach ($data as $value)
+			{
+				$prep->bindValue($whereData[self::PLACEHOLDER][$position], $value);
+				$position++;
+			}
+			if ($prep->execute())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 
 	public function getWhere($data, int $numberOfResults)
+	{
+		$whereData = $this->whereString($data);
+		if ($whereData)
+		{
+			$sql = $whereData[self::SQL];
+			$sql .= "LIMIT " . $numberOfResults . ";";
+			$prep = $this->pdo->prepare($sql);
+			$position = 0;
+			foreach ($data as $value)
+			{
+				$prep->bindValue($whereData[self::PLACEHOLDER][$position], $value);
+				$position++;
+			}
+			$prep->execute();
+			return $prep->fetchAll(PDO::FETCH_CLASS, $this->entityName);
+		}
+		return false;
+	}
+
+	public function getById($data)
+	{
+		$sql = "SELECT * FROM " . $this->tableName . " WHERE id = :id";
+		$prep = $this->byId($data, $sql);
+		$arr = $prep->fetchAll(PDO::FETCH_CLASS, $this->entityName);
+		return $arr[0];
+	}
+
+	public function getAll()
+	{
+		$sql = "SELECT * FROM " . $this->tableName;
+		$prep = $this->pdo->prepare($sql);
+		$prep->execute();
+		return $prep->fetchAll(PDO::FETCH_CLASS, $this->entityName);
+	}
+
+	private function whereString($data)
 	{
 		if (count($data) === 0)
 		{
@@ -167,44 +239,27 @@ abstract class BaseDatabase
 			$placeholderKeyArray[] = $placeholderKey;
 			$counter++;
 		}
-		$sql .= "LIMIT " . $numberOfResults . ";";
-		$prep = $this->pdo->prepare($sql);
-		$position = 0;
-		foreach ($data as $value)
-		{
-			$prep->bindValue($placeholderKeyArray[$position], $value);
-			$position++;
-		}
-		$prep->execute();
-		return $prep->fetchAll(PDO::FETCH_CLASS, $this->entityName);
+		$returnArr[self::SQL] = $sql;
+		$returnArr[self::PLACEHOLDER] = $placeholderKeyArray;
+		return $returnArr;
 	}
 
-	public function getById($data)
+	private function byId($data, $sql)
 	{
-		$sql = "SELECT * FROM " . $this->tableName . " WHERE id = :id";
 		$prep = $this->pdo->prepare($sql);
 		if (is_array($data))
 		{
-			$prep->bindValue(":id", $data[BaseObjectDatabaseEntity::BASE_ID]);
+			$prep->bindValue(":id", (int)$data[BaseObjectEntity::BASE_ID]);
 		} else
 			if (is_int($data))
 			{
-				$prep->bindValue(":id", $data);
+				$prep->bindValue(":id", (int)$data);
 			} else
 			{
 				return false;
 			}
 		$prep->execute();
-		$arr = $prep->fetchAll(PDO::FETCH_CLASS, $this->entityName);
-		return $arr[0];
-	}
-
-	public function getAll()
-	{
-		$sql = "SELECT * FROM " . $this->tableName;
-		$prep = $this->pdo->prepare($sql);
-		$prep->execute();
-		return $prep->fetchAll(PDO::FETCH_CLASS, $this->entityName);
+		return $prep;
 	}
 
 }

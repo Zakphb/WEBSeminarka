@@ -1,10 +1,11 @@
+{varType App\Enums\EBaseActionNames $actions}
 {block registerForm}
 <div class="register-box">
     <div class="card">
         <div class="card-body register-card-body">
             <p class="login-box-msg">Registrace</p>
 
-            <form action="login.actionRegister" method="post">
+            <form action="{$actions::register()}" method="post">
                 <div class="input-group mb-3">
                     <input type="text" id="name" name="name" class="form-control" placeholder="Jméno" value="" required>
                     <div class="input-group-append">

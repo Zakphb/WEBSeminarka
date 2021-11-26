@@ -2,7 +2,7 @@
 namespace App\Utilities;
 
 
-use App\Entities\Database\Object\UserObjectDatabaseEntity;
+use App\Entities\Database\Object\UserObjectEntity;
 use App\Models\Database\UserDatabase;
 use App\Models\Database\UserToRoleDatabase;
 use App\Models\Facade\UserFacade;
@@ -70,7 +70,7 @@ class Login
 	 *  Vrati informace o uzivateli.
 	 * @return string|null  Informace o uzivateli.
 	 */
-	public function getUserInfo(): ?UserObjectDatabaseEntity
+	public function getUserInfo(): ?UserObjectEntity
 	{
 		if (!$this->isUserLogged())
 		{

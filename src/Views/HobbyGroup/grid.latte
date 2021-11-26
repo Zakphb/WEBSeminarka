@@ -1,5 +1,6 @@
 {layout '../layout.latte'}
-{varType App\Entities\Database\Object\HobbyGroupObjectDatabaseEntity[] $gridvalues}
+{varType App\Entities\Database\Object\HobbyGroupObjectEntity[] $gridvalues}
+{varType App\Enums\EBaseActionNames $actions}
 {block content}
     <!-- Main content -->
     <div class="card">
@@ -42,17 +43,17 @@
                             {$gridValue->getCapacity()}
                         </td>
                         <td class="project-actions">
-                            <a class="btn btn-primary btn-sm" href="#">
+                            <a class="btn btn-primary btn-sm" href="{$actions::detail()}?id={$gridValue->getId()}">
                                 <i class="fas fa-folder">
                                 </i>
                                 View
                             </a>
-                            <a class="btn btn-info btn-sm" href="{$actions[App\Utilities\EActionNames::EDIT]}?id={$gridValue->getId()}">
+                            <a class="btn btn-info btn-sm" href="{$actions::edit()}?id={$gridValue->getId()}">
                                 <i class="fas fa-pencil-alt">
                                 </i>
                                 Edit
                             </a>
-                            <a class="btn btn-danger btn-sm" href="#">
+                            <a class="btn btn-danger btn-sm" href="{$actions::delete()}?id={$gridValue->getId()}">
                                 <i class="fas fa-trash">
                                 </i>
                                 Delete

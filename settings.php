@@ -40,6 +40,7 @@ const WEB_PAGES = array(
     'Contact' => '/Contact/contact',
 	'Login' => '/login',
 	'HobbyGroup' => '/hobbygroup',
+	'Schoolroom' => '/schoolroom'
 );
 
 ?>

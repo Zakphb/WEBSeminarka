@@ -2,7 +2,7 @@
 
 namespace App\Entities\Database\Object;
 
-class HobbyGroupObjectDatabaseEntity extends BaseObjectDatabaseEntity
+class HobbyGroupObjectEntity extends BaseObjectEntity
 {
 	const HOBBYGROUP_IMAGE = 'image';
 	const HOBBYGROUP_NAME = 'name';

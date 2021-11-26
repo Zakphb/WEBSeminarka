@@ -2,7 +2,7 @@
 
 namespace App\Entities\Database\Object;
 
-class UserObjectDatabaseEntity extends BaseObjectDatabaseEntity
+class UserObjectEntity extends BaseObjectEntity
 {
 	const USER_ID = 'id';
 	const USER_NAME = 'name';

@@ -2,7 +2,7 @@
 
 namespace App\Entities\Database\Object;
 
-abstract class BaseObjectDatabaseEntity
+abstract class BaseObjectEntity
 {
 	const BASE_ID = "id";
 	protected ?int $id;

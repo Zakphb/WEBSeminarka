@@ -1,6 +1,6 @@
 {varType App\Utilities\Login $user}
 {varType App\Entities\Full\UserFullEntity $userinfo}
-{varType array $actions}
+{varType App\Enums\EBaseActionNames $actions}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -105,13 +105,36 @@
                             <li class="nav-item">
                                 <a href="hobbygroup" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Přidat kroužek</p>
+                                    <p>Přidat</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="hobbygroup.actionGrid" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Seznam kroužků</p>
+                                    <p>Seznam</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Třídy
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="schoolroom" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Přidat</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="schoolroom.actionGrid" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Seznam</p>
                                 </a>
                             </li>
                         </ul>

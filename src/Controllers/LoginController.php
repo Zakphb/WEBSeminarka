@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Enums\EBaseActionNames;
 use App\Models\Database\UserDatabase;
 use App\Models\Database\UserToRoleDatabase;
 use App\Models\Facade\UserFacade;
@@ -17,11 +18,11 @@ class LoginController extends BaseController
 
 	public function __construct($latte)
 	{
-		parent::__construct($latte, null);
+		parent::__construct($latte, new EBaseActionNames());
 		$this->userFacade = new UserFacade(new UserDatabase(), new UserToRoleDatabase());
 	}
 
-	public function show(?string $path = self::VIEW_LOGIN, $args = null)
+	public function show(string $path = self::VIEW_LOGIN, $args = null)
 	{
 		parent::show($path, $args);
 	}
@@ -32,7 +33,7 @@ class LoginController extends BaseController
 		$logged = $this->userFacade->login($variables, $this->getUser());
 		if ($logged->isSuccess())
 		{
-			RedirectUtils::redirect(HomeController::URL_DEFAULT);
+			RedirectUtils::redirect();
 		} else
 		{
 			$this->show();
@@ -42,7 +43,7 @@ class LoginController extends BaseController
 	public function actionLogout()
 	{
 		$this->getUser()->logout();
-		RedirectUtils::redirect(HomeController::URL_DEFAULT);
+		RedirectUtils::redirect();
 	}
 
 	public function actionRegister()
@@ -51,7 +52,7 @@ class LoginController extends BaseController
 		$registered = $this->userFacade->register($variables);
 		if ($registered->isSuccess())
 		{
-			RedirectUtils::redirect(HomeController::URL_DEFAULT);
+			RedirectUtils::redirect();
 		} else
 		{
 			$this->show(self::VIEW_REGISTER);

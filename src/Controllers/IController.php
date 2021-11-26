@@ -12,7 +12,7 @@ interface IController
 	 * @param $args
 	 * @return mixed
 	 */
-	public function show(?string $path, $args);
+	public function show(string $path, $args);
 
 }
 

@@ -2,7 +2,7 @@
 
 namespace App\Models\Facade;
 
-use App\Entities\Database\Decomp\UserToRoleDecompDatabaseEntity;
+use App\Entities\Database\Decomp\UserToRoleDecompEntity;
 use App\Entities\Full\UserFullEntity;
 use App\Models\Database\RoleDatabase;
 use App\Models\Database\UserDatabase;
@@ -33,10 +33,10 @@ class UserFacade
 		$userInserted = $this->userDatabase->save($userEntity->toArray());
 		if ($userEntity[UserFullEntity::USER_TEACHER])
 		{
-			$roleInserted = $this->userToRoleDatabase->save([UserToRoleDecompDatabaseEntity::USER_TO_ROLE_USER_ID => $userInserted, UserToRoleDecompDatabaseEntity::USER_TO_ROLE_ROLE_ID => RoleDatabase::ROLE_TEACHER_IN_WAITING]);
+			$roleInserted = $this->userToRoleDatabase->save([UserToRoleDecompEntity::USER_TO_ROLE_USER_ID => $userInserted, UserToRoleDecompEntity::USER_TO_ROLE_ROLE_ID => RoleDatabase::ROLE_TEACHER_IN_WAITING]);
 		} else
 		{
-			$roleInserted = $this->userToRoleDatabase->save([UserToRoleDecompDatabaseEntity::USER_TO_ROLE_USER_ID => $userInserted, UserToRoleDecompDatabaseEntity::USER_TO_ROLE_ROLE_ID => RoleDatabase::ROLE_STUDENT]);
+			$roleInserted = $this->userToRoleDatabase->save([UserToRoleDecompEntity::USER_TO_ROLE_USER_ID => $userInserted, UserToRoleDecompEntity::USER_TO_ROLE_ROLE_ID => RoleDatabase::ROLE_STUDENT]);
 		}
 		if ($roleInserted !== false && $userInserted !== false)
 		{

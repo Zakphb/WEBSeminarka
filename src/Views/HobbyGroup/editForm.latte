@@ -1,10 +1,11 @@
-{varType App\Entities\Database\Object\HobbyGroupObjectDatabaseEntity $formData}
+{varType App\Entities\Database\Object\HobbyGroupObjectEntity $formData}
+{varType App\Enums\EBaseActionNames $actions}
 {block editForm}
     <!-- Main content -->
     <div class="row">
         <div class="col-md-6">
             <div class="card card-body">
-                <form action="/hobbygroup.actionEdit" method="post">
+                <form action="{$actions::edit()}" method="post">
                     <input type="hidden" name="id" value="{ifset $formData}{$formData->getId()}{/ifset}">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" name="name" placeholder="Jméno"

@@ -2,7 +2,7 @@
 
 namespace App\Models\Facade;
 
-use App\Entities\Database\Object\HobbyGroupObjectDatabaseEntity;
+use App\Entities\Database\Object\HobbyGroupObjectEntity;
 use App\Models\Database\HobbyGroupDatabase;
 
 class HobbyGroupFacade
@@ -15,16 +15,17 @@ class HobbyGroupFacade
 		$this->hobbyGroupDatabase = $hobbyGroupDatabase;
 	}
 
-	public function saveHobbyGroup($formVariables){
-		$this->hobbyGroupDatabase->save($formVariables);
+	public function saveHobbyGroup($formVariables): int
+	{
+		return $this->hobbyGroupDatabase->save($formVariables);
 	}
 
-	public function getAllHobbyGroups() :array
+	public function getAllHobbyGroups(): array
 	{
 		return $this->hobbyGroupDatabase->getAll();
 	}
 
-	public function getHobbyGroupById(int $id): HobbyGroupObjectDatabaseEntity
+	public function getHobbyGroupById(int $id): HobbyGroupObjectEntity
 	{
 		return $this->hobbyGroupDatabase->getById($id);
 	}
