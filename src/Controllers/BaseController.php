@@ -44,13 +44,15 @@ abstract class BaseController implements IController
 
 	private function checkPermissions($userInfo): bool
 	{
-		bdump($userInfo);
 		foreach (EControllerNames::ALWAYSALLOWED as $allowed)
 		{
 			if ($this->controllerName === $allowed)
 			{
 				return true;
 			}
+		}
+		if (is_null($userInfo)){
+			return false;
 		}
 		foreach (EControllerNames::NEEDTOCHECK as $check)
 		{
