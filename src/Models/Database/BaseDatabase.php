@@ -43,6 +43,7 @@ abstract class BaseDatabase
 		$lastId = null;
 //		if ($isMutli = ArrayUtils::isMultidimensional($data))
 //		{
+//			bdump("here");
 //			$insertedIds = [];
 //			try
 //			{
@@ -251,7 +252,7 @@ abstract class BaseDatabase
 		{
 			$prep->bindValue(":id", (int)$data[BaseObjectEntity::BASE_ID]);
 		} else
-			if (is_int($data))
+			if (is_numeric($data))
 			{
 				$prep->bindValue(":id", (int)$data);
 			} else

@@ -1,0 +1,34 @@
+{varType App\Entities\Database\Object\PermissionObjectEntity $formData}
+{varType App\Enums\ActionConstructors\EBaseActionConstructor[] $actionConstructors}
+{block editForm}
+    <!-- Main content -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-body">
+                <form action="{$actionConstructors[App\Enums\EControllerNames::PERMISSION]::edit()}" method="post">
+                    {ifset $formData}<input type="hidden" name="id" value="{$formData->getId()}">{/ifset}
+                    <div class="input-group mb-3">
+                        <!-- select -->
+                        <label>Práva</label>
+                        <select multiple name="permission[]" class="form-control select2">
+                            {foreach $selectNames as $select}
+                                    <option value="{$select}" selected>{$select}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block">Uložit</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+            </div>
+            <!-- /.card-body -->
+            <!-- /.card -->
+        </div>
+        <!-- /.content -->
+{/block}

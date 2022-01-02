@@ -12,5 +12,4 @@ abstract class BaseObjectEntity
 		return array();
 	}
 
-
 }

@@ -10,18 +10,19 @@ class UserFullEntity extends BaseFullEntity
 	const USER_EMAIL = 'email';
 	const USER_PASSWORD = 'password';
 	const USER_TEACHER = 'teacher';
-	const USER_ROLE = "role_id";
+	const USER_ROLE = "role";
+	const USER_PERMISSIONS = 'permissions';
 
 	private $email;
 	private $password;
 	private ?int $id;
 	private ?string $name;
 	private ?string $surname;
-	private ?int $role;
+	private ?RoleFullEntity $role;
 	private ?bool $teacher;
 
 
-	public function __construct($email, $password,?int $id = null,?string $name = null, ?string $surname = null,?int $role = null,?bool $teacher = false)
+	public function __construct($email, $password,?int $id = null,?string $name = null, ?string $surname = null,?RoleFullEntity $role = null,?bool $teacher = false)
 	{
 		parent::__construct();
 
@@ -47,7 +48,7 @@ class UserFullEntity extends BaseFullEntity
 		];
 	}
 
-	public static function constructFromArray(array $params)
+	public static function constructFromArray(array $params): UserFullEntity
 	{
 		return new UserFullEntity($params[self::USER_EMAIL],$params[self::USER_PASSWORD], $params[self::USER_ID], $params[self::USER_NAME], $params[self::USER_SURNAME], $params[self::USER_ROLE], $params[self::USER_TEACHER]);
 	}
@@ -93,9 +94,9 @@ class UserFullEntity extends BaseFullEntity
 	}
 
 	/**
-	 * @return int|null
+	 * @return RoleFullEntity
 	 */
-	public function getRole(): ?int
+	public function getRole(): RoleFullEntity
 	{
 		return $this->role;
 	}
@@ -108,6 +109,60 @@ class UserFullEntity extends BaseFullEntity
 		return $this->teacher;
 	}
 
+	/**
+	 * @param mixed $email
+	 */
+	public function setEmail($email): void
+	{
+		$this->email = $email;
+	}
 
+	/**
+	 * @param mixed $password
+	 */
+	public function setPassword($password): void
+	{
+		$this->password = $password;
+	}
+
+	/**
+	 * @param int|null $id
+	 */
+	public function setId(?int $id): void
+	{
+		$this->id = $id;
+	}
+
+	/**
+	 * @param string|null $name
+	 */
+	public function setName(?string $name): void
+	{
+		$this->name = $name;
+	}
+
+	/**
+	 * @param string|null $surname
+	 */
+	public function setSurname(?string $surname): void
+	{
+		$this->surname = $surname;
+	}
+
+	/**
+	 * @param RoleFullEntity|null $role
+	 */
+	public function setRole(RoleFullEntity $role): void
+	{
+		$this->role = $role;
+	}
+
+	/**
+	 * @param bool|null $teacher
+	 */
+	public function setTeacher(?bool $teacher): void
+	{
+		$this->teacher = $teacher;
+	}
 
 }

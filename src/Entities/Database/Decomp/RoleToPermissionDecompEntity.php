@@ -23,6 +23,22 @@ class RoleToPermissionDecompEntity extends BaseDecompEntity
 	}
 
 	/**
+	 * @param int $permissionId
+	 */
+	public function setPermissionId(int $permissionId): void
+	{
+		$this->permissionId = $permissionId;
+	}
+
+	/**
+	 * @param int $roleId
+	 */
+	public function setRoleId(int $roleId): void
+	{
+		$this->roleId = $roleId;
+	}
+
+	/**
 	 * @return int
 	 */
 	public function getPermissionId(): int

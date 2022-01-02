@@ -4,14 +4,17 @@ namespace App\Models\Facade;
 
 use App\Entities\Database\Object\SchoolroomObjectEntity;
 use App\Models\Database\SchoolroomDatabase;
+use App\Models\Database\SchoolroomTypeDatabase;
 
 class SchoolroomFacade
 {
 	private SchoolroomDatabase $schoolroomDatabase;
+	private SchoolroomTypeDatabase $schoolroomTypeDatabase;
 
-	public function __construct(SchoolroomDatabase $schoolroomDatabase)
+	public function __construct(SchoolroomDatabase $schoolroomDatabase, SchoolroomTypeDatabase $schoolroomTypeDatabase)
 	{
 		$this->schoolroomDatabase = $schoolroomDatabase;
+		$this->schoolroomTypeDatabase = $schoolroomTypeDatabase;
 	}
 
 	public function saveSchoolroom($formVariables):string
@@ -35,12 +38,6 @@ class SchoolroomFacade
 
 	public function getTypeNamesForSelect(): array
 	{
-		$arr = [];
-		$count = count(SchoolroomObjectEntity::TYPE_KEYS);
-		for ($i = 0; $i < $count; $i++)
-		{
-			$arr[SchoolroomObjectEntity::TYPE_KEYS[$i]] = SchoolroomObjectEntity::TYPE_NAMES[$i];
-		}
-		return $arr;
+		return $this->schoolroomTypeDatabase->getSelection();
 	}
 }

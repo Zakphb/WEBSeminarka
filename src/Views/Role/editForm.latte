@@ -1,4 +1,4 @@
-{varType App\Entities\Database\Object\SchoolroomObjectEntity $formData}
+{varType App\Entities\Database\Object\PermissionObjectEntity $formData}
 {varType array $selectNames}
 {varType App\Enums\ActionConstructors\EBaseActionConstructor[] $actionConstructors}
 {block editForm}
@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card card-body">
-                <form action="{$actionConstructors[App\Enums\EControllerNames::SCHOOLROOM]::edit()}" method="post">
+                <form action="{$actionConstructors[App\Enums\EControllerNames::ROLE]::edit()}" method="post">
                     {ifset $formData}<input type="hidden" name="id" value="{$formData->getId()}">{/ifset}
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" name="name" placeholder="Jméno"
@@ -17,16 +17,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="input-group mb-3">
-                        <!-- select -->
-                        <label>Typ třídy</label>
-                        <select name="type_id" class="form-control">
-                            {foreach $selectNames as $key => $selectName}
-                                {if isset($formData) && ($key === $formData->getTypeId())}
-                                    <option value="{$key}" selected>{$selectName}</option>
-                                {else}
-                                    <option value="{$key}">{$selectName}</option>
-                                {/if}
+                    <div>
+                        Prava
+                    </div>
+                    <!-- select -->
+                    <div class="form-group">
+                        <select multiple="multiple" name="permission[]" class="select2" style="width: 100%;">
+                            {dump $selectNames}
+                            {foreach $selectNames as $select}
+                                <option value="{$select->getId()}">{$select->getName()}</option>
                             {/foreach}
                         </select>
                     </div>

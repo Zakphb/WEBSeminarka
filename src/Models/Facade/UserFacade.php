@@ -3,8 +3,12 @@
 namespace App\Models\Facade;
 
 use App\Entities\Database\Decomp\UserToRoleDecompEntity;
+use App\Entities\Database\Object\UserObjectEntity;
+use App\Entities\Full\RoleFullEntity;
 use App\Entities\Full\UserFullEntity;
+use App\Models\Database\PermissionDatabase;
 use App\Models\Database\RoleDatabase;
+use App\Models\Database\RoleToPermissionDatabase;
 use App\Models\Database\UserDatabase;
 use App\Models\Database\UserToRoleDatabase;
 use App\Utilities\Login;
@@ -14,11 +18,13 @@ class UserFacade
 {
 	private UserDatabase $userDatabase;
 	private UserToRoleDatabase $userToRoleDatabase;
+	private RoleFacade $roleFacade;
 
 	public function __construct(UserDatabase $userDatabase, UserToRoleDatabase $userToRoleDatabase)
 	{
 		$this->userDatabase = $userDatabase;
 		$this->userToRoleDatabase = $userToRoleDatabase;
+		$this->roleFacade = new RoleFacade(new RoleDatabase(), new RoleToPermissionDatabase(), new PermissionDatabase());
 	}
 
 
@@ -74,7 +80,12 @@ class UserFacade
 	}
 
 	public function getFullUser(int $id){
-		return $this->userDatabase->getById($id);
+		$fullRole = $this->getFullRoleWithPermissions($id);
+		$user = $this->userDatabase->getById($id);
+		$fullUser = UserFullEntity::constructFromArray($user->toArray());
+		$fullUser->setRole($fullRole);
+		return $fullUser;
+
 	}
 
 	public function mapFormDataToUserEntity($formData){
@@ -87,5 +98,11 @@ class UserFacade
 		return trim(password_hash($pass, PASSWORD_DEFAULT));
 	}
 
+	public function getFullRoleWithPermissions($userId): RoleFullEntity
+	{
+		$data = [UserToRoleDecompEntity::USER_TO_ROLE_USER_ID => $userId];
+		$role = $this->userToRoleDatabase->getWhere($data, 1);
+		return $this->roleFacade->getFullRoleWithPermissions($role[0]->role_id);
+	}
 
 }

@@ -6,14 +6,14 @@
 //// Pripojeni k databazi ////
 
 /** Adresa serveru. */
-define("DB_SERVER","localhost"); // https://students.kiv.zcu.cz lze 147.228.63.10, ale musite byt na VPN
+const DB_SERVER = "127.0.0.1:3306"; // https://students.kiv.zcu.cz lze 147.228.63.10, ale musite byt na VPN
 /** Nazev databaze. */
 //define("DB_NAME","kivweb"); Je pro kiv web
-define("DB_NAME","webseminarka");
+const DB_NAME = "webseminarka";
 /** Uzivatel databaze. */
-define("DB_USER","root");
+const DB_USER = "root";
 /** Heslo uzivatele databaze */
-define("DB_PASS","");
+const DB_PASS = "";
 
 
 
@@ -33,14 +33,16 @@ const DIRECTORY_VIEWS = "src/Views";
 const NAMESPACE_DIRECTORY_VIEWS = null;
 /** Klic defaultni webove stranky. */
 const DEFAULT_WEB_PAGE_KEY = "src/Views/home.latte";
-
+const BASESLASH = '/';
 /** Dostupne webove stranky. */
 const WEB_PAGES = array(
-    'Home' => '/',
-    'Contact' => '/Contact/contact',
-	'Login' => '/login',
-	'HobbyGroup' => '/hobbygroup',
-	'Schoolroom' => '/schoolroom'
+    'Home' => BASESLASH,
+	'Login' => BASESLASH.'login',
+	'HobbyGroup' => BASESLASH.'hobbygroup',
+	'Schoolroom' => BASESLASH.'schoolroom',
+	'Permission' => BASESLASH.'permission',
+	'Role' => BASESLASH.'role',
+
 );
 
 ?>

@@ -1,11 +1,11 @@
-{varType App\Enums\EBaseActionNames $actions}
+{varType App\Enums\ActionConstructors\EBaseActionConstructor[] $actionConstructors}
 {block registerForm}
 <div class="register-box">
     <div class="card">
         <div class="card-body register-card-body">
             <p class="login-box-msg">Registrace</p>
 
-            <form action="{$actions::register()}" method="post">
+            <form action="{$actionConstructors[App\Enums\EControllerNames::LOGIN]::register()}" method="post">
                 <div class="input-group mb-3">
                     <input type="text" id="name" name="name" class="form-control" placeholder="Jméno" value="" required>
                     <div class="input-group-append">
@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <div class="col-4">
-                        <a href="/login" class="text-center">Už mám účet</a>
+                        <a href="{$actionConstructors[App\Enums\EControllerNames::LOGIN]::show()}" class="text-center">Už mám účet</a>
                     </div>
                     <!-- /.col -->
                     <div class="col">

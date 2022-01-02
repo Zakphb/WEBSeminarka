@@ -1,45 +1,45 @@
 {block loginForm}
-    {varType App\Enums\EBaseActionNames $actions}
-<body class="hold-transition login-page">
-<div class="login-box">
-    <div class="card">
-        <div class="card-body login-card-body">
-            <p class="login-box-msg">Přihlášení</p>
+    {varType App\Enums\ActionConstructors\EBaseActionConstructor[] $actionConstructors}
+    <body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Přihlášení</p>
 
-            <form action="{$actions::login()}" method="post">
-                <div class="input-group mb-3">
-                    <input type="email" class="form-control" name="email" placeholder="Email" required>
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-envelope"></span>
+                <form action="{$actionConstructors[App\Enums\EControllerNames::LOGIN]::login()}" method="post">
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" name="email" placeholder="Email" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="input-group mb-3">
-                    <input type="password" class="form-control" name="password" placeholder="Heslo" required>
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" name="password" placeholder="Heslo" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-8">
-                        <p class="mb-0">
-                            <a href="/login.showRegister" class="text-center">Nemáš účet ? Zaregistruj se!</a>
-                        </p>
+                    <div class="row">
+                        <div class="col-8">
+                            <p class="mb-0">
+                                <a href="{$actionConstructors[App\Enums\EControllerNames::LOGIN]::showRegister()}" class="text-center">Nemáš účet ? Zaregistruj se!</a>
+                            </p>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block">Přihlášení</button>
+                        </div>
+                        <!-- /.col -->
                     </div>
-                    <!-- /.col -->
-                    <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block">Přihlášení</button>
-                    </div>
-                    <!-- /.col -->
-                </div>
-            </form>
+                </form>
+            </div>
+            <!-- /.login-card-body -->
         </div>
-        <!-- /.login-card-body -->
     </div>
-</div>
-<!-- /.login-box -->
-</body>
+    <!-- /.login-box -->
+    </body>
 {/block loginForm}

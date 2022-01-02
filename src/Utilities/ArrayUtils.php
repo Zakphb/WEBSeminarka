@@ -11,13 +11,27 @@ class ArrayUtils
 
 	static function arrayIntoQueryArgs(array $array, ?bool $quote = false): string
 	{
-		if ($quote){
+		if ($quote)
+		{
 			foreach ($array as $key => $value)
 			{
 				$array[$key] = StringUtils::addQuotes($value);
 			}
 		}
 		return implode(",", $array);
+	}
+
+	/**
+	 * @param array $arrayToChangeKeys
+	 * @param array $newKeys
+	 * @return array|false
+	 */
+	static function changeKey(array $arrayToChangeKeys, array $newKeys): array
+	{
+		return array_combine(array_map(function ($el) use ($newKeys)
+		{
+			return $el;
+		}, array_values($newKeys)), array_values($arrayToChangeKeys));
 	}
 
 }
