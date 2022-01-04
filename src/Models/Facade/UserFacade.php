@@ -36,8 +36,11 @@ class UserFacade
 		{
 			return new Response(false, "Uživatel jiz existuje.");
 		}
-		$userInserted = $this->userDatabase->save($userEntity->toArray());
-		if ($userEntity[UserFullEntity::USER_TEACHER])
+		$userEntity = $userEntity->toArray();
+		$teacher = $userEntity[UserFullEntity::USER_TEACHER];
+		unset($userEntity[UserFullEntity::USER_TEACHER], $userEntity[UserFullEntity::USER_ROLE]);
+		$userInserted = $this->userDatabase->save($userEntity);
+		if ($teacher)
 		{
 			$roleInserted = $this->userToRoleDatabase->save([UserToRoleDecompEntity::USER_TO_ROLE_USER_ID => $userInserted, UserToRoleDecompEntity::USER_TO_ROLE_ROLE_ID => RoleDatabase::ROLE_TEACHER_IN_WAITING]);
 		} else
@@ -54,8 +57,8 @@ class UserFacade
 	public function doUserExistAlready(UserFullEntity $userEntity)
 	{
 		$user = $userEntity->toArray();
-		unset($user[UserFullEntity::USER_PASSWORD], $user[UserFullEntity::USER_ID]);
-		$user = $this->userDatabase->getWhere($userEntity->toArray(), 1);
+		unset($user[UserFullEntity::USER_PASSWORD], $user[UserFullEntity::USER_ID], $user[UserFullEntity::USER_ROLE], $user[UserFullEntity::USER_TEACHER]);
+		$user = $this->userDatabase->getWhere($user, 1);
 		if (empty($user))
 		{
 			return false;

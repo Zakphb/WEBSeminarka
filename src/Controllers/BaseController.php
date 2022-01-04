@@ -2,17 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Entities\Full\UserFullEntity;
-use App\Enums\ActionConstructors\EBaseActionConstructor;
-use App\Enums\ActionConstructors\EHobbyGroupConstructor;
-use App\Enums\ActionConstructors\ELoginConstructor;
-use App\Enums\ActionConstructors\EPermissionConstructor;
-use App\Enums\ActionConstructors\ERoleConstructor;
-use App\Enums\ActionConstructors\ESchoolroomConstructor;
 use App\Enums\EControllerNames;
 use App\Utilities\ArrayUtils;
 use App\Utilities\Login;
-use App\Utilities\RedirectUtils;
 
 abstract class BaseController implements IController
 {
@@ -32,38 +24,39 @@ abstract class BaseController implements IController
 		$args['user'] = $this->user;
 		$args['userinfo'] = $this->user->getUserInfo();
 		$allowed = $this->checkPermissions($args['userinfo']);
-		if (!$allowed)
+		if (!$allowed[$this->controllerName])
 		{
-        	$path = LoginController::VIEW_LOGIN;
+			$path = LoginController::VIEW_LOGIN;
 			$args = [];
 		}
+		$args['allowedConstructors'] = $allowed;
 		$args['actionConstructors'] = $this->actionConstructors;
+		bdump($args);
 		return $this->latte->render($path, $args);
 	}
 
 
-	private function checkPermissions($userInfo): bool
+	private function checkPermissions($userInfo): array
 	{
-		foreach (EControllerNames::ALWAYSALLOWED as $allowed)
+		$allowed = [];
+		if (!is_null($userInfo))
 		{
-			if ($this->controllerName === $allowed)
+			foreach ($userInfo->getRole()->getPermisions() as $allowedController)
 			{
-				return true;
-			}
-		}
-		if (is_null($userInfo)){
-			return false;
-		}
-		foreach (EControllerNames::NEEDTOCHECK as $check)
-		{
-			foreach ($userInfo->getRole()->getPermisions() as $allowed)
-			{
-				if ($allowed->getName() === $check){
-					return true;
+				foreach (EControllerNames::NEEDTOCHECK as $check)
+				{
+					if ($allowedController->getName() === $check)
+					{
+						$allowed[$allowedController->getName()] = true;
+					}
 				}
 			}
 		}
-		return false;
+		foreach (EControllerNames::ALWAYSALLOWED as $allowedController)
+		{
+			$allowed[$allowedController] = true;
+		}
+		return $allowed;
 	}
 
 	/**

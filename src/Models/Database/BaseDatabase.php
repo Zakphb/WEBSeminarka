@@ -188,7 +188,7 @@ abstract class BaseDatabase
 		if ($whereData)
 		{
 			$sql = $whereData[self::SQL];
-			$sql .= "LIMIT " . $numberOfResults . ";";
+			$sql .= " LIMIT " . $numberOfResults . ";";
 			$prep = $this->pdo->prepare($sql);
 			$position = 0;
 			foreach ($data as $value)

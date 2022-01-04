@@ -10,9 +10,9 @@
                     <div class="input-group mb-3">
                         <!-- select -->
                         <label>Práva</label>
-                        <select multiple name="permission[]" class="form-control select2">
+                        <select multiple name="name" class="form-control select2">
                             {foreach $selectNames as $select}
-                                    <option value="{$select}" selected>{$select}</option>
+                                    <option value="{$select}">{$select}</option>
                             {/foreach}
                         </select>
                     </div>

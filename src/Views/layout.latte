@@ -1,6 +1,7 @@
 {varType App\Utilities\Login $user}
 {varType App\Entities\Full\UserFullEntity $userinfo}
 {varType App\Enums\ActionConstructors\EBaseActionConstructor[] $actionConstructors}
+{varType array $allowedConstructors}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,6 +93,7 @@
                     data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
+                    {if $allowedConstructors[App\Enums\EControllerNames::HOBBY_GROUP]}
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -115,6 +117,8 @@
                             </li>
                         </ul>
                     </li>
+                    {/if}
+                    {if $allowedConstructors[App\Enums\EControllerNames::SCHOOLROOM]}
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -138,6 +142,8 @@
                             </li>
                         </ul>
                     </li>
+                    {/if}
+                    {if $allowedConstructors[App\Enums\EControllerNames::PERMISSION]}
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -161,6 +167,8 @@
                             </li>
                         </ul>
                     </li>
+                    {/if}
+                    {if $allowedConstructors[App\Enums\EControllerNames::ROLE]}
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -184,6 +192,7 @@
                             </li>
                         </ul>
                     </li>
+                    {/if}
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->

@@ -45,6 +45,7 @@ class ComposerStaticInitf7934d7bc9f168461b53a3044694792a
         'App\\Enums\\ActionConstructors\\EPermissionConstructor' => __DIR__ . '/../..' . '/src/Enums/ActionConstructors/EPermissionConstructor.php',
         'App\\Enums\\ActionConstructors\\ERoleConstructor' => __DIR__ . '/../..' . '/src/Enums/ActionConstructors/ERoleConstructor.php',
         'App\\Enums\\ActionConstructors\\ESchoolroomConstructor' => __DIR__ . '/../..' . '/src/Enums/ActionConstructors/ESchoolroomConstructor.php',
+        'App\\Enums\\ActionConstructors\\EUserConstructor' => __DIR__ . '/../..' . '/src/Enums/ActionConstructors/EUserConstructor.php',
         'App\\Enums\\EControllerNames' => __DIR__ . '/../..' . '/src/Enums/EControllerNames.php',
         'App\\Models\\Database\\BaseDatabase' => __DIR__ . '/../..' . '/src/Models/Database/BaseDatabase.php',
         'App\\Models\\Database\\HobbyGroupDatabase' => __DIR__ . '/../..' . '/src/Models/Database/HobbyGroupDatabase.php',

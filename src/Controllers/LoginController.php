@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Enums\ActionConstructors\ELoginConstructor;
 use App\Enums\EBaseActionConstructor;
 use App\Models\Database\UserDatabase;
 use App\Models\Database\UserToRoleDatabase;
@@ -15,6 +16,7 @@ class LoginController extends BaseController
 	public const VIEW_LOGIN = "src/Views/Login/login.latte";
 	private const VIEW_REGISTER = "src/Views/Login/register.latte";
 	private $userFacade;
+	protected $controllerName = ELoginConstructor::CONTROLLER_NAME;
 
 	public function __construct($latte)
 	{

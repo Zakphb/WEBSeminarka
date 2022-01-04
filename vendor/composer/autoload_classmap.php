@@ -40,6 +40,7 @@ return array(
     'App\\Enums\\ActionConstructors\\EPermissionConstructor' => $baseDir . '/src/Enums/ActionConstructors/EPermissionConstructor.php',
     'App\\Enums\\ActionConstructors\\ERoleConstructor' => $baseDir . '/src/Enums/ActionConstructors/ERoleConstructor.php',
     'App\\Enums\\ActionConstructors\\ESchoolroomConstructor' => $baseDir . '/src/Enums/ActionConstructors/ESchoolroomConstructor.php',
+    'App\\Enums\\ActionConstructors\\EUserConstructor' => $baseDir . '/src/Enums/ActionConstructors/EUserConstructor.php',
     'App\\Enums\\EControllerNames' => $baseDir . '/src/Enums/EControllerNames.php',
     'App\\Models\\Database\\BaseDatabase' => $baseDir . '/src/Models/Database/BaseDatabase.php',
     'App\\Models\\Database\\HobbyGroupDatabase' => $baseDir . '/src/Models/Database/HobbyGroupDatabase.php',
