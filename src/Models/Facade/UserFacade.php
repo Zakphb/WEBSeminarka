@@ -3,6 +3,7 @@
 namespace App\Models\Facade;
 
 use App\Entities\Database\Decomp\UserToRoleDecompEntity;
+use App\Entities\Database\Object\BaseObjectEntity;
 use App\Entities\Database\Object\UserObjectEntity;
 use App\Entities\Full\RoleFullEntity;
 use App\Entities\Full\UserFullEntity;
@@ -82,7 +83,8 @@ class UserFacade
 		return new Response(false, "Uživatele se nepovedlo přihlásit, máte správné heslo ?");
 	}
 
-	public function getFullUser(int $id){
+	public function getFullUser(int $id)
+	{
 		$fullRole = $this->getFullRoleWithPermissions($id);
 		$user = $this->userDatabase->getById($id);
 		$fullUser = UserFullEntity::constructFromArray($user->toArray());
@@ -91,7 +93,43 @@ class UserFacade
 
 	}
 
-	public function mapFormDataToUserEntity($formData){
+	public function getFullUserFromUserObject(UserObjectEntity $userObject)
+	{
+		$fullRole = $this->getFullRoleWithPermissions($userObject->getId());
+		$fullUser = UserFullEntity::constructFromArray($userObject->toArray());
+		$fullUser->setRole($fullRole);
+		return $fullUser;
+	}
+
+	public function getAllUsers()
+	{
+		$gridUsers = [];
+		$users = $this->userDatabase->getAll();
+		foreach ($users as $user)
+		{
+			$gridUsers[] = $this->getFullUserFromUserObject($user);
+		}
+		return $gridUsers;
+	}
+
+	public function getAllStudents()
+	{
+		$gridStudents = [];
+		$users = $this->userDatabase->getAll();
+		foreach ($users as $user)
+		{
+			$student = $this->getFullUserFromUserObject($user);
+			if ($student->getRole()->getName() === "student")
+			{
+				$gridStudents[] = $student;
+			}
+		}
+		return $gridStudents;
+	}
+
+
+	public function mapFormDataToUserEntity($formData)
+	{
 		return UserFullEntity::constructFromArray($formData);
 	}
 
@@ -107,5 +145,16 @@ class UserFacade
 		$role = $this->userToRoleDatabase->getWhere($data, 1);
 		return $this->roleFacade->getFullRoleWithPermissions($role[0]->role_id);
 	}
+
+	public function saveUser($formValues)
+	{
+		$roleId = $formValues[UserFullEntity::USER_ROLE];
+		unset($formValues[UserFullEntity::USER_ROLE]);
+		$userToRoleArray = [UserToRoleDecompEntity::USER_TO_ROLE_USER_ID => $formValues[BaseObjectEntity::BASE_ID], UserToRoleDecompEntity::USER_TO_ROLE_ROLE_ID => $roleId];
+		$this->userToRoleDatabase->deleteWhere($userToRoleArray);
+		$this->userToRoleDatabase->save($userToRoleArray);
+		return $this->userDatabase->save($formValues);
+	}
+
 
 }

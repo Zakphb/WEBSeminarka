@@ -18,7 +18,6 @@ class UserObjectEntity extends BaseObjectEntity
 		self::USER_PASSWORD
 	];
 
-	protected ?int $id;
 	protected $name;
 	protected $surname;
 	protected $email;

@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Entities\Database\Object\BaseObjectEntity;
 use App\Enums\EControllerNames;
 use App\Utilities\ArrayUtils;
 use App\Utilities\Login;
@@ -31,7 +32,6 @@ abstract class BaseController implements IController
 		}
 		$args['allowedConstructors'] = $allowed;
 		$args['actionConstructors'] = $this->actionConstructors;
-		bdump($args);
 		return $this->latte->render($path, $args);
 	}
 
@@ -83,11 +83,6 @@ abstract class BaseController implements IController
 		}, EControllerNames::CONTROLLERS), EControllerNames::NAMES);
 	}
 
-	function mapActions($controller)
-	{
-		$controller = get_class($controller);
-		return [];
-	}
 
 	public function actionEdit()
 	{

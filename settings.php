@@ -42,6 +42,7 @@ const WEB_PAGES = array(
 	'Schoolroom' => BASESLASH.'schoolroom',
 	'Permission' => BASESLASH.'permission',
 	'Role' => BASESLASH.'role',
+	'User' => BASESLASH.'user',
 
 );
 

@@ -1,0 +1,64 @@
+{layout '../layout.latte'}
+{varType App\Entities\Full\UserFullEntity[] $gridvalues}
+{varType App\Enums\ActionConstructors\EBaseActionConstructor[] $actionConstructors}
+{block content}
+    <!-- Main content -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Uzivatele</h3>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped projects">
+                <thead>
+                <tr>
+                    <th style="width: 20%">
+                        Jméno
+                    </th>
+                    <th style="width: 20%">
+                        Prijmeni
+                    </th>
+                    <th style="width: 20%">
+                        Email
+                    </th>
+                    <th style="width: 20%">
+                        Role
+                    </th>
+                    <th style="width: 20%">
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {dump $gridvalues}
+                {foreach $gridvalues as  $gridValue}
+                    <tr>
+                        <td>
+                            {$gridValue->getName()}
+                        </td>
+                        <td>
+                            {$gridValue->getSurname()}
+                        </td>
+                        <td>
+                            {$gridValue->getEmail()}
+                        </td>
+                        <td>
+                            {$gridValue->getRole()->getName()}
+                        </td>
+                        <td class="project-actions">
+                            <a class="btn btn-info btn-sm" href="{$actionConstructors[App\Enums\EControllerNames::USER]::edit()}?id={$gridValue->getId()}">
+                                <i class="fas fa-pencil-alt">
+                                </i>
+                                Edit
+                            </a>
+                            <a class="btn btn-danger btn-sm" href="{$actionConstructors[App\Enums\EControllerNames::USER]::delete()}?id={$gridValue->getId()}">
+                                <i class="fas fa-trash">
+                                </i>
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                {/foreach}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{/block}

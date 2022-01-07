@@ -111,8 +111,12 @@ abstract class BaseDatabase
 	function update($data)
 	{
 		$sql = "UPDATE " . $this->tableName . " SET";
-		$id = (int)$data[BaseObjectEntity::BASE_ID];
-		unset($data[BaseObjectEntity::BASE_ID]);
+		$idSet = isset($data[BaseObjectEntity::BASE_ID]);
+		if ($idSet)
+		{
+			$id = (int)$data[BaseObjectEntity::BASE_ID];
+			unset($data[BaseObjectEntity::BASE_ID]);
+		}
 		$count = 0;
 		foreach ($data as $key => $value)
 		{
@@ -127,7 +131,10 @@ abstract class BaseDatabase
 			$count++;
 			$placeholderKeyArray[] = $placeholderKey;
 		}
-		$sql .= " WHERE id = :id";
+		if ($idSet)
+		{
+			$sql .= " WHERE id = :id";
+		}
 		$prep = $this->pdo->prepare($sql);
 		$position = 0;
 		foreach ($data as $value)
@@ -135,7 +142,10 @@ abstract class BaseDatabase
 			$prep->bindValue($placeholderKeyArray[$position], $value);
 			$position++;
 		}
-		$prep->bindValue(":id", $id);
+		if ($idSet)
+		{
+			$prep->bindValue(":id", $id);
+		}
 		return $prep->execute();
 	}
 
@@ -162,10 +172,11 @@ abstract class BaseDatabase
 
 	public function deleteWhere($data)
 	{
-		$whereData = $this->whereString($data);
+		$whereData = $this->whereString($data, "DELETE");
 		if ($whereData)
 		{
 			$sql = $whereData[self::SQL];
+			$sql .= ";";
 			$prep = $this->pdo->prepare($sql);
 			$position = 0;
 			foreach ($data as $value)
@@ -182,7 +193,7 @@ abstract class BaseDatabase
 	}
 
 
-	public function getWhere($data, int $numberOfResults)
+	public function getWhere($data, int $numberOfResults = 100)
 	{
 		$whereData = $this->whereString($data);
 		if ($whereData)
@@ -218,13 +229,13 @@ abstract class BaseDatabase
 		return $prep->fetchAll(PDO::FETCH_CLASS, $this->entityName);
 	}
 
-	private function whereString($data)
+	private function whereString($data,$sql = "SELECT *")
 	{
 		if (count($data) === 0)
 		{
 			return false;
 		}
-		$sql = "SELECT * FROM " . $this->tableName . " WHERE";
+		$sql .= " FROM " . $this->tableName . " WHERE";
 		$counter = 0;
 		$placeholderKeyArray = [];
 		foreach ($data as $key => $value)

@@ -2,11 +2,8 @@
 
 namespace App\Entities\Database\Decomp;
 
-abstract class BaseDecompEntity
-{
-	public function toArray(): array
-	{
-		return array();
-	}
+use App\Entities\Database\Object\BaseObjectEntity;
 
+abstract class BaseDecompEntity extends BaseObjectEntity
+{
 }

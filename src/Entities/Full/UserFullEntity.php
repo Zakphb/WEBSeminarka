@@ -15,7 +15,6 @@ class UserFullEntity extends BaseFullEntity
 
 	private $email;
 	private $password;
-	private ?int $id;
 	private ?string $name;
 	private ?string $surname;
 	private ?RoleFullEntity $role;

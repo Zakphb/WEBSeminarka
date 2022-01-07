@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Enums\ActionConstructors\ELoginConstructor;
-use App\Enums\EBaseActionConstructor;
 use App\Models\Database\UserDatabase;
 use App\Models\Database\UserToRoleDatabase;
 use App\Models\Facade\UserFacade;
@@ -67,5 +66,25 @@ class LoginController extends BaseController
 	public function showRegister()
 	{
 		$this->show(self::VIEW_REGISTER);
+	}
+
+	public function saveForm($variables)
+	{
+		// TODO: Implement saveForm() method.
+	}
+
+	public function loadForm($variables)
+	{
+		// TODO: Implement loadForm() method.
+	}
+
+	public function redirectEdit($id)
+	{
+		// TODO: Implement redirectEdit() method.
+	}
+
+	public function actionGrid()
+	{
+		// TODO: Implement actionGrid() method.
 	}
 }

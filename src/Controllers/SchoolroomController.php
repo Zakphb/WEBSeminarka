@@ -56,18 +56,18 @@ class SchoolroomController extends BaseController
 		$variablesGet = $_GET;
 	}
 
-	protected function saveForm($variables)
+	public function saveForm($variables)
 	{
 		return $this->schoolroomFacade->saveSchoolroom($variables);
 	}
 
-	protected function loadForm($variables)
+	public function loadForm($variables)
 	{
 		$args['formData'] = $this->schoolroomFacade->getSchoolroomById($variables[BaseObjectEntity::BASE_ID]);
 		$this->show(self::VIEW_EDIT, $args);
 	}
 
-	protected function redirectEdit($id)
+	public function redirectEdit($id)
 	{
 		RedirectUtils::redirectWithURLBuild(ESchoolroomConstructor::edit(), [BaseObjectEntity::BASE_ID => $id]);
 	}

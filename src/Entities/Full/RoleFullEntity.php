@@ -7,7 +7,6 @@ class RoleFullEntity extends BaseFullEntity
 	const ID = 'id';
 	const ROLE_NAME = 'name';
 	private $permissions = [];
-	private $id;
 	private $name;
 	public function __construct(int $id, $name, array $permissions)
 	{

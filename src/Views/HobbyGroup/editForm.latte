@@ -1,15 +1,17 @@
-{varType App\Entities\Database\Object\HobbyGroupObjectEntity $formData}
+{varType App\Entities\Full\HobbyGroupFullEntity $formData}
 {varType App\Enums\ActionConstructors\EBaseActionConstructor[] $actionConstructors}
+{varType App\Entities\Full\UserFullEntity[] $selectNames}
 {block editForm}
+    {dump $formData}
     <!-- Main content -->
     <div class="row">
         <div class="col-md-6">
             <div class="card card-body">
                 <form action="{$actionConstructors[App\Enums\EControllerNames::HOBBY_GROUP]::edit()}" method="post">
-                    <input type="hidden" name="id" value="{ifset $formData}{$formData->getId()}{/ifset}">
+                    <input type="hidden" name="id" value="{ifset $formData}{$formData->id}{/ifset}">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" name="name" placeholder="Jméno"
-                               value="{ifset $formData}{$formData->getName()}{/ifset}" required>
+                               value="{ifset $formData}{$formData->name}{/ifset}" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -18,7 +20,7 @@
                     </div>
                     <div class="input-group mb-3">
                         <textarea class="form-control" name="description" placeholder="Popisek"
-                                  required>{ifset $formData}{$formData->getDescription()}{/ifset}</textarea>
+                                  required>{ifset $formData}{$formData->description}{/ifset}</textarea>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -37,7 +39,7 @@
                     </div>
                     <div class="input-group mb-3">
                         <input type="number" class="form-control" name="capacity" placeholder="Kapacita"
-                               value="{ifset $formData}{$formData->getCapacity()}{/ifset}" required>
+                               value="{ifset $formData}{$formData->capacity}{/ifset}" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -46,12 +48,26 @@
                     </div>
                     <div class="input-group mb-3">
                         <input type="number" class="form-control" name="price" placeholder="Cena"
-                               value="{ifset $formData}{$formData->getPrice()}{/ifset}" required>
+                               value="{ifset $formData}{$formData->price}{/ifset}" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <select multiple="multiple" name="students[]" class="select2" style="width: 100%;">
+                            {foreach $selectNames as $select}
+                                {ifset $formData}
+                                    {foreach $formData->students as $student}
+                                        {if $select->getId() == $student->user_id}
+                                            <option selected value="{$select->getId()}">{$select->getName()}</option>
+                                        {/if}
+                                    {/foreach}
+                                {/ifset}
+                                <option value="{$select->getId()}">{$select->getName()}</option>
+                            {/foreach}
+                        </select>
                     </div>
                     <div class="row">
                         <div class="col-8">

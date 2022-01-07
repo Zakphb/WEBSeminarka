@@ -16,4 +16,24 @@ class HomeController extends BaseController
 	{
 		parent::show($path);
 	}
+
+	public function saveForm($variables)
+	{
+		// TODO: Implement saveForm() method.
+	}
+
+	public function loadForm($variables)
+	{
+		// TODO: Implement loadForm() method.
+	}
+
+	public function redirectEdit($id)
+	{
+		// TODO: Implement redirectEdit() method.
+	}
+
+	public function actionGrid()
+	{
+		// TODO: Implement actionGrid() method.
+	}
 }
