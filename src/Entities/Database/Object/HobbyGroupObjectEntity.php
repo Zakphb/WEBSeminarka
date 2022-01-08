@@ -26,7 +26,9 @@ class HobbyGroupObjectEntity extends BaseObjectEntity
 	protected $price;
 	protected $capacity;
 
-
+	/**
+	 * @return array
+	 */
 	public function toArray(): array
 	{
 		return [

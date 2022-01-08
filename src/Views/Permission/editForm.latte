@@ -8,13 +8,12 @@
                 <form action="{$actionConstructors[App\Enums\EControllerNames::PERMISSION]::edit()}" method="post">
                     {ifset $formData}<input type="hidden" name="id" value="{$formData->getId()}">{/ifset}
                     <div class="input-group mb-3">
-                        <!-- select -->
-                        <label>Práva</label>
-                        <select multiple name="name" class="form-control select2">
-                            {foreach $selectNames as $select}
-                                    <option value="{$select}">{$select}</option>
-                            {/foreach}
-                        </select>
+                        <label>    </label>
+                            <select multiple name="name" class="form-control select2bs4" data-placeholder="Vyberte právo">
+                                {foreach $selectNames as $select}
+                                        <option value="{$select}">{$select}</option>
+                                {/foreach}
+                            </select>
                     </div>
                     <div class="row">
                         <div class="col-8">

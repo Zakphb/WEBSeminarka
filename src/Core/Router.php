@@ -16,6 +16,11 @@ class Router
 	public Engine $latte;
 	public string $root;
 
+	/**
+	 * @param Request $request
+	 * @param Engine $latte
+	 * @param $root
+	 */
 	public function __construct(Request $request, Engine $latte, $root)
 	{
 		$this->request = $request;
@@ -32,6 +37,10 @@ class Router
 		$this->routes['get'][$path] = $callback;
 	}
 
+	/**
+	 * @param $path
+	 * @param $callback
+	 */
 	public function post($path, $callback)
 	{
 		$this->routes['post'][$path] = $callback;
@@ -49,6 +58,11 @@ class Router
 		$this->resolveControllers($path, $function, $controllerBase);
 	}
 
+	/**
+	 * @param $path
+	 * @param $function
+	 * @param $controllerBase
+	 */
 	public function resolveControllers($path, $function, $controllerBase){
 		if (!$controllerBase)
 		{
@@ -62,6 +76,10 @@ class Router
 		$function ? $controller->$function($_GET) : $controller->show();
 	}
 
+	/**
+	 * @param $callback
+	 * @return string
+	 */
 	public function buildControllerString($callback)
 	{
 		return NAMESPACE_DIRECTORY_CONTROLLERS . $callback . "Controller";

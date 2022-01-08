@@ -1,27 +1,27 @@
 {layout '../layout.latte'}
-{varType App\Entities\Full\ScheduleFullEntity[] $gridvalues}
+{varType App\Entities\Full\UserFullEntity[] $gridvalues}
 {varType App\Enums\ActionConstructors\EBaseActionConstructor[] $actionConstructors}
 {block content}
     <!-- Main content -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Krouzky</h3>
+            <h3 class="card-title">Uživatelé</h3>
         </div>
         <div class="card-body p-0">
             <table class="table table-striped projects">
                 <thead>
                 <tr>
                     <th style="width: 20%">
-                        Jmeno krouzku
+                        Jméno
                     </th>
                     <th style="width: 20%">
-                        Jmeno ucebny
+                        Příjmení
                     </th>
                     <th style="width: 20%">
-                        Zacatek
+                        Email
                     </th>
                     <th style="width: 20%">
-                        Konec
+                        Role
                     </th>
                     <th style="width: 20%">
                     </th>
@@ -32,24 +32,24 @@
                 {foreach $gridvalues as  $gridValue}
                     <tr>
                         <td>
-                            {$gridValue->getHobbygroup()->getName()}
+                            {$gridValue->getName()}
                         </td>
                         <td>
-                            {$gridValue->getSchoolroom()->getName()}
+                            {$gridValue->getSurname()}
                         </td>
                         <td>
-                            {$gridValue->getTimeStart()}
+                            {$gridValue->getEmail()}
                         </td>
                         <td>
-                            {$gridValue->getTimeEnd()}
+                            {$gridValue->getRole()->getName()}
                         </td>
                         <td class="project-actions">
-                            <a class="btn btn-info btn-sm" href="{$actionConstructors[App\Enums\EControllerNames::SCHEDULE]::edit()}?id={$gridValue->getId()}">
+                            <a class="btn btn-info btn-sm" href="{$actionConstructors[App\Enums\EControllerNames::USER]::edit()}?id={$gridValue->getId()}">
                                 <i class="fas fa-pencil-alt">
                                 </i>
                                 Edit
                             </a>
-                            <a class="btn btn-danger btn-sm" href="{$actionConstructors[App\Enums\EControllerNames::SCHEDULE]::delete()}?id={$gridValue->getId()}">
+                            <a class="btn btn-danger btn-sm" href="{$actionConstructors[App\Enums\EControllerNames::USER]::delete()}?id={$gridValue->getId()}">
                                 <i class="fas fa-trash">
                                 </i>
                                 Delete

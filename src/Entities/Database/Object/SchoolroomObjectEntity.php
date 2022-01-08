@@ -11,6 +11,9 @@ class SchoolroomObjectEntity extends BaseObjectEntity
 	protected $name;
 	protected $typeId;
 
+	/**
+	 * @return array
+	 */
 	public function toArray(): array
 	{
 		return [

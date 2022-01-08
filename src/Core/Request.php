@@ -2,7 +2,6 @@
 
 namespace App\Core;
 
-use http\Params;
 
 /**
  *
@@ -20,11 +19,18 @@ class Request
 		return $this->processUri(self::CHOP_PATH);
 	}
 
+	/**
+	 * @return false|mixed|string|void
+	 */
 	public function getFunction()
 	{
 		return $this->processUri(self::CHOP_FUNCTION);
 	}
 
+	/**
+	 * @param string $chop
+	 * @return false|mixed|string|void
+	 */
 	private function processUri(string $chop)
 	{
 		$uri = $_SERVER['REQUEST_URI'] ?? '/';

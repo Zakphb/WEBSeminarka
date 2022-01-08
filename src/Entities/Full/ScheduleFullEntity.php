@@ -2,6 +2,8 @@
 
 namespace App\Entities\Full;
 
+use App\Entities\Database\Object\SchoolroomObjectEntity;
+
 class ScheduleFullEntity extends BaseFullEntity
 {
 	const SCHEDULE_SCHOOLROOM_ID = 'schoolroom_id';
@@ -30,7 +32,17 @@ class ScheduleFullEntity extends BaseFullEntity
 	private $schoolroom;
 	private $hobbygroup;
 
-	public function __construct($id, $schoolroom_id, $hobby_group_id, $time_start, $time_end, $capacity, $schoolroom, $hobbygroup)
+	/**
+	 * @param $id
+	 * @param $schoolroom_id
+	 * @param $hobby_group_id
+	 * @param $time_start
+	 * @param $time_end
+	 * @param $capacity
+	 * @param SchoolroomObjectEntity $schoolroom
+	 * @param HobbyGroupFullEntity $hobbygroup
+	 */
+	public function __construct($id, $schoolroom_id, $hobby_group_id, $time_start, $time_end, $capacity, SchoolroomObjectEntity $schoolroom, HobbyGroupFullEntity $hobbygroup)
 	{
 		parent::__construct();
 		$this->id = $id;
@@ -43,6 +55,10 @@ class ScheduleFullEntity extends BaseFullEntity
 		$this->hobbygroup = $hobbygroup;
 	}
 
+	/**
+	 * @param array $params
+	 * @return ScheduleFullEntity
+	 */
 	public static function constructFromArray(array $params): ScheduleFullEntity
 	{
 		return new ScheduleFullEntity($params[self::BASE_ID], $params[self::SCHEDULE_SCHOOLROOM_ID], $params[self::SCHEDULE_HOBBYGROUP_ID], $params[self::SCHEDULE_TIME_START], $params[self::SCHEDULE_TIME_END], $params[self::SCHEDULE_CAPACITY], $params[self::SCHEDULE_SCHOOLROOM], $params[self::SCHLEDULE_HOBBYGROUP]);
@@ -175,7 +191,6 @@ class ScheduleFullEntity extends BaseFullEntity
 	{
 		$this->hobbygroup = $hobbygroup;
 	}
-
 
 
 }

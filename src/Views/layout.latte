@@ -51,9 +51,6 @@
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="/" class="nav-link">Home</a>
             </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link">Contact</a>
-            </li>
         </ul>
     </nav>
     <!-- /.navbar -->
@@ -79,7 +76,7 @@
                 </div>
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="info">
-                        <a href="{$actionConstructors[App\Enums\EControllerNames::LOGIN]::logout()}" class="d-block">Odhlasit
+                        <a href="{$actionConstructors[App\Enums\EControllerNames::LOGIN]::logout()}" class="d-block">Odhlásit
                             se</a>
                     </div>
                 </div>
@@ -90,7 +87,7 @@
                              class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="{$actionConstructors[App\Enums\EControllerNames::LOGIN]::show()}" class="d-block">Prihlasit
+                        <a href="{$actionConstructors[App\Enums\EControllerNames::LOGIN]::show()}" class="d-block">Přihlásit
                             se</a>
                     </div>
                 </div>
@@ -104,7 +101,7 @@
                     {if $allowedConstructors[App\Enums\EControllerNames::HOBBY_GROUP]}
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon fas fa-user-circle"></i>
                                 <p>
                                     Kroužky
                                     <i class="right fas fa-angle-left"></i>
@@ -114,14 +111,14 @@
                                 <li class="nav-item">
                                     <a href="{$actionConstructors[App\Enums\EControllerNames::HOBBY_GROUP]::edit()}"
                                        class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="nav-icon fas fa-plus"></i>
                                         <p>Přidat</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{$actionConstructors[App\Enums\EControllerNames::HOBBY_GROUP]::grid()}"
                                        class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="nav-icon fas fa-list"></i>
                                         <p>Seznam</p>
                                     </a>
                                 </li>
@@ -131,9 +128,9 @@
                     {if $allowedConstructors[App\Enums\EControllerNames::SCHOOLROOM]}
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon fas fa-chalkboard-teacher"></i>
                                 <p>
-                                    Třídy
+                                    Učebny
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -141,14 +138,14 @@
                                 <li class="nav-item">
                                     <a href="{$actionConstructors[App\Enums\EControllerNames::SCHOOLROOM]::edit()}"
                                        class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="nav-icon fas fa-plus"></i>
                                         <p>Přidat</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{$actionConstructors[App\Enums\EControllerNames::SCHOOLROOM]::grid()}"
                                        class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="nav-icon fas fa-list"></i>
                                         <p>Seznam</p>
                                     </a>
                                 </li>
@@ -158,7 +155,7 @@
                     {if $allowedConstructors[App\Enums\EControllerNames::PERMISSION]}
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon fas fa-landmark"></i>
                                 <p>
                                     Práva
                                     <i class="right fas fa-angle-left"></i>
@@ -168,14 +165,14 @@
                                 <li class="nav-item">
                                     <a href="{$actionConstructors[App\Enums\EControllerNames::PERMISSION]::edit()}"
                                        class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="nav-icon fas fa-plus"></i>
                                         <p>Přidat</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{$actionConstructors[App\Enums\EControllerNames::PERMISSION]::grid()}"
                                        class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="nav-icon fas fa-list"></i>
                                         <p>Seznam</p>
                                     </a>
                                 </li>
@@ -185,7 +182,7 @@
                     {if $allowedConstructors[App\Enums\EControllerNames::ROLE]}
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon fas fa-user-tag"></i>
                                 <p>
                                     Role
                                     <i class="right fas fa-angle-left"></i>
@@ -195,14 +192,14 @@
                                 <li class="nav-item">
                                     <a href="{$actionConstructors[App\Enums\EControllerNames::ROLE]::edit()}"
                                        class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="nav-icon fas fa-plus"></i>
                                         <p>Přidat</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{$actionConstructors[App\Enums\EControllerNames::ROLE]::grid()}"
                                        class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="nav-icon fas fa-list"></i>
                                         <p>Seznam</p>
                                     </a>
                                 </li>
@@ -212,9 +209,9 @@
                     {if $allowedConstructors[App\Enums\EControllerNames::USER]}
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon fas fa-users"></i>
                                 <p>
-                                    Uzivatel
+                                    Uživatelé
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -222,7 +219,7 @@
                                 <li class="nav-item">
                                     <a href="{$actionConstructors[App\Enums\EControllerNames::USER]::grid()}"
                                        class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="nav-icon fas fa-list"></i>
                                         <p>Seznam</p>
                                     </a>
                                 </li>
@@ -232,9 +229,9 @@
                     {if $allowedConstructors[App\Enums\EControllerNames::SCHEDULE]}
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon fas fa-calendar-alt"></i>
                                 <p>
-                                    Rozvrhove akce
+                                    Rozvrhové akce
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -242,14 +239,14 @@
                                 <li class="nav-item">
                                     <a href="{$actionConstructors[App\Enums\EControllerNames::SCHEDULE]::edit()}"
                                        class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="nav-icon fas fa-plus"></i>
                                         <p>Přidat</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{$actionConstructors[App\Enums\EControllerNames::SCHEDULE]::grid()}"
                                        class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="nav-icon fas fa-list"></i>
                                         <p>Seznam</p>
                                     </a>
                                 </li>

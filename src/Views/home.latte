@@ -1,47 +1,58 @@
 {layout 'layout.latte'}
+{varType App\Entities\Full\ScheduleFullEntity[] $schedules}
 {block content}
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>HOME</h1>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
+{*<section class="content-header">*}
+{*    <div class="container-fluid">*}
+{*        <div class="row mb-2">*}
+{*            <div class="col-sm-6">*}
+{*                <h1>HOME</h1>*}
+{*            </div>*}
+{*        </div>*}
+{*    </div><!-- /.container-fluid -->*}
+{*</section>*}
 
 <!-- Main content -->
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <!-- Default box -->
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Title</h3>
-
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                                <i class="fas fa-times"></i>
-                            </button>
+    <!-- Default box -->
+    <div class="card card-solid">
+        <div class="card-body pb-0">
+            <div class="row">
+                {if isset($schedules)}
+                {foreach $schedules as $schedule}
+                    <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+                        <div class="card bg-light d-flex flex-fill">
+                            <div class="card-header text-muted border-bottom-0">
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="lead"><b>{$schedule->getHobbygroup()->getName()}</b></h2>
+                                        <p class="text-muted text-sm">{$schedule->getHobbygroup()->getDescription()} </p>
+                                        <ul class="ml-4 mb-0 fa-ul text-muted">
+                                            <li class="small"><span class="fa-li"><i class="fas fa-user"></i></span> Vyucujici: {$schedule->getHobbygroup()->getPrice()}</li>
+                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-money-bill"></i></span> Cena: {$schedule->getHobbygroup()->getPrice()}</li>
+                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-clock"></i></span> Cas: {$schedule->getHobbygroup()->getPrice()}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-5 text-center">
+                                        <img src="{$schedule->getHobbygroup()->getImage()}" alt="Obrazek" class="img-circle img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="text-right">
+                                    <a href="#" class="btn btn-sm btn-success">
+                                        <i class="fas fa-user"></i> Přihlásit se
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        Start creating your amazing application!
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer">
-                        Footer
-                    </div>
-                    <!-- /.card-footer-->
-                </div>
-                <!-- /.card -->
+                {/foreach}
+                {else}
+                    Prave nejsou k dispozici zadne krouzky
+                {/if}
             </div>
         </div>
-    </div>
-</section>
+        <!-- /.card-body -->
 {/block}

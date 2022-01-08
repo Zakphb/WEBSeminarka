@@ -23,7 +23,9 @@ class UserObjectEntity extends BaseObjectEntity
 	protected $email;
 	protected $password;
 
-
+	/**
+	 * @return array
+	 */
 	public function toArray(): array
 	{
 		return [

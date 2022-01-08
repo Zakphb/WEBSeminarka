@@ -13,16 +13,16 @@
                                value="{ifset $formData}{$formData->getName()}{/ifset}" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
+                                <span class="fas fa-signature"></span>
                             </div>
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="surname" placeholder="Prijmeni"
+                        <input type="text" class="form-control" name="surname" placeholder="Příjmení"
                                value="{ifset $formData}{$formData->getSurname()}{/ifset}" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
+                                <span class="fas fa-signature"></span>
                             </div>
                         </div>
                     </div>
@@ -31,16 +31,13 @@
                                value="{ifset $formData}{$formData->getEmail()}{/ifset}" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
+                                <span class="fas fa-at"></span>
                             </div>
                         </div>
                     </div>
-                    <div>
-                        Role
-                    </div>
                     <!-- select -->
                     <div class="form-group">
-                        <select name="role" class="select2" style="width: 100%;">
+                        <select name="role" class="form-control select2bs4" style="width: 100%;" data-placeholder="Role">
 
                             {foreach $selectNames as $select}
                                 {ifset $formData} {if $select->getName() === $formData->getRole()->getName()}

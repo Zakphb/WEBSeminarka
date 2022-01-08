@@ -15,42 +15,86 @@ class EBaseActionConstructor
 	public const LOGOUT = 'actionLogout';
 	public const SHOW = 'show';
 
-	static function edit($controllerName = self::CONTROLLER_NAME)
+	const ALWAYS_ALLOWED_ACTIONS = [
+		self::DETAIL,
+		self::LOGIN,
+		self::REGISTER,
+		self::LOGOUT,
+		self::SHOW];
+	const NEED_TO_CHECK_ACTIONS = [
+		self::EDIT,
+		self::DELETE,
+		self::GRID,
+	];
+
+	/**
+	 * @param string $controllerName
+	 * @return string
+	 */
+	static function edit(string $controllerName = self::CONTROLLER_NAME)
 	{
 		return $controllerName . '.' . self::EDIT;
 	}
 
-	static function delete($controllerName = self::CONTROLLER_NAME)
+	/**
+	 * @param string $controllerName
+	 * @return string
+	 */
+	static function delete(string $controllerName = self::CONTROLLER_NAME)
 	{
 		return $controllerName . '.' . self::DELETE;
 	}
 
-	static function detail($controllerName = self::CONTROLLER_NAME)
+	/**
+	 * @param string $controllerName
+	 * @return string
+	 */
+	static function detail(string $controllerName = self::CONTROLLER_NAME)
 	{
 		return $controllerName . '.' . self::DETAIL;
 	}
 
-	static function grid($controllerName = self::CONTROLLER_NAME)
+	/**
+	 * @param string $controllerName
+	 * @return string
+	 */
+	static function grid(string $controllerName = self::CONTROLLER_NAME)
 	{
 		return $controllerName . '.' . self::GRID;
 	}
 
-	static function login($controllerName = 'login')
+	/**
+	 * @param string $controllerName
+	 * @return string
+	 */
+	static function login(string $controllerName = 'login')
 	{
 		return $controllerName . '.' . self::LOGIN;
 	}
 
-	static function register($controllerName = 'login')
+	/**
+	 * @param string $controllerName
+	 * @return string
+	 */
+	static function register(string $controllerName = 'login')
 	{
 		return $controllerName . '.' . self::REGISTER;
 	}
 
-	static function logout($controllerName = 'login')
+	/**
+	 * @param string $controllerName
+	 * @return string
+	 */
+	static function logout(string $controllerName = 'login')
 	{
 		return $controllerName . '.' . self::LOGOUT;
 	}
 
-	static function show($controllerName = self::CONTROLLER_NAME)
+	/**
+	 * @param string $controllerName
+	 * @return mixed|string
+	 */
+	static function show(string $controllerName = self::CONTROLLER_NAME)
 	{
 		return $controllerName;
 	}

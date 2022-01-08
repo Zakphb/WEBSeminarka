@@ -37,13 +37,16 @@ abstract class BaseDatabase
 		$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	}
 
-
+	/**
+	 * @param $data
+	 * @return string
+	 */
 	public function save($data): string
 	{
 		$lastId = null;
 //		if ($isMutli = ArrayUtils::isMultidimensional($data))
 //		{
-//			bdump("here");
+//
 //			$insertedIds = [];
 //			try
 //			{
@@ -93,7 +96,10 @@ abstract class BaseDatabase
 		return $lastId;
 	}
 
-
+	/**
+	 * @param array $data
+	 * @return bool
+	 */
 	public function insert(array $data)
 	{
 		if (is_null($data["id"]) || array_key_exists("id", $data))
@@ -106,7 +112,10 @@ abstract class BaseDatabase
 		return $prep->execute();
 	}
 
-
+	/**
+	 * @param $data
+	 * @return bool
+	 */
 	public
 	function update($data)
 	{
@@ -149,6 +158,10 @@ abstract class BaseDatabase
 		return $prep->execute();
 	}
 
+	/**
+	 * @param $data
+	 * @return bool
+	 */
 	public
 	function exists($data)
 	{
@@ -159,6 +172,10 @@ abstract class BaseDatabase
 		return false;
 	}
 
+	/**
+	 * @param $data
+	 * @return bool
+	 */
 	public function deleteById($data)
 	{
 
@@ -170,6 +187,10 @@ abstract class BaseDatabase
 		return false;
 	}
 
+	/**
+	 * @param $data
+	 * @return bool
+	 */
 	public function deleteWhere($data)
 	{
 		$whereData = $this->whereString($data, "DELETE");
@@ -192,7 +213,11 @@ abstract class BaseDatabase
 		return false;
 	}
 
-
+	/**
+	 * @param $data
+	 * @param int $numberOfResults
+	 * @return array|false
+	 */
 	public function getWhere($data, int $numberOfResults = 100)
 	{
 		$whereData = $this->whereString($data);
@@ -213,6 +238,10 @@ abstract class BaseDatabase
 		return false;
 	}
 
+	/**
+	 * @param $data
+	 * @return mixed
+	 */
 	public function getById($data)
 	{
 		$sql = "SELECT * FROM " . $this->tableName . " WHERE id = :id";
@@ -221,6 +250,9 @@ abstract class BaseDatabase
 		return $arr[0];
 	}
 
+	/**
+	 * @return array|false
+	 */
 	public function getAll()
 	{
 		$sql = "SELECT * FROM " . $this->tableName;
@@ -229,7 +261,12 @@ abstract class BaseDatabase
 		return $prep->fetchAll(PDO::FETCH_CLASS, $this->entityName);
 	}
 
-	private function whereString($data,$sql = "SELECT *")
+	/**
+	 * @param $data
+	 * @param string $sql
+	 * @return array|false
+	 */
+	private function whereString($data, $sql = "SELECT *")
 	{
 		if (count($data) === 0)
 		{
@@ -256,6 +293,11 @@ abstract class BaseDatabase
 		return $returnArr;
 	}
 
+	/**
+	 * @param $data
+	 * @param $sql
+	 * @return false|\PDOStatement
+	 */
 	private function byId($data, $sql)
 	{
 		$prep = $this->pdo->prepare($sql);
@@ -272,6 +314,26 @@ abstract class BaseDatabase
 			}
 		$prep->execute();
 		return $prep;
+	}
+
+	/**
+	 * @param $data
+	 * @param false $unique
+	 * @return string|void
+	 */
+	public function decompTableSave($data, $unique = FALSE)
+	{
+		if ($unique)
+		{
+			$this->deleteWhere($data);
+			return $this->save($data);
+		}
+		$exists = $this->getWhere($data);
+		if (!$exists || empty($exists))
+		{
+			$this->save($data);
+		}
+
 	}
 
 }

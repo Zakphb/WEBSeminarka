@@ -6,6 +6,7 @@ use App\Entities\Database\Object\UserObjectEntity;
 use App\Entities\Full\UserFullEntity;
 use App\Models\Database\UserDatabase;
 use App\Models\Database\UserToRoleDatabase;
+use App\Models\Database\UserToScheduleDatabase;
 use App\Models\Facade\UserFacade;
 
 /**
@@ -36,7 +37,7 @@ class Login
 	{
 		// vytvorim instanci vlastni tridy pro praci se session (objekt)
 		$this->ses = new Sessions();
-		$this->userFacade = new UserFacade(new UserDatabase(), new UserToRoleDatabase());
+		$this->userFacade = new UserFacade(new UserDatabase(), new UserToRoleDatabase(), new UserToScheduleDatabase());
 	}
 
 	/**

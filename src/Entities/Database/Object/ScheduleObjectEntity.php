@@ -26,7 +26,9 @@ class ScheduleObjectEntity extends BaseObjectEntity
 	protected $time_end;
 	protected $capacity;
 
-
+	/**
+	 * @return array
+	 */
 	public function toArray(): array
 	{
 		return [

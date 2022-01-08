@@ -20,7 +20,15 @@ class UserFullEntity extends BaseFullEntity
 	private ?RoleFullEntity $role;
 	private ?bool $teacher;
 
-
+	/**
+	 * @param $email
+	 * @param $password
+	 * @param int|null $id
+	 * @param string|null $name
+	 * @param string|null $surname
+	 * @param RoleFullEntity|null $role
+	 * @param bool|null $teacher
+	 */
 	public function __construct($email, $password,?int $id = null,?string $name = null, ?string $surname = null,?RoleFullEntity $role = null,?bool $teacher = false)
 	{
 		parent::__construct();
@@ -34,6 +42,9 @@ class UserFullEntity extends BaseFullEntity
 		$this->teacher = $teacher;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function toArray(): array
 	{
 		return [
@@ -47,6 +58,10 @@ class UserFullEntity extends BaseFullEntity
 		];
 	}
 
+	/**
+	 * @param array $params
+	 * @return UserFullEntity
+	 */
 	public static function constructFromArray(array $params): UserFullEntity
 	{
 		return new UserFullEntity($params[self::USER_EMAIL],$params[self::USER_PASSWORD], $params[self::USER_ID], $params[self::USER_NAME], $params[self::USER_SURNAME], $params[self::USER_ROLE], $params[self::USER_TEACHER]);

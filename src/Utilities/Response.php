@@ -8,6 +8,11 @@ class Response
 	private string $message;
 	private ?string $redirect;
 
+	/**
+	 * @param bool $success
+	 * @param string $message
+	 * @param string|null $redirect
+	 */
 	public function __construct(bool $success, string $message,?string $redirect = null)
 	{
 		$this->success = $success;

@@ -7,6 +7,9 @@ class RoleObjectEntity extends BaseObjectEntity
 	const ROLE_NAME = "name";
 	protected $name;
 
+	/**
+	 * @return array
+	 */
 	public function toArray(): array
 	{
 		return [

@@ -7,39 +7,44 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card card-body">
-                <form action="{$actionConstructors[App\Enums\EControllerNames::HOBBY_GROUP]::edit()}" method="post">
-                    <input type="hidden" name="id" value="{ifset $formData}{$formData->id}{/ifset}">
+                <form action="{$actionConstructors[App\Enums\EControllerNames::HOBBY_GROUP]::edit()}" method="post"
+                      enctype="multipart/form-data">
+                    {ifset $formData}<input type="hidden" name="id" value="{$formData->getId()}">{/ifset}
+
+
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="name" placeholder="Jméno"
-                               value="{ifset $formData}{$formData->name}{/ifset}" required>
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
+                            <input type="text" class="form-control" name="name" placeholder="Jméno"
+                                   value="{ifset $formData}{$formData->getName()}{/ifset}" required>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-signature"></span>
+                                </div>
                             </div>
-                        </div>
+                    </div>
+
+
+                    <div class="input-group mb-3">
+                            <textarea class="form-control" name="description" placeholder="Popisek"
+                                      required>{ifset $formData}{$formData->getDescription()}{/ifset}</textarea>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-file-signature"></span>
+                                </div>
+                            </div>
                     </div>
                     <div class="input-group mb-3">
-                        <textarea class="form-control" name="description" placeholder="Popisek"
-                                  required>{ifset $formData}{$formData->description}{/ifset}</textarea>
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
+                            <div class="custom-file">
+                                <input type="file" class="file-data" name="image" placeholder="Obrázek">
                             </div>
-                        </div>
                     </div>
-                    <div class="input-group mb-3">
-                        <div class="custom-file">
-                            <input type="file" class="file-data" name="image" placeholder="Obrázek">
+                     {ifset $formData}
+                        <div class="input-group mb-3">
+                            <img src="{$formData->getImage()}" class="img-fluid mb-2" alt="Obrazek">
                         </div>
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
-                        </div>
-                    </div>
+                    {/ifset}
                     <div class="input-group mb-3">
                         <input type="number" class="form-control" name="capacity" placeholder="Kapacita"
-                               value="{ifset $formData}{$formData->capacity}{/ifset}" required>
+                               value="{ifset $formData}{$formData->getCapacity()}{/ifset}" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -48,24 +53,28 @@
                     </div>
                     <div class="input-group mb-3">
                         <input type="number" class="form-control" name="price" placeholder="Cena"
-                               value="{ifset $formData}{$formData->price}{/ifset}" required>
+                               value="{ifset $formData}{$formData->getPrice()}{/ifset}" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
+                                <span class="fas fa-money-bill"></span>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <select multiple="multiple" name="students[]" class="select2" style="width: 100%;">
+                        <select multiple="multiple" name="students[]" class="form-control select2bs4" style="width: 100%;" data-placeholder="Vyberte studenty">
+                            {dump $selectNames}
                             {foreach $selectNames as $select}
-                                {ifset $formData}
-                                    {foreach $formData->students as $student}
+                                {if (isset($formData) && !empty($formData->getStudents()))}
+                                    {foreach $formData->getStudents() as $student}
                                         {if $select->getId() == $student->user_id}
                                             <option selected value="{$select->getId()}">{$select->getName()}</option>
+                                        {else}
+                                            <option value="{$select->getId()}">{$select->getName()}</option>
                                         {/if}
                                     {/foreach}
-                                {/ifset}
-                                <option value="{$select->getId()}">{$select->getName()}</option>
+                                {else}
+                                    <option value="{$select->getId()}">{$select->getName()}</option>
+                                {/if}
                             {/foreach}
                         </select>
                     </div>

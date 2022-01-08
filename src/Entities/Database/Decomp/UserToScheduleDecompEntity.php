@@ -6,7 +6,6 @@ use App\Entities\Database\Object\BaseObjectEntity;
 
 class UserToScheduleDecompEntity extends BaseDecompEntity
 {
-	const USER_TO_SCHEDULE_ID = 'id';
 	const USER_TO_SCHEDULE_USER_ID = 'user_id';
 	const USER_TO_SCHEDULE_SCHEDULE_ID = 'schedule_id';
 	const USER_TO_SCHEDULE_IS_ALLOWED = 'is_allowed';
@@ -14,7 +13,7 @@ class UserToScheduleDecompEntity extends BaseDecompEntity
 	const USER_TO_SCHEDULE_IS_LOGGED_IN = 'is_logged_in';
 
 	const COLUMN_NAMES = [
-		self::USER_TO_SCHEDULE_ID,
+		self::BASE_ID,
 		self::USER_TO_SCHEDULE_USER_ID,
 		self::USER_TO_SCHEDULE_SCHEDULE_ID,
 		self::USER_TO_SCHEDULE_IS_ALLOWED,
@@ -22,7 +21,6 @@ class UserToScheduleDecompEntity extends BaseDecompEntity
 		self::USER_TO_SCHEDULE_IS_LOGGED_IN
 	];
 
-	protected int $id;
 	protected int $userId;
 	protected int $roleId;
 	protected $isAllowed;
@@ -32,7 +30,7 @@ class UserToScheduleDecompEntity extends BaseDecompEntity
 	public function toArray(): array
 	{
 		return [
-			self::USER_TO_SCHEDULE_ID => $this->id,
+			self::BASE_ID => $this->id,
 			self::USER_TO_SCHEDULE_USER_ID => $this->userId,
 			self::USER_TO_SCHEDULE_SCHEDULE_ID => $this->roleId,
 			self::USER_TO_SCHEDULE_IS_ALLOWED => $this->isAllowed,

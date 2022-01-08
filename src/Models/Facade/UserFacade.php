@@ -12,23 +12,37 @@ use App\Models\Database\RoleDatabase;
 use App\Models\Database\RoleToPermissionDatabase;
 use App\Models\Database\UserDatabase;
 use App\Models\Database\UserToRoleDatabase;
+use App\Models\Database\UserToScheduleDatabase;
 use App\Utilities\Login;
 use App\Utilities\Response;
 
+/**
+ *
+ */
 class UserFacade
 {
 	private UserDatabase $userDatabase;
 	private UserToRoleDatabase $userToRoleDatabase;
 	private RoleFacade $roleFacade;
+	private UserToScheduleDatabase $userToScheduleDatabase;
 
-	public function __construct(UserDatabase $userDatabase, UserToRoleDatabase $userToRoleDatabase)
+	/**
+	 * @param UserDatabase $userDatabase
+	 * @param UserToRoleDatabase $userToRoleDatabase
+	 * @param UserToScheduleDatabase $userToScheduleDatabase
+	 */
+	public function __construct(UserDatabase $userDatabase, UserToRoleDatabase $userToRoleDatabase, UserToScheduleDatabase $userToScheduleDatabase)
 	{
 		$this->userDatabase = $userDatabase;
 		$this->userToRoleDatabase = $userToRoleDatabase;
 		$this->roleFacade = new RoleFacade(new RoleDatabase(), new RoleToPermissionDatabase(), new PermissionDatabase());
+		$this->userToScheduleDatabase = $userToScheduleDatabase;
 	}
 
-
+	/**
+	 * @param $formValues
+	 * @return Response
+	 */
 	public function register($formValues): Response
 	{
 		$formValues[UserFullEntity::USER_PASSWORD] = $this->hashPassword($formValues[UserFullEntity::USER_PASSWORD]);
@@ -55,6 +69,10 @@ class UserFacade
 		return new Response(false, "Při registraci došlo k chybě, zkuste to znovu.");
 	}
 
+	/**
+	 * @param UserFullEntity $userEntity
+	 * @return bool
+	 */
 	public function doUserExistAlready(UserFullEntity $userEntity)
 	{
 		$user = $userEntity->toArray();
@@ -67,6 +85,11 @@ class UserFacade
 		return true;
 	}
 
+	/**
+	 * @param $formValues
+	 * @param Login $user
+	 * @return Response
+	 */
 	public function login($formValues, Login $user): Response
 	{
 		$userEntity = $this->mapFormDataToUserEntity($formValues);
@@ -83,6 +106,10 @@ class UserFacade
 		return new Response(false, "Uživatele se nepovedlo přihlásit, máte správné heslo ?");
 	}
 
+	/**
+	 * @param int $id
+	 * @return UserFullEntity
+	 */
 	public function getFullUser(int $id)
 	{
 		$fullRole = $this->getFullRoleWithPermissions($id);
@@ -93,6 +120,10 @@ class UserFacade
 
 	}
 
+	/**
+	 * @param UserObjectEntity $userObject
+	 * @return UserFullEntity
+	 */
 	public function getFullUserFromUserObject(UserObjectEntity $userObject)
 	{
 		$fullRole = $this->getFullRoleWithPermissions($userObject->getId());
@@ -101,6 +132,9 @@ class UserFacade
 		return $fullUser;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getAllUsers()
 	{
 		$gridUsers = [];
@@ -112,6 +146,9 @@ class UserFacade
 		return $gridUsers;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getAllStudents()
 	{
 		$gridStudents = [];
@@ -127,18 +164,29 @@ class UserFacade
 		return $gridStudents;
 	}
 
-
+	/**
+	 * @param $formData
+	 * @return UserFullEntity
+	 */
 	public function mapFormDataToUserEntity($formData)
 	{
 		return UserFullEntity::constructFromArray($formData);
 	}
 
+	/**
+	 * @param $pass
+	 * @return string
+	 */
 	private function hashPassword($pass)
 	{
 		$pass = trim($pass);
 		return trim(password_hash($pass, PASSWORD_DEFAULT));
 	}
 
+	/**
+	 * @param $userId
+	 * @return RoleFullEntity
+	 */
 	public function getFullRoleWithPermissions($userId): RoleFullEntity
 	{
 		$data = [UserToRoleDecompEntity::USER_TO_ROLE_USER_ID => $userId];
@@ -146,13 +194,16 @@ class UserFacade
 		return $this->roleFacade->getFullRoleWithPermissions($role[0]->role_id);
 	}
 
+	/**
+	 * @param $formValues
+	 * @return string
+	 */
 	public function saveUser($formValues)
 	{
 		$roleId = $formValues[UserFullEntity::USER_ROLE];
 		unset($formValues[UserFullEntity::USER_ROLE]);
 		$userToRoleArray = [UserToRoleDecompEntity::USER_TO_ROLE_USER_ID => $formValues[BaseObjectEntity::BASE_ID], UserToRoleDecompEntity::USER_TO_ROLE_ROLE_ID => $roleId];
-		$this->userToRoleDatabase->deleteWhere($userToRoleArray);
-		$this->userToRoleDatabase->save($userToRoleArray);
+		$this->userToRoleDatabase->decompTableSave($userToRoleArray, TRUE);
 		return $this->userDatabase->save($formValues);
 	}
 

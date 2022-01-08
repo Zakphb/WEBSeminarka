@@ -27,7 +27,15 @@ class HobbyGroupFullEntity extends BaseFullEntity
 	private $capacity;
 	private $students;
 
-
+	/**
+	 * @param $id
+	 * @param $image
+	 * @param $name
+	 * @param $description
+	 * @param $price
+	 * @param $capacity
+	 * @param $students
+	 */
 	public function __construct($id, $image, $name, $description, $price, $capacity, $students)
 	{
 		parent::__construct();
@@ -40,6 +48,10 @@ class HobbyGroupFullEntity extends BaseFullEntity
 		$this->students = $students;
 	}
 
+	/**
+	 * @param array $params
+	 * @return HobbyGroupFullEntity
+	 */
 	public static function constructFromArray(array $params)
 	{
 		return new HobbyGroupFullEntity($params[self::BASE_ID], $params[self::HOBBYGROUP_IMAGE], $params[self::HOBBYGROUP_NAME], $params[self::HOBBYGROUP_DESCRIPTION], $params[self::HOBBYGROUP_PRICE], $params[self::HOBBYGROUP_CAPACITY], $params[self::HOBBYGROUP_STUDENTS]);

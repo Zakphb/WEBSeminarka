@@ -14,6 +14,9 @@ class UserToRoleDecompEntity extends BaseDecompEntity
 	private int $userId;
 	private int $roleId;
 
+	/**
+	 * @return array
+	 */
 	public function toArray(): array
 	{
 		return [

@@ -7,6 +7,9 @@ class PermissionObjectEntity extends BaseObjectEntity
 	const PERMISSION_NAME = "name";
 	protected $name;
 
+	/**
+	 * @return array
+	 */
 	public function toArray(): array
 	{
 		return [

@@ -2,17 +2,22 @@
 
 namespace App\Controllers;
 
-use App\Entities\Database\Object\BaseObjectEntity;
 use App\Enums\EControllerNames;
 use App\Utilities\ArrayUtils;
 use App\Utilities\Login;
 
+/**
+ *
+ */
 abstract class BaseController implements IController
 {
 	private $latte;
 	private Login $user;
 	private array $actionConstructors;
 
+	/**
+	 * @param $latte
+	 */
 	public function __construct($latte)
 	{
 		$this->latte = $latte;
@@ -20,6 +25,11 @@ abstract class BaseController implements IController
 		$this->actionConstructors = $this->getActionConstructors();
 	}
 
+	/**
+	 * @param string|null $path
+	 * @param array $args
+	 * @return mixed
+	 */
 	public function show(string $path = DEFAULT_WEB_PAGE_KEY, $args = [])
 	{
 		$args['user'] = $this->user;
@@ -35,7 +45,10 @@ abstract class BaseController implements IController
 		return $this->latte->render($path, $args);
 	}
 
-
+	/**
+	 * @param $userInfo
+	 * @return array
+	 */
 	private function checkPermissions($userInfo): array
 	{
 		$allowed = [];
@@ -75,6 +88,9 @@ abstract class BaseController implements IController
 		return $this->user;
 	}
 
+	/**
+	 * @return array|false
+	 */
 	private function getActionConstructors()
 	{
 		return ArrayUtils::changeKey(array_map(function ($controller)
@@ -83,7 +99,9 @@ abstract class BaseController implements IController
 		}, EControllerNames::CONTROLLERS), EControllerNames::NAMES);
 	}
 
-
+	/**
+	 * @return mixed|void
+	 */
 	public function actionEdit()
 	{
 		$variablesGet = $_GET;
@@ -96,11 +114,19 @@ abstract class BaseController implements IController
 		}
 		if (!$postEmpty && !$getEmpty)
 		{
+			if (!empty($_FILES))
+			{
+				$variablesPost['files'] = $_FILES;
+			}
 			$id = $this->saveForm($variablesPost);
 			$this->redirectEdit($id);
 		}
 		if (!$postEmpty)
 		{
+			if (!empty($_FILES))
+			{
+				$variablesPost['files'] = $_FILES;
+			}
 			$id = $this->saveForm($variablesPost);
 			$this->redirectEdit($id);
 		}

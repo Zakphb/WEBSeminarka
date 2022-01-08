@@ -13,16 +13,14 @@
                                value="{ifset $formData}{$formData->getName()}{/ifset}" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
+                                <span class="fas fa-signature"></span>
                             </div>
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <!-- select -->
-                        <label>Typ třídy</label>
-                        <select name="type_id" class="form-control">
+                        <select class="form-control select2bs4" id="type_id" data-placeholder="Vyberte typ učebny">
                             {foreach $selectNames as $key => $selectName}
-                                {if isset($formData) && ($key === $formData->getTypeId())}
+                                {if (isset($formData) && ($key === $formData->getTypeId()))}
                                     <option value="{$key}" selected>{$selectName}</option>
                                 {else}
                                     <option value="{$key}">{$selectName}</option>

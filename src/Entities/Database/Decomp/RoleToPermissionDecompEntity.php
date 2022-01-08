@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Entities\Database\Decomp;
-
+/**
+ *
+ */
 class RoleToPermissionDecompEntity extends BaseDecompEntity
 {
 	const ROLE_TO_PERMISSION_PERMISSION_ID = 'permission_id';
@@ -14,6 +16,9 @@ class RoleToPermissionDecompEntity extends BaseDecompEntity
 	protected int $permissionId;
 	protected int $roleId;
 
+	/**
+	 * @return array
+	 */
 	public function toArray(): array
 	{
 		return [

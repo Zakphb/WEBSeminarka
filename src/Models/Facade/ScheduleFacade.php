@@ -10,27 +10,45 @@ use App\Models\Database\HobbyGroupDatabase;
 use App\Models\Database\ScheduleDatabase;
 use App\Models\Database\SchoolroomDatabase;
 use App\Models\Database\SchoolroomTypeDatabase;
+use App\Models\Database\UserDatabase;
 use App\Models\Database\UserToHobbyGroupDatabase;
+use App\Models\Database\UserToRoleDatabase;
 use App\Models\Database\UserToScheduleDatabase;
+use App\Utilities\DateTimeUtility;
 
+/**
+ *
+ */
 class ScheduleFacade
 {
 	private ScheduleDatabase $scheduleDatabase;
-	private UserToScheduleDatabase $userToScheduleDatabase;
 
-	public function __construct(ScheduleDatabase $scheduleDatabase, UserToScheduleDatabase $userToScheduleDatabase)
+	/**
+	 * @param ScheduleDatabase $scheduleDatabase
+	 */
+	public function __construct(ScheduleDatabase $scheduleDatabase)
 	{
 		$this->scheduleDatabase = $scheduleDatabase;
-		$this->userToScheduleDatabase = $userToScheduleDatabase;
+		$this->userFacade = new UserFacade(new UserDatabase(), new UserToRoleDatabase(), new UserToScheduleDatabase());
 		$this->schoolroomFacade = new SchoolroomFacade(new SchoolroomDatabase(), new SchoolroomTypeDatabase());
 		$this->hobbygroupFacade = new HobbyGroupFacade(new HobbyGroupDatabase(), new UserToHobbyGroupDatabase());
 	}
 
+	/**
+	 * @param $formVariables
+	 * @return string
+	 */
 	public function saveSchedule($formVariables)
 	{
+		$formVariables[ScheduleObjectEntity::SCHEDULE_TIME_START] = DateTimeUtility::getDateTime($formVariables[ScheduleObjectEntity::SCHEDULE_TIME_START]);
+		$formVariables[ScheduleObjectEntity::SCHEDULE_TIME_END] = DateTimeUtility::getDateTime($formVariables[ScheduleObjectEntity::SCHEDULE_TIME_END]);
 		return $this->scheduleDatabase->save($formVariables);
 	}
 
+	/**
+	 * @param $schedule
+	 * @return mixed
+	 */
 	private function getAdditionalData($schedule)
 	{
 		$schedule = $schedule->toArray();
@@ -41,6 +59,10 @@ class ScheduleFacade
 		return $schedule;
 	}
 
+	/**
+	 * @param $id
+	 * @return ScheduleFullEntity
+	 */
 	public function getFullSchedule($id): ScheduleFullEntity
 	{
 		$schedule = $this->scheduleDatabase->getById($id);
@@ -48,6 +70,9 @@ class ScheduleFacade
 		return ScheduleFullEntity::constructFromArray($schedule);
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getAllSchedules()
 	{
 		$schedules = $this->scheduleDatabase->getAll();
