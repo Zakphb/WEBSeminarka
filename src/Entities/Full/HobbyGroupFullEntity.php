@@ -20,16 +20,88 @@ class HobbyGroupFullEntity extends BaseFullEntity
 		self::HOBBYGROUP_CAPACITY,
 		self::HOBBYGROUP_STUDENTS
 	];
+	private $image;
+	private $name;
+	private $description;
+	private $price;
+	private $capacity;
+	private $students;
+
+
+	public function __construct($id, $image, $name, $description, $price, $capacity, $students)
+	{
+		parent::__construct();
+		$this->id = $id;
+		$this->image = $image;
+		$this->name = $name;
+		$this->description = $description;
+		$this->price = $price;
+		$this->capacity = $capacity;
+		$this->students = $students;
+	}
 
 	public static function constructFromArray(array $params)
 	{
-		$hobbyGroup = new HobbyGroupFullEntity();
-		foreach ($params as $key => $value)
-		{
-			$hobbyGroup->$key = $value;
-		}
-		return $hobbyGroup;
+		return new HobbyGroupFullEntity($params[self::BASE_ID], $params[self::HOBBYGROUP_IMAGE], $params[self::HOBBYGROUP_NAME], $params[self::HOBBYGROUP_DESCRIPTION], $params[self::HOBBYGROUP_PRICE], $params[self::HOBBYGROUP_CAPACITY], $params[self::HOBBYGROUP_STUDENTS]);
 	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getImage()
+	{
+		return $this->image;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getName()
+	{
+		return $this->name;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getDescription()
+	{
+		return $this->description;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getPrice()
+	{
+		return $this->price;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getCapacity()
+	{
+		return $this->capacity;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getStudents()
+	{
+		return $this->students;
+	}
+
+
 
 
 

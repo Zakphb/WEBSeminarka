@@ -21,7 +21,7 @@ class ScheduleObjectEntity extends BaseObjectEntity
 
 
 	protected $schoolroom_id;
-	protected $hobbygroup_id;
+	protected $hobby_group_id;
 	protected $time_start;
 	protected $time_end;
 	protected $capacity;
@@ -32,7 +32,7 @@ class ScheduleObjectEntity extends BaseObjectEntity
 		return [
 			self::BASE_ID => $this->id,
 			self::SCHEDULE_SCHOOLROOM_ID => $this->schoolroom_id,
-			self::SCHEDULE_HOBBYGROUP_ID => $this->hobbygroup_id,
+			self::SCHEDULE_HOBBYGROUP_ID => $this->hobby_group_id,
 			self::SCHEDULE_TIME_START => $this->time_start,
 			self::SCHEDULE_TIME_END => $this->time_end,
 			self::SCHEDULE_CAPACITY => $this->capacity
@@ -60,7 +60,7 @@ class ScheduleObjectEntity extends BaseObjectEntity
 	 */
 	public function getHobbygroupId()
 	{
-		return $this->hobbygroup_id;
+		return $this->hobby_group_id;
 	}
 
 	/**

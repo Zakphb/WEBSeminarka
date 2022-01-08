@@ -7,6 +7,7 @@ use App\Enums\ActionConstructors\EHomeConstructor;
 use App\Enums\ActionConstructors\ELoginConstructor;
 use App\Enums\ActionConstructors\EPermissionConstructor;
 use App\Enums\ActionConstructors\ERoleConstructor;
+use App\Enums\ActionConstructors\EScheduleConstructor;
 use App\Enums\ActionConstructors\ESchoolroomConstructor;
 use App\Enums\ActionConstructors\EUserConstructor;
 
@@ -19,6 +20,7 @@ class EControllerNames
 	const ROLE = ERoleConstructor::CONTROLLER_NAME;
 	const HOME = EHomeConstructor::CONTROLLER_NAME;
 	const USER = EUserConstructor::CONTROLLER_NAME;
+	const SCHEDULE = EScheduleConstructor::CONTROLLER_NAME;
 
 	const NAMES = [
 		self::HOBBY_GROUP,
@@ -27,7 +29,8 @@ class EControllerNames
 		self::PERMISSION,
 		self::ROLE,
 		self::HOME,
-		self::USER
+		self::USER,
+		self::SCHEDULE
 	];
 
 	const ALWAYSALLOWED = [
@@ -40,7 +43,8 @@ class EControllerNames
 		self::SCHOOLROOM,
 		self::PERMISSION,
 		self::ROLE,
-		self::USER
+		self::USER,
+		self::SCHEDULE
 	];
 
 	const CONTROLLERS = [
@@ -50,6 +54,7 @@ class EControllerNames
 		EPermissionConstructor::class,
 		ERoleConstructor::class,
 		EHomeConstructor::class,
-		EUserConstructor::class
+		EUserConstructor::class,
+		EScheduleConstructor::class
 	];
 }

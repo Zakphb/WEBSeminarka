@@ -12,6 +12,6 @@ abstract class BaseFullEntity extends BaseObjectEntity
 
 	public static function constructFromArray(array $params)
 	{
-		return null;
+
 	}
 }

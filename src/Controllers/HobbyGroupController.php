@@ -56,9 +56,9 @@ class HobbyGroupController extends BaseController
 	}
 
 
-	public function saveForm($variables):string
+	public function saveForm($variables)
 	{
-		return (string)$this->hobbyGroupFacade->saveHobbyGroup($variables);
+		return $this->hobbyGroupFacade->saveHobbyGroup($variables);
 	}
 
 	public function loadForm($variables)

@@ -43,6 +43,7 @@ const WEB_PAGES = array(
 	'Permission' => BASESLASH.'permission',
 	'Role' => BASESLASH.'role',
 	'User' => BASESLASH.'user',
+	'Schedule' => BASESLASH.'schedule',
 
 );
 

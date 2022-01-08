@@ -39,18 +39,18 @@ class PermissionController extends BaseController
 		$variablesGet = $_GET;
 	}
 
-	protected function saveForm($variables)
+	public function saveForm($variables)
 	{
 		return $this->permissionFacade->savePermission($variables);
 	}
 
-	protected function loadForm($variables)
+	public function loadForm($variables)
 	{
 		$args['formData'] = $this->permissionFacade->getPermissionById($variables[BaseObjectEntity::BASE_ID]);
 		$this->show(self::VIEW_EDIT, $args);
 	}
 
-	protected function redirectEdit($id)
+	public function redirectEdit($id)
 	{
 		RedirectUtils::redirectWithURLBuild(EPermissionConstructor::edit(), [BaseObjectEntity::BASE_ID => $id]);
 	}

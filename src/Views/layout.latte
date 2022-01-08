@@ -14,15 +14,18 @@
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../../vendor/almasaeed2010/adminlte/plugins/fontawesome-free/css/all.min.css">
+    <!-- DateRange -->
+    <link rel="stylesheet" href="../../vendor/almasaeed2010/adminlte/plugins/daterangepicker/daterangepicker.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="../../vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css">
     <!-- icheck bootstrap -->
     <link rel="stylesheet" href="../../vendor/almasaeed2010/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Select2 -->
     <link rel="stylesheet" href="../../vendor/almasaeed2010/adminlte/plugins/select2/css/select2.min.css">
-    <link rel="stylesheet" href="../../vendor/almasaeed2010/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <link rel="stylesheet"
+          href="../../vendor/almasaeed2010/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 
-{*    NUTNO NACITAT PRED LATTE*}
+    {*    NUTNO NACITAT PRED LATTE*}
     <!-- jQuery -->
     <script src="../../vendor/almasaeed2010/adminlte/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
@@ -31,6 +34,9 @@
     <script src="../../vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
     <!-- Select2 -->
     <script src="../../vendor/almasaeed2010/adminlte/plugins/select2/js/select2.full.min.js"></script>
+    <!-- date-range-picker -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-boxed">
 <!-- Site wrapper -->
@@ -73,7 +79,8 @@
                 </div>
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="info">
-                        <a href="{$actionConstructors[App\Enums\EControllerNames::LOGIN]::logout()}" class="d-block">Odhlasit se</a>
+                        <a href="{$actionConstructors[App\Enums\EControllerNames::LOGIN]::logout()}" class="d-block">Odhlasit
+                            se</a>
                     </div>
                 </div>
             {else}
@@ -83,7 +90,8 @@
                              class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="{$actionConstructors[App\Enums\EControllerNames::LOGIN]::show()}" class="d-block">Prihlasit se</a>
+                        <a href="{$actionConstructors[App\Enums\EControllerNames::LOGIN]::show()}" class="d-block">Prihlasit
+                            se</a>
                     </div>
                 </div>
             {/if}
@@ -94,104 +102,112 @@
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                     {if $allowedConstructors[App\Enums\EControllerNames::HOBBY_GROUP]}
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                Kroužky
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{$actionConstructors[App\Enums\EControllerNames::HOBBY_GROUP]::edit()}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Přidat</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{$actionConstructors[App\Enums\EControllerNames::HOBBY_GROUP]::grid()}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Seznam</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Kroužky
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{$actionConstructors[App\Enums\EControllerNames::HOBBY_GROUP]::edit()}"
+                                       class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Přidat</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{$actionConstructors[App\Enums\EControllerNames::HOBBY_GROUP]::grid()}"
+                                       class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Seznam</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     {/if}
                     {if $allowedConstructors[App\Enums\EControllerNames::SCHOOLROOM]}
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                Třídy
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{$actionConstructors[App\Enums\EControllerNames::SCHOOLROOM]::edit()}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Přidat</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{$actionConstructors[App\Enums\EControllerNames::SCHOOLROOM]::grid()}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Seznam</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Třídy
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{$actionConstructors[App\Enums\EControllerNames::SCHOOLROOM]::edit()}"
+                                       class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Přidat</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{$actionConstructors[App\Enums\EControllerNames::SCHOOLROOM]::grid()}"
+                                       class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Seznam</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     {/if}
                     {if $allowedConstructors[App\Enums\EControllerNames::PERMISSION]}
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                Práva
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{$actionConstructors[App\Enums\EControllerNames::PERMISSION]::edit()}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Přidat</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{$actionConstructors[App\Enums\EControllerNames::PERMISSION]::grid()}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Seznam</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Práva
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{$actionConstructors[App\Enums\EControllerNames::PERMISSION]::edit()}"
+                                       class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Přidat</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{$actionConstructors[App\Enums\EControllerNames::PERMISSION]::grid()}"
+                                       class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Seznam</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     {/if}
                     {if $allowedConstructors[App\Enums\EControllerNames::ROLE]}
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                Role
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{$actionConstructors[App\Enums\EControllerNames::ROLE]::edit()}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Přidat</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{$actionConstructors[App\Enums\EControllerNames::ROLE]::grid()}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Seznam</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Role
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{$actionConstructors[App\Enums\EControllerNames::ROLE]::edit()}"
+                                       class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Přidat</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{$actionConstructors[App\Enums\EControllerNames::ROLE]::grid()}"
+                                       class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Seznam</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     {/if}
                     {if $allowedConstructors[App\Enums\EControllerNames::USER]}
                         <li class="nav-item">
@@ -204,7 +220,35 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{$actionConstructors[App\Enums\EControllerNames::USER]::grid()}" class="nav-link">
+                                    <a href="{$actionConstructors[App\Enums\EControllerNames::USER]::grid()}"
+                                       class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Seznam</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    {/if}
+                    {if $allowedConstructors[App\Enums\EControllerNames::SCHEDULE]}
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Rozvrhove akce
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{$actionConstructors[App\Enums\EControllerNames::SCHEDULE]::edit()}"
+                                       class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Přidat</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{$actionConstructors[App\Enums\EControllerNames::SCHEDULE]::grid()}"
+                                       class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Seznam</p>
                                     </a>

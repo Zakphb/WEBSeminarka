@@ -1,0 +1,81 @@
+{varType App\Entities\Full\ScheduleFullEntity $formData}
+{varType App\Entities\Database\Object\HobbyGroupObjectEntity[] $selectHobbyGroups}
+{varType App\Entities\Database\Object\SchoolroomObjectEntity[] $selectSchoolrooms}
+{varType App\Enums\ActionConstructors\EBaseActionConstructor[] $actionConstructors}
+{block editForm}
+    <!-- Main content -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-body">
+                <form action="{$actionConstructors[App\Enums\EControllerNames::SCHEDULE]::edit()}" method="post">
+                    {ifset $formData}<input type="hidden" name="id" value="{$formData->getId()}">{/ifset}
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="capacity" placeholder="Kapacita"
+                               value="{ifset $formData}{$formData->getCapacity()}{/ifset}" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        Zájmový kroužek
+                    </div>
+                    <!-- select -->
+                    <div class="form-group">
+                        <select name="hobby_group_id" class="select2" style="width: 100%;">
+                            {foreach $selectHobbyGroups as $select}
+                                <option value="{$select->getId()}">{$select->getName()}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                    <div>
+                        Třída
+                    </div>
+                    <!-- select -->
+                    <div class="form-group">
+                        <select name="schoolroom_id" class="select2" style="width: 100%;">
+                            {foreach $selectSchoolrooms as $select}
+                                <option value="{$select->getId()}">{$select->getName()}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Time start</label>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="far fa-clock"></i></span>
+                            </div>
+                            <input type="text" name="time_start" class="form-control float-right" id="time_start">
+                        </div>
+                        <!-- /.input group -->
+                    </div>
+                    <div class="form-group">
+                        <label>Time end</label>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="far fa-clock"></i></span>
+                            </div>
+                            <input type="text"  name="time_end" class="form-control float-right" id="time_end">
+                        </div>
+                        <!-- /.input group -->
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block">Uložit</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+
+                </form>
+            </div>
+            <!-- /.card-body -->
+            <!-- /.card -->
+        </div>
+        <!-- /.content -->
+{/block}
