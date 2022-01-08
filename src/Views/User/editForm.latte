@@ -1,0 +1,69 @@
+{varType App\Entities\Full\UserFullEntity $formData}
+{varType App\Entities\Full\RoleFullEntity[] $selectNames}
+{varType App\Enums\ActionConstructors\EBaseActionConstructor[] $actionConstructors}
+{block editForm}
+    <!-- Main content -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-body">
+                <form action="{$actionConstructors[App\Enums\EControllerNames::USER]::edit()}" method="post">
+                    {ifset $formData}<input type="hidden" name="id" value="{$formData->getId()}">{/ifset}
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="name" placeholder="Jméno"
+                               value="{ifset $formData}{$formData->getName()}{/ifset}" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="surname" placeholder="Prijmeni"
+                               value="{ifset $formData}{$formData->getSurname()}{/ifset}" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" name="email" placeholder="Email"
+                               value="{ifset $formData}{$formData->getEmail()}{/ifset}" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        Role
+                    </div>
+                    <!-- select -->
+                    <div class="form-group">
+                        <select name="role" class="select2" style="width: 100%;">
+
+                            {foreach $selectNames as $select}
+                                {ifset $formData} {if $select->getName() === $formData->getRole()->getName()}
+                                    <option selected value="{$select->getId()}">{$select->getName()}</option>
+                                {/if}{/ifset}
+                            {else}
+                                <option value="{$select->getId()}">{$select->getName()}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block">Uložit</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+            </div>
+            <!-- /.card-body -->
+            <!-- /.card -->
+        </div>
+        <!-- /.content -->
+{/block}
