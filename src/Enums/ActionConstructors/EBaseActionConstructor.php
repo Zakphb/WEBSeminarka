@@ -2,6 +2,8 @@
 
 namespace App\Enums\ActionConstructors;
 
+use App\Enums\EControllerNames;
+
 class EBaseActionConstructor
 {
 	const CONTROLLER_NAME = '';
@@ -14,6 +16,8 @@ class EBaseActionConstructor
 	public const REGISTER = 'actionRegister';
 	public const LOGOUT = 'actionLogout';
 	public const SHOW = 'show';
+	public const JOIN = 'join';
+	public const ALLOW = 'actionAllow';
 
 	const ALWAYS_ALLOWED_ACTIONS = [
 		self::DETAIL,
@@ -97,5 +101,22 @@ class EBaseActionConstructor
 	static function show(string $controllerName = self::CONTROLLER_NAME)
 	{
 		return $controllerName;
+	}
+
+	/**
+	 * @param string $controllerName
+	 * @return string
+	 */
+	static function join(string $controllerName = EControllerNames::PROFILE)
+	{
+		return $controllerName . '.' . self::JOIN;
+	}
+	/**
+	 * @param string $controllerName
+	 * @return string
+	 */
+	static function allow(string $controllerName = EControllerNames::PROFILE)
+	{
+		return $controllerName . '.' . self::ALLOW;
 	}
 }

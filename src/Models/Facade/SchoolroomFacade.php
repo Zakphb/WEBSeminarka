@@ -3,6 +3,7 @@
 namespace App\Models\Facade;
 
 use App\Entities\Database\Object\SchoolroomObjectEntity;
+use App\Entities\Full\SchoolroomFullEntity;
 use App\Models\Database\SchoolroomDatabase;
 use App\Models\Database\SchoolroomTypeDatabase;
 
@@ -41,6 +42,19 @@ class SchoolroomFacade
 		return $this->schoolroomDatabase->getAll();
 	}
 
+	public function getFullSchoolrooms(): array
+	{
+		$fullSchoolrooms = [];
+		$schoolrooms = $this->schoolroomDatabase->getAll();
+		foreach ($schoolrooms as $schoolroom){
+			$schoolroom = $schoolroom->toArray();
+			$type = $this->schoolroomTypeDatabase->getById($schoolroom[SchoolroomObjectEntity::SCHOOLROOM_TYPE_ID]);
+			$schoolroom[SchoolroomFullEntity::SCHOOLROOM_TYPE] = $type;
+			$fullSchoolrooms[] = SchoolroomFullEntity::constructFromArray($schoolroom);
+		}
+		return $fullSchoolrooms;
+	}
+
 	/**
 	 * @param int $id
 	 * @return SchoolroomObjectEntity
@@ -50,13 +64,6 @@ class SchoolroomFacade
 		return $this->schoolroomDatabase->getById($id);
 	}
 
-	/**
-	 * @param int $id
-	 * @return bool
-	 */
-	public function deleteSchoolroomById(int $id): bool{
-		return $this->schoolroomDatabase->deleteById($id);
-	}
 
 	/**
 	 * @return array

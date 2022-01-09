@@ -1,0 +1,75 @@
+{layout '../layout.latte'}
+{varType App\Entities\Full\UserScheduleFullEntity[] $gridvalues}
+{varType int $scheduleId}
+{varType App\Enums\ActionConstructors\EBaseActionConstructor[] $actionConstructors}
+{block content}
+    <!-- Main content -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Účastníci</h3>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped projects">
+                <thead>
+                <tr>
+                    <th style="width: 20%">
+                        Jméno
+                    </th>
+                    <th style="width: 20%">
+                        Příjmení
+                    </th>
+                    <th style="width: 20%">
+                        Email
+                    </th>
+                    <th style="width: 20%">
+                        Role
+                    </th>
+                    <th style="width: 20%">
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {dump $gridvalues}
+                {foreach $gridvalues as $gridValue}
+                    <tr>
+                        <td>
+                            {$gridValue->getName()}
+                        </td>
+                        <td>
+                            {$gridValue->getSurname()}
+                        </td>
+                        <td>
+                            {$gridValue->getEmail()}
+                        </td>
+                        <td>
+                            {$gridValue->getRole()->getName()}
+                        </td>
+                        <td class="project-actions">
+                            <form action="{$actionConstructors[App\Enums\EControllerNames::PROFILE]::allow()}"
+                                  method="post">
+                                <input type="hidden" name="user_id" value="{$gridValue->getId()}">
+                                <input type="hidden" name="schedule_id" value="{$scheduleId}">
+                                <input type="hidden" name="hobby_group_id" value="{$gridValue->getHobbygroupId()}">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="is_allowed" value="1"
+                                           {if $gridValue->getIsAllowed()}checked{/if}>
+                                    <label class="form-check-label">Povolit účast</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="is_allowed" value="0"
+                                           {if $gridValue->getIsAllowed() === "0"}checked{/if}>
+                                    <label class="form-check-label">Zakázat účast</label>
+                                </div>
+                                <input type="text" name="not_allowed_note"
+                                       value="{if $gridValue->getNotAllowedNote()} {$gridValue->getNotAllowedNote()}{/if}"
+                                       placeholder="Zdůvodnění zákazu">
+                                <button type="submit" class="btn btn-sm btn-success">Uložit</button>
+                            </form>
+                        </td>
+                    </tr>
+                {/foreach}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{/block}

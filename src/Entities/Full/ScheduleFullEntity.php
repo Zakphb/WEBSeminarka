@@ -13,6 +13,10 @@ class ScheduleFullEntity extends BaseFullEntity
 	const SCHEDULE_CAPACITY = 'capacity';
 	const SCHEDULE_SCHOOLROOM = 'schoolroom';
 	const SCHLEDULE_HOBBYGROUP = 'hobbygroup';
+	const SCHEDULE_TEACHER = 'teacher';
+	const SCHEDULE_DURATION = 'duration';
+	const SCHEDULE_OCCUPANCY = 'occupancy';
+	const SCHEDULE_ALLOWED = 'allowed';
 
 	const COLUMN_NAMES = [
 		self::BASE_ID,
@@ -22,7 +26,11 @@ class ScheduleFullEntity extends BaseFullEntity
 		self::SCHEDULE_TIME_END,
 		self::SCHEDULE_CAPACITY,
 		self::SCHEDULE_SCHOOLROOM,
-		self::SCHLEDULE_HOBBYGROUP
+		self::SCHLEDULE_HOBBYGROUP,
+		self::SCHEDULE_TEACHER,
+		self::SCHEDULE_DURATION,
+		self::SCHEDULE_OCCUPANCY,
+		self::SCHEDULE_ALLOWED
 	];
 	private $schoolroom_id;
 	private $hobby_group_id;
@@ -31,6 +39,10 @@ class ScheduleFullEntity extends BaseFullEntity
 	private $capacity;
 	private $schoolroom;
 	private $hobbygroup;
+	private $teacher;
+	private $duration;
+	private $occupancy;
+	private $allowed;
 
 	/**
 	 * @param $id
@@ -41,8 +53,12 @@ class ScheduleFullEntity extends BaseFullEntity
 	 * @param $capacity
 	 * @param SchoolroomObjectEntity $schoolroom
 	 * @param HobbyGroupFullEntity $hobbygroup
+	 * @param UserFullEntity $teacher
+	 * @param $duration
+	 * @param $occupancy
+	 * @param $allowed
 	 */
-	public function __construct($id, $schoolroom_id, $hobby_group_id, $time_start, $time_end, $capacity, SchoolroomObjectEntity $schoolroom, HobbyGroupFullEntity $hobbygroup)
+	public function __construct($id, $schoolroom_id, $hobby_group_id, $time_start, $time_end, $capacity, SchoolroomObjectEntity $schoolroom, HobbyGroupFullEntity $hobbygroup, UserFullEntity $teacher, $duration, $occupancy, $allowed)
 	{
 		parent::__construct();
 		$this->id = $id;
@@ -53,6 +69,10 @@ class ScheduleFullEntity extends BaseFullEntity
 		$this->capacity = $capacity;
 		$this->schoolroom = $schoolroom;
 		$this->hobbygroup = $hobbygroup;
+		$this->teacher = $teacher;
+		$this->duration = $duration;
+		$this->occupancy = $occupancy;
+		$this->allowed = $allowed;
 	}
 
 	/**
@@ -61,7 +81,7 @@ class ScheduleFullEntity extends BaseFullEntity
 	 */
 	public static function constructFromArray(array $params): ScheduleFullEntity
 	{
-		return new ScheduleFullEntity($params[self::BASE_ID], $params[self::SCHEDULE_SCHOOLROOM_ID], $params[self::SCHEDULE_HOBBYGROUP_ID], $params[self::SCHEDULE_TIME_START], $params[self::SCHEDULE_TIME_END], $params[self::SCHEDULE_CAPACITY], $params[self::SCHEDULE_SCHOOLROOM], $params[self::SCHLEDULE_HOBBYGROUP]);
+		return new ScheduleFullEntity($params[self::BASE_ID], $params[self::SCHEDULE_SCHOOLROOM_ID], $params[self::SCHEDULE_HOBBYGROUP_ID], $params[self::SCHEDULE_TIME_START], $params[self::SCHEDULE_TIME_END], $params[self::SCHEDULE_CAPACITY], $params[self::SCHEDULE_SCHOOLROOM], $params[self::SCHLEDULE_HOBBYGROUP], $params[self::SCHEDULE_TEACHER], $params[self::SCHEDULE_DURATION], $params[self::SCHEDULE_OCCUPANCY], $params[self::SCHEDULE_ALLOWED]);
 	}
 
 	/**
@@ -190,6 +210,63 @@ class ScheduleFullEntity extends BaseFullEntity
 	public function setHobbygroup($hobbygroup): void
 	{
 		$this->hobbygroup = $hobbygroup;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getTeacher()
+	{
+		return $this->teacher;
+	}
+
+	/**
+	 * @param mixed $teacher
+	 */
+	public function setTeacher($teacher): void
+	{
+		$this->teacher = $teacher;
+	}
+
+
+	/**
+	 * @return mixed
+	 */
+	public function getDuration()
+	{
+		return $this->duration;
+	}
+
+	/**
+	 * @param mixed $duration
+	 */
+	public function setDuration($duration): void
+	{
+		$this->duration = $duration;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getOccupancy()
+	{
+		return $this->occupancy;
+	}
+
+	/**
+	 * @param mixed $occupancy
+	 */
+	public function setOccupancy($occupancy): void
+	{
+		$this->occupancy = $occupancy;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getAllowed()
+	{
+		return $this->allowed;
 	}
 
 

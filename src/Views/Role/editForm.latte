@@ -19,8 +19,8 @@
                     </div>
                     <!-- select -->
                     <div class="form-group">
-                        <select multiple="multiple" name="permission[]" class="form-control select2bs4" data-placeholder="Vyberte právo" style="width: 100%;">
-                            {dump $selectNames}
+                        <select class="form-control select2bs4" name="permission" style="width: 100%;" required>
+                            <option value="" selected disabled>Vyberte právo k přiřazení</option>
                             {foreach $selectNames as $select}
                                 <option value="{$select->getId()}">{$select->getName()}</option>
                             {/foreach}

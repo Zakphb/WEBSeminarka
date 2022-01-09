@@ -5,6 +5,7 @@ namespace App\Utilities;
 class RedirectUtils
 {
 	const BASE_URL = "http://localhost/";
+	const LOGIN_URL = "http://localhost/login";
 
 	/**
 	 * @param string $url
@@ -44,5 +45,10 @@ class RedirectUtils
 			}
 		}
 		self::redirect($url, $statusCode);
+	}
+
+
+	public static function redirectToLogin(){
+		self::redirect(self::LOGIN_URL);
 	}
 }

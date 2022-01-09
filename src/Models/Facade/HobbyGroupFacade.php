@@ -30,7 +30,7 @@ class HobbyGroupFacade
 	{
 
 		$this->hobbyGroupDatabase = $hobbyGroupDatabase;
-		$this->userFacade = new UserFacade(new UserDatabase(), new UserToRoleDatabase(), new UserToScheduleDatabase());
+		$this->userFacade = new UserFacade(new UserDatabase(), new UserToRoleDatabase(), new UserToScheduleDatabase(), new UserToHobbyGroupDatabase());
 		$this->userToHobbyGroupDatabase = $userToHobbyGroupDatabase;
 	}
 
@@ -41,20 +41,11 @@ class HobbyGroupFacade
 	public function saveHobbyGroup($formVariables): int
 	{
 		$file = $formVariables['files']['image'];
-		$students = $formVariables["students"];
-		unset($formVariables["students"], $formVariables['files']);
+		unset($formVariables['files']);
 		$hobbyGroupId = $this->hobbyGroupDatabase->save($formVariables);
 		$hobbyGroup = $this->getHobbyGroupById($hobbyGroupId);
 		$imagePath = UploadUtils::upload($file, $hobbyGroup->getId(), $formVariables['name'], $hobbyGroup->getImage());
 		$this->hobbyGroupDatabase->update([BaseObjectEntity::BASE_ID => $hobbyGroupId, HobbyGroupObjectEntity::HOBBYGROUP_IMAGE => $imagePath]);
-		if ($students && $hobbyGroupId)
-		{
-			foreach ($students as $student)
-			{
-				$this->userToHobbyGroupDatabase->decompTableSave([UserToHobbyGroupDecompEntity::USER_TO_HOBBY_GROUP_HOBBY_USER_ID => $student, UserToHobbyGroupDecompEntity::USER_TO_HOBBY_GROUP_HOBBY_GROUP_ID => $hobbyGroupId]);
-			}
-
-		}
 		return $hobbyGroupId;
 	}
 

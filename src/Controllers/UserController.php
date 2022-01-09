@@ -9,6 +9,7 @@ use App\Models\Database\PermissionDatabase;
 use App\Models\Database\RoleDatabase;
 use App\Models\Database\RoleToPermissionDatabase;
 use App\Models\Database\UserDatabase;
+use App\Models\Database\UserToHobbyGroupDatabase;
 use App\Models\Database\UserToRoleDatabase;
 use App\Models\Database\UserToScheduleDatabase;
 use App\Models\Facade\RoleFacade;
@@ -27,7 +28,7 @@ class UserController extends BaseController
 	public function __construct($latte)
 	{
 		parent::__construct($latte);
-		$this->userFacade = new UserFacade(new UserDatabase(), new UserToRoleDatabase(), new UserToScheduleDatabase());
+		$this->userFacade = new UserFacade(new UserDatabase(), new UserToRoleDatabase(), new UserToScheduleDatabase(), new UserToHobbyGroupDatabase());
 		$this->roleFacade = new RoleFacade(new RoleDatabase(), new RoleToPermissionDatabase(), new PermissionDatabase());
 	}
 

@@ -71,8 +71,7 @@ class PermissionController extends BaseController
 	 */
 	public function loadForm($variables)
 	{
-		$args['formData'] = $this->permissionFacade->getPermissionById($variables[BaseObjectEntity::BASE_ID]);
-		$this->show(self::VIEW_EDIT, $args);
+		$this->show(self::VIEW_EDIT);
 	}
 
 	/**

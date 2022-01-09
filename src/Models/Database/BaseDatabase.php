@@ -109,6 +109,7 @@ abstract class BaseDatabase
 		$sql = "INSERT INTO $this->tableName (" . ArrayUtils::arrayIntoQueryArgs(array_keys($data)) . ") VALUES (" .
 			ArrayUtils::arrayIntoQueryArgs(array_values($data), true) . ");";
 		$prep = $this->pdo->prepare($sql);
+		bdump($prep);
 		return $prep->execute();
 	}
 
@@ -165,7 +166,7 @@ abstract class BaseDatabase
 	public
 	function exists($data)
 	{
-		if (isset($data["id"]))
+		if (isset($data[BaseObjectEntity::BASE_ID]))
 		{
 			return true;
 		}
@@ -335,6 +336,8 @@ abstract class BaseDatabase
 		}
 
 	}
+
+
 
 }
 

@@ -1,6 +1,7 @@
 {varType App\Entities\Full\ScheduleFullEntity $formData}
 {varType App\Entities\Database\Object\HobbyGroupObjectEntity[] $selectHobbyGroups}
 {varType App\Entities\Database\Object\SchoolroomObjectEntity[] $selectSchoolrooms}
+{varType App\Entities\Full\UserFullEntity[] $selectTeachers}
 {varType App\Enums\ActionConstructors\EBaseActionConstructor[] $actionConstructors}
 {block editForm}
     <!-- Main content -->
@@ -20,17 +21,56 @@
                     </div>
                     <!-- select -->
                     <div class="form-group">
-                        <select name="hobby_group_id" class="form-control select2bs4" style="width: 100%;" data-placeholder="Zájmový kroužek">
-                            {foreach $selectHobbyGroups as $select}
-                                <option value="{$select->getId()}">{$select->getName()}</option>
+                        <select name="teacher" class="form-control select2bs4" style="width: 100%;" required>
+                            {if !isset($formData)}
+                                <option value="" selected disabled>Vyberte vyučujícího pro rozvrhovou akci</option>{/if}
+                            {foreach $selectTeachers as $select}
+                                {if isset($formData)}
+                                    {if $formData->getTeacher()->getId() == $select->getId()}
+                                        <option selected
+                                                value="{$select->getId()}">{$select->getName()} {$select->getSurname()}</option>
+                                    {else}
+                                        <option value="{$select->getId()}">{$select->getName()} {$select->getSurname()}</option>
+                                    {/if}
+                                {else}
+                                    <option value="{$select->getId()}">{$select->getName()} {$select->getSurname()}</option>
+                                {/if}
                             {/foreach}
                         </select>
                     </div>
                     <!-- select -->
                     <div class="form-group">
-                        <select name="schoolroom_id" class="form-control select2bs4" style="width: 100%;" data-placeholder="Učebna">
+                        <select name="hobby_group_id" class="form-control select2bs4" style="width: 100%;" required>
+                            {if !isset($formData)}
+                                <option value="" selected disabled>Vyberte kroužek pro rozvrhovou akci</option>{/if}
+                            {foreach $selectHobbyGroups as $select}
+                                {if isset($formData)}
+                                    {if $formData->getHobbygroup()->getId() == $select->getId()}
+                                        <option selected value="{$select->getId()}">{$select->getName()}</option>
+                                    {else}
+                                        <option value="{$select->getId()}">{$select->getName()}</option>
+                                    {/if}
+                                {else}
+                                    <option value="{$select->getId()}">{$select->getName()}</option>
+                                {/if}
+                            {/foreach}
+                        </select>
+                    </div>
+                    <!-- select -->
+                    <div class="form-group">
+                        <select name="schoolroom_id" class="form-control select2bs4" style="width: 100%;" required>
+                            {if !isset($formData)}
+                                <option value="" selected disabled>Vyberte místnost pro rozvrhovou akci</option>{/if}
                             {foreach $selectSchoolrooms as $select}
-                                <option value="{$select->getId()}">{$select->getName()}</option>
+                                {if isset($formData)}
+                                    {if $formData->getSchoolroom()->getId() == $select->getId()}
+                                        <option selected value="{$select->getId()}">{$select->getName()}</option>
+                                    {else}
+                                        <option value="{$select->getId()}">{$select->getName()}</option>
+                                    {/if}
+                                {else}
+                                    <option value="{$select->getId()}">{$select->getName()}</option>
+                                {/if}
                             {/foreach}
                         </select>
                     </div>
@@ -41,7 +81,8 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="far fa-clock"></i></span>
                             </div>
-                            <input type="text" name="time_start" class="form-control float-right" id="time_start">
+                            <input type="text" name="time_start" class="form-control float-right" id="time_start" value="{if isset($formData)}{$formData->getTimeStart()}{/if}"
+                                   required>
                         </div>
                         <!-- /.input group -->
                     </div>
@@ -52,7 +93,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="far fa-clock"></i></span>
                             </div>
-                            <input type="text"  name="time_end" class="form-control float-right" id="time_end">
+                            <input type="text" name="time_end" class="form-control float-right" id="time_end" value="{if isset($formData)}{$formData->getTimeEnd()}{/if}" required>
                         </div>
                         <!-- /.input group -->
                     </div>

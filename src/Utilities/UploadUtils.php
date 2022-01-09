@@ -24,13 +24,15 @@ class UploadUtils
 			{
 				throw new \RuntimeException(sprintf('Directory "%s" was not created', $targetDir));
 			}
-			if ($file['size'] === 0){
-				return $oldfile;
-			}
+		}
+		if ($file['size'] === 0){
+			return $oldfile;
 		}
 
 		move_uploaded_file($file['tmp_name'], $targetFile);
-		unlink($oldfile);
+		if (!is_null($oldfile)){
+			unlink($oldfile);
+		}
 
 		return $targetFile;
 	}

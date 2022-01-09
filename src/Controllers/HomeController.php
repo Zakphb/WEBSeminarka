@@ -21,7 +21,7 @@ class HomeController extends BaseController
 	public function __construct($latte)
 	{
 		parent::__construct($latte);
-		$this->scheduleFacade = new ScheduleFacade(new ScheduleDatabase(), new UserToScheduleDatabase());
+		$this->scheduleFacade = new ScheduleFacade(new ScheduleDatabase());
 	}
 
 	/**
@@ -31,7 +31,12 @@ class HomeController extends BaseController
 	 */
 	public function show(string $path = self::PATH_DEFAULT, $args = null)
 	{
-		$args['schedules'] = $this->scheduleFacade->getAllSchedules();
+		$id = null;
+		if ($this->getUser()->getUserInfo() !== null)
+		{
+			$id = $this->getUser()->getUserInfo()->getId();
+		}
+		$args['schedules'] = $this->scheduleFacade->getAllSchedules($id);
 		parent::show($path, $args);
 	}
 

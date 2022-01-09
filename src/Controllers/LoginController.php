@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Enums\ActionConstructors\ELoginConstructor;
 use App\Models\Database\UserDatabase;
+use App\Models\Database\UserToHobbyGroupDatabase;
 use App\Models\Database\UserToRoleDatabase;
 use App\Models\Database\UserToScheduleDatabase;
 use App\Models\Facade\UserFacade;
@@ -24,7 +25,7 @@ class LoginController extends BaseController
 	public function __construct($latte)
 	{
 		parent::__construct($latte);
-		$this->userFacade = new UserFacade(new UserDatabase(), new UserToRoleDatabase(), new UserToScheduleDatabase());
+		$this->userFacade = new UserFacade(new UserDatabase(), new UserToRoleDatabase(), new UserToScheduleDatabase(), new UserToHobbyGroupDatabase());
 	}
 
 	/**
@@ -42,7 +43,7 @@ class LoginController extends BaseController
 	 */
 	public function actionLogin()
 	{
-		$variables = $_POST;
+		$variables = $this->getVariables()[self::POST];
 		if (empty($variables)){
 			$this->show();
 		}
@@ -70,7 +71,7 @@ class LoginController extends BaseController
 	 */
 	public function actionRegister()
 	{
-		$variables = $_POST;
+		$variables = $this->getVariables()[self::POST];
 		$registered = $this->userFacade->register($variables);
 		if ($registered->isSuccess())
 		{

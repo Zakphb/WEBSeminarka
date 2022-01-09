@@ -27,7 +27,12 @@ class PermissionFacade
 	 */
 	public function savePermission($formVariables):string
 	{
-		return $this->permissionDatabase->save($formVariables);
+		bdump($formVariables);
+		$found = $this->permissionDatabase->getWhere([PermissionObjectEntity::PERMISSION_NAME => $formVariables[PermissionObjectEntity::PERMISSION_NAME]]);
+		if (empty($found)){
+			return $this->permissionDatabase->save($formVariables);
+		}
+		return '';
 	}
 
 	/**

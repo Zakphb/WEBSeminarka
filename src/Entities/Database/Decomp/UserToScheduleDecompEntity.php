@@ -11,6 +11,7 @@ class UserToScheduleDecompEntity extends BaseDecompEntity
 	const USER_TO_SCHEDULE_IS_ALLOWED = 'is_allowed';
 	const USER_TO_SCHEDULE_NOTE = 'note';
 	const USER_TO_SCHEDULE_IS_LOGGED_IN = 'is_logged_in';
+	const USER_TO_SCHEDULE_NOT_ALLOWED_NOTE = 'not_allowed_note';
 
 	const COLUMN_NAMES = [
 		self::BASE_ID,

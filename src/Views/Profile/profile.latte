@@ -1,14 +1,26 @@
-{layout 'layout.latte'}
+{layout '../layout.latte'}
 {varType App\Entities\Full\ScheduleFullEntity[] $schedules}
 {varType App\Entities\Full\UserFullEntity $userinfo}
+{varType App\Entities\Full\UserFullEntity $profileInfo}
 {varType App\Enums\ActionConstructors\EBaseActionConstructor[] $actionConstructors}
 {block content}
     <!-- Main content -->
     <!-- Default box -->
+    <!-- Profile Image -->
+    <div class="card card-primary card-outline">
+        <div class="card-body box-profile">
+            <h3 class="profile-username text-center">{$profileInfo->getName()} {$profileInfo->getSurname()}</h3>
+
+            <p class="text-muted text-center">{$profileInfo->getRole()->getName()}</p>
+            <p class="text-muted text-center">{$profileInfo->getEmail()}</p>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
     <div class="card card-solid">
         <div class="card-body pb-0">
             <div class="row">
-                {if isset($schedules)}
+                {if isset($schedules) && !empty($schedules)}
                     {foreach $schedules as $schedule}
                         <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
                             <div class="card bg-light d-flex flex-fill">
@@ -25,7 +37,8 @@
                                                 </li>
                                                 <li class="small"><span class="fa-li"><i
                                                                 class="fas fa-lg fa-money-bill"></i></span>
-                                                    Cena: {$schedule->getHobbygroup()->getPrice()}</li>
+                                                    Cena: {$schedule->getHobbygroup()->getPrice()}/h
+                                                </li>
                                                 <li class="small"><span class="fa-li"><i
                                                                 class="fas fa-lg fa-calendar"></i></span>
                                                     Datum: {$schedule->getDuration()['date']}</li>
@@ -43,7 +56,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    {if $schedule->getAllowed()['is_logged_in']}
+                                    {if $userinfo->getRole()->getName() === 'student'}
                                         <div class="row">
                                             <div class="col">
                                                 Obsazenost: {$schedule->getOccupancy()}/{$schedule->getCapacity()}
@@ -63,23 +76,15 @@
                                                 Důvod zamítnutí: {$schedule->getAllowed()['not_allowed_note']}
                                             </div>
                                         {/if}
-
-                                    {elseif isset($userinfo) && $userinfo->getRole()->getName() === 'student'}
+                                    {else}
                                         <div class="row">
                                             <div class="col">
                                                 Obsazenost: {$schedule->getOccupancy()}/{$schedule->getCapacity()}
                                             </div>
-                                            <div class="col">
-                                                <form action="{$actionConstructors[App\Enums\EControllerNames::PROFILE]::join()}"
-                                                      method="post">
-                                                    <button type="submit" class="btn btn-sm btn-success"><i
-                                                                class="fas fa-user"></i> Zúčastnit se
-                                                    </button>
-                                                    <input type="hidden" name="user_id" value="{$userinfo->getId()}">
-                                                    <input type="hidden" name="schedule_id"
-                                                           value="{$schedule->getId()}">
-                                                </form>
-                                            </div>
+                                            <a href="{$actionConstructors[App\Enums\EControllerNames::PROFILE]::grid()}?id={$schedule->getId()}"
+                                               class="btn btn-sm btn-success">
+                                                <p>Účastníci</p>
+                                            </a>
                                         </div>
                                     {/if}
                                 </div>
@@ -87,7 +92,7 @@
                         </div>
                     {/foreach}
                 {else}
-                    Právě nejsou k dispozici žádné kroužky.
+                    Uživatel nemá zapsané žádné kroužky.
                 {/if}
             </div>
         </div>

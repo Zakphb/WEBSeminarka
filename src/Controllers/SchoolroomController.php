@@ -62,7 +62,7 @@ class SchoolroomController extends BaseController
 	 */
 	public function actionGrid()
 	{
-		$gridValues = $this->schoolroomFacade->getAllSchoolrooms();
+		$gridValues = $this->schoolroomFacade->getFullSchoolrooms();
 		$args["gridvalues"] = $gridValues;
 		$this->show(self::VIEW_GRID, $args);
 	}

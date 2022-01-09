@@ -37,17 +37,22 @@
                     </div>
                     <!-- select -->
                     <div class="form-group">
-                        <select name="role" class="form-control select2bs4" style="width: 100%;" data-placeholder="Role">
-
+                        <select name="role" class="form-control select2bs4" style="width: 100%;"
+                                required>
+                            {dump $formData}
                             {foreach $selectNames as $select}
-                                {ifset $formData} {if $select->getName() === $formData->getRole()->getName()}
-                                    <option selected value="{$select->getId()}">{$select->getName()}</option>
-                                {/if}{/ifset}
-                            {else}
-                                <option value="{$select->getId()}">{$select->getName()}</option>
+                                {if isset($formData)}
+                                    {if $select->getName() === $formData->getRole()->getName()}
+                                        <option selected value="{$select->getId()}">{$select->getName()}</option>
+                                    {else}
+                                        <option value="{$select->getId()}">{$select->getName()}</option>
+                                    {/if}
+                                {else}
+                                    <option value="{$select->getId()}">{$select->getName()}</option>
+                                {/if}
                             {/foreach}
                         </select>
-                    </div>
+                    </div
                     <div class="row">
                         <div class="col-8">
                         </div>

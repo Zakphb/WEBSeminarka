@@ -18,9 +18,10 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <select class="form-control select2bs4" id="type_id" data-placeholder="Vyberte typ učebny">
+                        <select class="form-control select2bs4" name="type_id" required>
+                           {if !isset($formData)}<option value="" selected disabled>Vyberte typ učebny</option>{/if}
                             {foreach $selectNames as $key => $selectName}
-                                {if (isset($formData) && ($key === $formData->getTypeId()))}
+                                {if (isset($formData) && ($key == $formData->getTypeId()))}
                                     <option value="{$key}" selected>{$selectName}</option>
                                 {else}
                                     <option value="{$key}">{$selectName}</option>

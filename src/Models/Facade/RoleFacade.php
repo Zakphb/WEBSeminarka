@@ -36,12 +36,13 @@ class RoleFacade
 	 */
 	public function saveRole($formVariables): string
 	{
+		bdump($formVariables);
 		foreach ($formVariables["permission"] as $permission)
 		{
 			$roleToPermission = new RoleToPermissionDecompEntity();
 			$roleToPermission->setRoleId($formVariables[RoleObjectEntity::BASE_ID]);
 			$roleToPermission->setPermissionId($permission);
-			$this->roleToPermissionDatabase->save($roleToPermission->toArray());
+			$this->roleToPermissionDatabase->decompTableSave($roleToPermission->toArray(), TRUE);
 		}
 		unset($formVariables['permission']);
 		return $this->roleDatabase->save($formVariables);

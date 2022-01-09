@@ -47,12 +47,12 @@
                             <a class="btn btn-info btn-sm" href="{$actionConstructors[App\Enums\EControllerNames::USER]::edit()}?id={$gridValue->getId()}">
                                 <i class="fas fa-pencil-alt">
                                 </i>
-                                Edit
+                                Upravit
                             </a>
-                            <a class="btn btn-danger btn-sm" href="{$actionConstructors[App\Enums\EControllerNames::USER]::delete()}?id={$gridValue->getId()}">
-                                <i class="fas fa-trash">
+                            <a class="btn btn-success btn-sm" href="{$actionConstructors[App\Enums\EControllerNames::PROFILE]::CONTROLLER_NAME}?id={$gridValue->getId()}">
+                                <i class="fas fa-user">
                                 </i>
-                                Delete
+                                Detail
                             </a>
                         </td>
                     </tr>

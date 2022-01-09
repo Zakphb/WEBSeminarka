@@ -1,6 +1,8 @@
 {layout '../layout.latte'}
 {varType App\Entities\Full\ScheduleFullEntity[] $gridvalues}
 {varType App\Enums\ActionConstructors\EBaseActionConstructor[] $actionConstructors}
+{varType App\Entities\Full\UserFullEntity $userinfo}
+
 {block content}
     <!-- Main content -->
     <div class="card">
@@ -12,13 +14,16 @@
                 <thead>
                 <tr>
                     <th style="width: 20%">
-                        Jmeno krouzku
+                        Jméno kroužku
                     </th>
                     <th style="width: 20%">
-                        Jmeno ucebny
+                        Učebna
                     </th>
                     <th style="width: 20%">
-                        Zacatek
+                        Vyučující
+                    </th>
+                    <th style="width: 20%">
+                        Začátek
                     </th>
                     <th style="width: 20%">
                         Konec
@@ -38,6 +43,9 @@
                             {$gridValue->getSchoolroom()->getName()}
                         </td>
                         <td>
+                            {$gridValue->getTeacher()->getName()} {$gridValue->getTeacher()->getSurname()}
+                        </td>
+                        <td>
                             {$gridValue->getTimeStart()}
                         </td>
                         <td>
@@ -47,13 +55,14 @@
                             <a class="btn btn-info btn-sm" href="{$actionConstructors[App\Enums\EControllerNames::SCHEDULE]::edit()}?id={$gridValue->getId()}">
                                 <i class="fas fa-pencil-alt">
                                 </i>
-                                Edit
+                                Upravit
                             </a>
-                            <a class="btn btn-danger btn-sm" href="{$actionConstructors[App\Enums\EControllerNames::SCHEDULE]::delete()}?id={$gridValue->getId()}">
-                                <i class="fas fa-trash">
-                                </i>
-                                Delete
-                            </a>
+                            {if $userinfo->getRole()->getName() === "super"}
+                                <a href="{$actionConstructors[App\Enums\EControllerNames::PROFILE]::grid()}?id={$gridValue->getId()}"
+                                   class="btn btn-sm btn-success">
+                                    <p>Účastníci</p>
+                                </a>
+                            {/if}
                         </td>
                     </tr>
                 {/foreach}

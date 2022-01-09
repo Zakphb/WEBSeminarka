@@ -9,7 +9,7 @@ class SchoolroomObjectEntity extends BaseObjectEntity
 
 
 	protected $name;
-	protected $typeId;
+	protected $type_id;
 
 	/**
 	 * @return array
@@ -19,7 +19,7 @@ class SchoolroomObjectEntity extends BaseObjectEntity
 		return [
 			self::BASE_ID => $this->id,
 			self::SCHOOLROOM_NAME => $this->name,
-			self::SCHOOLROOM_TYPE_ID => $this->typeId,
+			self::SCHOOLROOM_TYPE_ID => $this->type_id,
 		];
 	}
 
@@ -44,7 +44,7 @@ class SchoolroomObjectEntity extends BaseObjectEntity
 	 */
 	public function getTypeId()
 	{
-		return $this->typeId;
+		return $this->type_id;
 	}
 
 
