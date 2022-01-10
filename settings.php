@@ -9,7 +9,7 @@
 const DB_SERVER = "127.0.0.1:3306"; // https://students.kiv.zcu.cz lze 147.228.63.10, ale musite byt na VPN
 /** Nazev databaze. */
 //define("DB_NAME","kivweb"); Je pro kiv web
-const DB_NAME = "webseminarka";
+const DB_NAME = "db1_vyuka";
 /** Uzivatel databaze. */
 const DB_USER = "root";
 /** Heslo uzivatele databaze */
